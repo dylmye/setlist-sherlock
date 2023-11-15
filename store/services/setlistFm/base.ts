@@ -9,7 +9,7 @@ import { version as appVersion } from "../../../package.json";
 export const setlistFmApi = createApi({
   reducerPath: "setlistFm",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.setlist.fm/rest/1.0/",
+    baseUrl: "https://api.setlist.fm/rest/",
     prepareHeaders: (headers) => {
       headers.set(
         "x-api-key",
