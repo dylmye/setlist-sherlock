@@ -353,7 +353,11 @@ export type Setlist = {
   artist?: Artist;
   venue?: Venue;
   tour?: Tour;
-  set?: Set[];
+  // manually edited to match actual schema
+  // set?: Set[];
+  sets?: {
+    set: Set[];
+  };
   info?: string;
   url?: string;
   id?: string;

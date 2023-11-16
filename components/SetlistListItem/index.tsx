@@ -3,6 +3,7 @@ import { Icon, ListItem } from "@ui-kitten/components";
 import { Setlist } from "../../store/services/setlistFm";
 import { router } from "expo-router";
 
+/** Simple display item for an indivdual setlist from search results, etc */
 const SetlistListItem = ({ id, artist, venue }: Setlist) => {
   const showState = venue?.city?.country?.code === "US";
   const stateText = showState ? `, ${venue?.city?.stateCode}` : "";
