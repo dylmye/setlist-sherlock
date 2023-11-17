@@ -6,11 +6,13 @@ import SetlistSectionListItem from "./SetlistSectionListItem";
 
 interface SetlistSectionListProps {
   sets: Set[];
+  header: JSX.Element;
 }
 
-const SetlistSectionList = ({ sets }: SetlistSectionListProps) => {
+/** List songs within a setlist, as well as act/part headers */
+const SetlistSectionList = ({ sets, header }: SetlistSectionListProps) => {
   const sections: SectionListData<Song>[] = sets?.map((x, i) => ({
-    title: x.name ?? `Section ${i}`,
+    title: x.name ?? x.encore === 1 ? "Encore" : "Setlist",
     data: x.song ?? [],
   }));
 
@@ -28,6 +30,7 @@ const SetlistSectionList = ({ sets }: SetlistSectionListProps) => {
           {title}
         </Text>
       )}
+      ListHeaderComponent={header}
     />
   );
 };

@@ -1,12 +1,12 @@
+import React, { useMemo } from "react";
 import { StyleSheet, ListRenderItem } from "react-native";
 import { Stack, router } from "expo-router";
 import { Button, Divider, Layout, List, Text } from "@ui-kitten/components";
+import { format } from "date-fns";
 
 import { useGet10SearchSetlistsQuery } from "../store/services/setlistFm";
 import { Setlist } from "../store/services/setlistFm";
 import SetlistListItem from "../components/SetlistListItem";
-import { useMemo } from "react";
-import { format } from "date-fns";
 
 /** Entry point for users - latest setlists view default */
 const Home = () => {
@@ -25,10 +25,6 @@ const Home = () => {
   return (
     <Layout style={styles.container}>
       <Stack.Screen options={{ title: "Setlist Sherlock" }} />
-      <Text category="h6" style={styles.title}>
-        Latest Setlists
-      </Text>
-      <Button onPress={() => router.push(`/setlist/2ba1a46e`)}>Test Setlist</Button>
       <List<Setlist>
         data={latestSetlists?.setlist}
         renderItem={renderSetlist}
@@ -37,6 +33,16 @@ const Home = () => {
         style={styles.container}
         onRefresh={() => refetchSetlists()}
         refreshing={isFetchingSetlists}
+        ListHeaderComponent={
+          <Layout style={[styles.container, styles.title]}>
+            <Text
+              category="h6"
+              onPress={() => router.push(`/setlist/63df2657`)}
+            >
+              Latest Setlists
+            </Text>
+          </Layout>
+        }
       />
     </Layout>
   );
@@ -47,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    margin: 8,
+    padding: 16,
   },
 });
 
