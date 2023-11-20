@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
-import { Button, Icon, Layout, Spinner, Text } from "@ui-kitten/components";
+import { ActivityIndicator, FAB, Text } from "react-native-paper";
 import * as Linking from "expo-linking";
 
 import { useGet10SetlistBySetlistIdQuery } from "../../store/services/setlistFm";
@@ -17,19 +17,19 @@ const SetlistDetails = () => {
 
   const setlistEmpty = !isLoading && !setlist?.sets?.set?.length;
 
-  const Header = () => <SetlistMetadataList {...setlist} />;
+  const Header = () => <SetlistMetadataList {...setlist} style={styles.metadataCard} />;
   const Footer = () => (
-    <Layout style={styles.footer}>
+    <View style={styles.footer}>
       <Link asChild href={setlist?.url ?? "https://setlist.fm"}>
-        <Text style={styles.footerText}>
+        <Text style={styles.footerText} variant="bodySmall">
           Source: {setlist?.artist?.name!} setlist on setlist.fm
         </Text>
       </Link>
-    </Layout>
+    </View>
   );
 
   return (
-    <Layout style={styles.container}>
+    <View style={styles.container}>
       <Stack.Screen
         options={{ title: setlist ? `${setlist?.artist?.name} setlist` : "" }}
       />
@@ -46,24 +46,19 @@ const SetlistDetails = () => {
           footer={<Footer />}
         />
       ) : (
-        <Layout style={styles.loadState}>
-          <Spinner />
-        </Layout>
+        <ActivityIndicator animating size="large" />
       )}
       {!isLoading && (
-        <Button
-          style={styles.floatingButton}
-          size="giant"
-          appearance="filled"
-          accessoryLeft={(props) => <Icon {...props} name="edit-outline" />}
+        <FAB
+          icon="pencil"
           onPress={() =>
             Linking.openURL(`${setlist?.url}` ?? "https://setlist.fm")
           }
-          accessible
           accessibilityLabel="Edit this setlist on the Setlist FM website"
+          style={styles.floatingButton}
         />
       )}
-    </Layout>
+    </View>
   );
 };
 
@@ -71,14 +66,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  loadState: {
-    minHeight: 150,
-    display: "flex",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  // loadState: {
+  //   minHeight: 150,
+  //   display: "flex",
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
   emptySetlistCard: {
+    margin: 16,
+  },
+  metadataCard: {
     margin: 16,
   },
   footer: {
@@ -89,20 +87,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   floatingButton: {
-    borderRadius: 1000,
     position: "absolute",
     bottom: 24,
     right: 24,
-    width: 72,
-    height: 72,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
   },
 });
 

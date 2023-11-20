@@ -1,18 +1,17 @@
-import { StyleSheet } from "react-native";
-import { Icon, Input, Layout, Text } from "@ui-kitten/components";
+import { StyleSheet, View } from "react-native";
+import { Text } from "react-native-paper";
 import { router } from "expo-router";
 
+import SetlistSearchbar from "./SetlistSearchbar";
+
+/** Top content for Homepage FlatList */
 const HomepageHeader = () => (
-  <Layout style={[styles.container, styles.title]}>
-    <Input
-      placeholder="Search for a setlist"
-      style={styles.searchInput}
-      accessoryRight={(props) => <Icon {...props} name="search-outline" />}
-    />
-    <Text category="h6" onPress={() => router.push(`/setlist/63df2657`)}>
+  <View style={[styles.container, styles.title]}>
+    <SetlistSearchbar style={styles.searchInput} />
+    <Text variant="headlineSmall" onPress={() => router.push(`/setlist/63df2657`)}>
       Latest Setlists
     </Text>
-  </Layout>
+  </View>
 );
 
 const styles = StyleSheet.create({

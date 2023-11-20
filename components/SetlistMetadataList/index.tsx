@@ -1,28 +1,32 @@
 import React, { useMemo } from "react";
-import { ListRenderItem } from "react-native";
+import { FlatList, ListRenderItem, StyleProp, ViewStyle } from "react-native";
 import { format, parse } from "date-fns";
-import { Card, Icon, List, ListItem } from "@ui-kitten/components";
 import * as Linking from "expo-linking";
+import { Card, List } from "react-native-paper";
 
 import { Setlist } from "../../store/services/setlistFm";
 import SetlistMetadataItem from "./SetlistMetadataItem";
 import { getMapsAddressFromVenue } from "../../utils/geo";
 
 interface SetlistMetadataListProps
-  extends Pick<Setlist, "artist" | "venue" | "eventDate" | "tour"> {}
+  extends Pick<Setlist, "artist" | "venue" | "eventDate" | "tour"> {
+    style?: StyleProp<ViewStyle>;
+  }
 
+/** Card containing information about the setlist e.g. date, artist, location */
 const SetlistMetadataList = ({
   artist,
   venue,
   eventDate,
   tour,
+  style,
 }: SetlistMetadataListProps) => {
   const formattedEventDate = useMemo(
     () =>
       eventDate
         ? format(parse(eventDate, "d-M-y", new Date()), "do MMM y")
         : "unknown",
-    [eventDate]
+    [eventDate],
   );
   const data = useMemo<SetlistMetadataItem[]>(() => {
     const d: SetlistMetadataItem[] = [
@@ -30,14 +34,14 @@ const SetlistMetadataList = ({
         key: "date",
         title: "Date",
         value: formattedEventDate,
-        iconName: "calendar-outline",
+        iconName: "calendar-star",
       },
       {
         key: "artist-name",
         title: "Artist",
         value: artist?.name ?? "unknown",
         internalLink: `artist/${artist?.mbid}`,
-        iconName: "star-outline",
+        iconName: "account-star",
         externalLink: artist?.url,
       },
     ];
@@ -47,7 +51,7 @@ const SetlistMetadataList = ({
         key: "tour",
         title: "Tour",
         value: tour?.name ?? "unknown",
-        iconName: "car-outline",
+        iconName: "badge-account",
       });
     }
 
@@ -56,7 +60,7 @@ const SetlistMetadataList = ({
         key: "venue",
         title: "Venue",
         value: venue?.name,
-        iconName: "home-outline",
+        iconName: "stadium-variant",
         externalLink: venue?.url,
       });
       d.push({
@@ -65,7 +69,7 @@ const SetlistMetadataList = ({
         value: `${venue?.city?.name}, ${
           venue?.city?.state ?? venue?.city?.country?.name
         }`,
-        iconName: "navigation-outline",
+        iconName: "navigation-variant",
         externalLink: getMapsAddressFromVenue(venue),
       });
     }
@@ -74,14 +78,14 @@ const SetlistMetadataList = ({
   }, [formattedEventDate]);
 
   const renderItem: ListRenderItem<SetlistMetadataItem> = ({ item }) => (
-    <ListItem
+    <List.Item
       title={item.value}
-      accessoryLeft={(props) =>
-        item?.iconName ? <Icon {...props} name={item.iconName} /> : <></>
+      left={(props) =>
+        item?.iconName ? <List.Icon {...props} icon={item.iconName} /> : <></>
       }
-      accessoryRight={(props) =>
+      right={(props) =>
         item?.externalLink || item?.internalLink ? (
-          <Icon {...props} name="chevron-right-outline" />
+          <List.Icon {...props} icon="chevron-right" />
         ) : (
           <></>
         )
@@ -95,8 +99,10 @@ const SetlistMetadataList = ({
   );
 
   return (
-    <Card>
-      <List data={data} renderItem={renderItem} />
+    <Card mode="contained" style={style}>
+      <Card.Content>
+        <FlatList<SetlistMetadataItem> data={data} renderItem={renderItem} />
+      </Card.Content>
     </Card>
   );
 };

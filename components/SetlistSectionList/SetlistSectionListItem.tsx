@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { ListItem } from "@ui-kitten/components";
+import { List } from "react-native-paper";
 
 import { Song } from "../../store/services/setlistFm";
 
@@ -7,6 +7,7 @@ interface SetlistSectionListItemProps {
   song: Song;
 }
 
+/** Indivial item for setlist song item */
 const SetlistSectionListItem = ({ song }: SetlistSectionListItemProps) => {
   const description = useMemo<string>(() => {
     let d = "";
@@ -26,7 +27,7 @@ const SetlistSectionListItem = ({ song }: SetlistSectionListItemProps) => {
     return d;
   }, [song]);
 
-  return <ListItem title={song.name} description={description} />;
+  return <List.Item title={song.name} description={description} />;
 };
 
 export default SetlistSectionListItem;

@@ -1,5 +1,5 @@
-import { SectionList, SectionListData, StyleSheet } from "react-native";
-import { Layout, Text } from "@ui-kitten/components";
+import { SectionList, SectionListData, StyleSheet, View } from "react-native";
+import { Surface, Text } from "react-native-paper";
 
 import { Set, Song } from "../../store/services/setlistFm";
 import SetlistSectionListItem from "./SetlistSectionListItem";
@@ -31,11 +31,9 @@ const SetlistSectionList = ({
       keyExtractor={(x, i) => `song-${x.name}-${i}`}
       renderItem={({ item }) => <SetlistSectionListItem song={item} />}
       renderSectionHeader={({ section: { title } }) => (
-        <Layout style={styles.sectionHeader}>
-          <Text category="h6">
-            {title}
-          </Text>
-        </Layout>
+        <Surface style={styles.sectionHeader} elevation={3}>
+          <Text variant="titleLarge">{title}</Text>
+        </Surface>
       )}
       stickySectionHeadersEnabled
       ListHeaderComponent={header}

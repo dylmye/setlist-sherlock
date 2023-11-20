@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import { StyleSheet, ListRenderItem } from "react-native";
+import { StyleSheet, ListRenderItem, FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
-import { Divider, Layout, List } from "@ui-kitten/components";
 import { format } from "date-fns";
+import { Divider } from "react-native-paper";
 
 import { useGet10SearchSetlistsQuery } from "../store/services/setlistFm";
 import { Setlist } from "../store/services/setlistFm";
@@ -26,11 +26,11 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Layout style={styles.container}>
+      <View style={styles.container}>
         <Stack.Screen
           options={{ title: "Setlist Sherlock", headerShown: false }}
         />
-        <List<Setlist>
+        <FlatList<Setlist>
           data={latestSetlists?.setlist}
           renderItem={renderSetlist}
           keyExtractor={(s) => `latest-setlist-${s.id}`}
@@ -40,7 +40,7 @@ const Home = () => {
           refreshing={isFetchingSetlists}
           ListHeaderComponent={<HomepageHeader />}
         />
-      </Layout>
+      </View>
     </SafeAreaView>
   );
 };
