@@ -1,12 +1,14 @@
 import React, { useMemo } from "react";
 import { StyleSheet, ListRenderItem } from "react-native";
-import { Stack, router } from "expo-router";
-import { Button, Divider, Layout, List, Text } from "@ui-kitten/components";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Stack } from "expo-router";
+import { Divider, Layout, List } from "@ui-kitten/components";
 import { format } from "date-fns";
 
 import { useGet10SearchSetlistsQuery } from "../store/services/setlistFm";
 import { Setlist } from "../store/services/setlistFm";
 import SetlistListItem from "../components/SetlistListItem";
+import HomepageHeader from "../components/HomepageHeader";
 
 /** Entry point for users - latest setlists view default */
 const Home = () => {
@@ -23,37 +25,29 @@ const Home = () => {
   );
 
   return (
-    <Layout style={styles.container}>
-      <Stack.Screen options={{ title: "Setlist Sherlock" }} />
-      <List<Setlist>
-        data={latestSetlists?.setlist}
-        renderItem={renderSetlist}
-        keyExtractor={(s) => `latest-setlist-${s.id}`}
-        ItemSeparatorComponent={Divider}
-        style={styles.container}
-        onRefresh={() => refetchSetlists()}
-        refreshing={isFetchingSetlists}
-        ListHeaderComponent={
-          <Layout style={[styles.container, styles.title]}>
-            <Text
-              category="h6"
-              onPress={() => router.push(`/setlist/63df2657`)}
-            >
-              Latest Setlists
-            </Text>
-          </Layout>
-        }
-      />
-    </Layout>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Layout style={styles.container}>
+        <Stack.Screen
+          options={{ title: "Setlist Sherlock", headerShown: false }}
+        />
+        <List<Setlist>
+          data={latestSetlists?.setlist}
+          renderItem={renderSetlist}
+          keyExtractor={(s) => `latest-setlist-${s.id}`}
+          ItemSeparatorComponent={Divider}
+          style={styles.container}
+          onRefresh={() => refetchSetlists()}
+          refreshing={isFetchingSetlists}
+          ListHeaderComponent={<HomepageHeader />}
+        />
+      </Layout>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  title: {
-    padding: 16,
   },
 });
 

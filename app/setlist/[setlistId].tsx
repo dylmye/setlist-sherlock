@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { Button, Icon, Layout, Spinner } from "@ui-kitten/components";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Button, Icon, Layout, Spinner, Text } from "@ui-kitten/components";
 import * as Linking from "expo-linking";
 
 import { useGet10SetlistBySetlistIdQuery } from "../../store/services/setlistFm";
@@ -17,6 +17,17 @@ const SetlistDetails = () => {
 
   const setlistEmpty = !isLoading && !setlist?.sets?.set?.length;
 
+  const Header = () => <SetlistMetadataList {...setlist} />;
+  const Footer = () => (
+    <Layout style={styles.footer}>
+      <Link asChild href={setlist?.url ?? "https://setlist.fm"}>
+        <Text style={styles.footerText}>
+          Source: {setlist?.artist?.name!} setlist on setlist.fm
+        </Text>
+      </Link>
+    </Layout>
+  );
+
   return (
     <Layout style={styles.container}>
       <Stack.Screen
@@ -24,13 +35,15 @@ const SetlistDetails = () => {
       />
       {setlistEmpty ? (
         <>
-          <SetlistMetadataList {...setlist} />
+          <Header />
           <SetlistEmptyCard style={styles.emptySetlistCard} />
+          <Footer />
         </>
       ) : !isLoading ? (
         <SetlistSectionList
           sets={setlist?.sets?.set!}
-          header={<SetlistMetadataList {...setlist} />}
+          header={<Header />}
+          footer={<Footer />}
         />
       ) : (
         <Layout style={styles.loadState}>
@@ -46,6 +59,8 @@ const SetlistDetails = () => {
           onPress={() =>
             Linking.openURL(`${setlist?.url}` ?? "https://setlist.fm")
           }
+          accessible
+          accessibilityLabel="Edit this setlist on the Setlist FM website"
         />
       )}
     </Layout>
@@ -65,6 +80,13 @@ const styles = StyleSheet.create({
   },
   emptySetlistCard: {
     margin: 16,
+  },
+  footer: {
+    margin: 16,
+    marginBottom: 32,
+  },
+  footerText: {
+    fontWeight: "bold",
   },
   floatingButton: {
     borderRadius: 1000,

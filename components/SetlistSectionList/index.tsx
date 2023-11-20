@@ -1,5 +1,5 @@
 import { SectionList, SectionListData, StyleSheet } from "react-native";
-import { Text } from "@ui-kitten/components";
+import { Layout, Text } from "@ui-kitten/components";
 
 import { Set, Song } from "../../store/services/setlistFm";
 import SetlistSectionListItem from "./SetlistSectionListItem";
@@ -7,10 +7,15 @@ import SetlistSectionListItem from "./SetlistSectionListItem";
 interface SetlistSectionListProps {
   sets: Set[];
   header: JSX.Element;
+  footer: JSX.Element;
 }
 
 /** List songs within a setlist, as well as act/part headers */
-const SetlistSectionList = ({ sets, header }: SetlistSectionListProps) => {
+const SetlistSectionList = ({
+  sets,
+  header,
+  footer,
+}: SetlistSectionListProps) => {
   const sections: SectionListData<Song>[] = sets?.map((x, i) => ({
     title: x.name ?? x.encore === 1 ? "Encore" : "Setlist",
     data: x.song ?? [],
@@ -26,18 +31,22 @@ const SetlistSectionList = ({ sets, header }: SetlistSectionListProps) => {
       keyExtractor={(x, i) => `song-${x.name}-${i}`}
       renderItem={({ item }) => <SetlistSectionListItem song={item} />}
       renderSectionHeader={({ section: { title } }) => (
-        <Text category="h6" style={styles.sectionHeader}>
-          {title}
-        </Text>
+        <Layout style={styles.sectionHeader}>
+          <Text category="h6">
+            {title}
+          </Text>
+        </Layout>
       )}
+      stickySectionHeadersEnabled
       ListHeaderComponent={header}
+      ListFooterComponent={footer}
     />
   );
 };
 
 const styles = StyleSheet.create({
   sectionHeader: {
-    margin: 16,
+    padding: 16,
   },
 });
 
