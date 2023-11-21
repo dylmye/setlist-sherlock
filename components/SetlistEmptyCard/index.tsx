@@ -12,6 +12,7 @@ const SetlistEmptyCard = ({ style }: SetlistEmptyCardProps) => (
       title="Nobody's added a setlist for this concert yet."
       titleVariant="titleMedium"
       titleStyle={styles.title}
+      titleNumberOfLines={0}
     />
     <Card.Content>
       <Text variant="bodyMedium">
@@ -24,6 +25,7 @@ const SetlistEmptyCard = ({ style }: SetlistEmptyCardProps) => (
 const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
+    paddingTop: 8
   },
 });
 

@@ -1,3 +1,4 @@
+import { StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { List } from "react-native-paper";
 
@@ -11,11 +12,18 @@ const SetlistListItem = ({ id, artist, venue }: Setlist) => {
   return (
     <List.Item
       title={artist?.name}
+      titleStyle={style.title}
       description={`${venue?.name}, ${venue?.city?.name}${stateText}`}
       right={(props) => <List.Icon {...props} icon="chevron-right" />}
       onPress={() => router.push(`/setlist/${id}`)}
     />
   );
 };
+
+const style = StyleSheet.create({
+  title: {
+    fontWeight: "bold",
+  },
+});
 
 export default SetlistListItem;

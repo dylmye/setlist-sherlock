@@ -33,7 +33,7 @@ const Home = () => {
         data={latestSetlists?.setlist}
         renderItem={renderSetlist}
         keyExtractor={(s) => `latest-setlist-${s.id}`}
-        ItemSeparatorComponent={Divider}
+        ItemSeparatorComponent={() => <Divider horizontalInset />}
         style={styles.container}
         onRefresh={() => refetchSetlists()}
         refreshing={isFetchingSetlists}

@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import React, { memo } from "react";
+import { StyleSheet } from "react-native";
 import { List } from "react-native-paper";
 
 import { Song } from "../../store/services/setlistFm";
@@ -8,26 +9,38 @@ interface SetlistSectionListItemProps {
 }
 
 /** Indivial item for setlist song item */
-const SetlistSectionListItem = ({ song }: SetlistSectionListItemProps) => {
-  const description = useMemo<string>(() => {
-    let d = "";
+const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
+  const description = () => {
+    let d = [];
     if (song.with) {
-      d += `with ${song.with.name}\n`;
+      d.push(`with ${song.with.name}`);
     }
     if (song.cover) {
-      d += `${song.cover.name} cover\n`;
+      d.push(`${song.cover.name} cover`);
     }
-    if (song.tape) {
-      d += "Pre-recorded\n";
-    }
-    if (song.info) {
-      d += `${song.info}`;
-    }
+    // if (song.tape) {
+    //   d += "Pre-recorded";
+    // }
+    // if (song.info) {
+    //   d += `${song.info}`;
+    // }
 
-    return d;
-  }, [song]);
+    return d.join(`\n`);
+  };
 
-  return <List.Item title={song.name} description={description} />;
-};
+  return (
+    <List.Item
+      title={song.name}
+      titleStyle={styles.title}
+      description={description}
+    />
+  );
+});
+
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: "bold",
+  },
+});
 
 export default SetlistSectionListItem;

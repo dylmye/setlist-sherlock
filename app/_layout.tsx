@@ -25,7 +25,7 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
 
 const AppLayout = () => {
   const systemTheme = useColorScheme();
-  const { theme: m3Theme } = useMaterial3Theme();
+  const { theme: m3Theme } = useMaterial3Theme({ fallbackSourceColor: "#C8E6C9" });
 
   const paperTheme =
     systemTheme === "dark"

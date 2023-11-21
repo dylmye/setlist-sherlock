@@ -3,6 +3,7 @@ import { Surface, Text } from "react-native-paper";
 
 import { Set, Song } from "../../store/services/setlistFm";
 import SetlistSectionListItem from "./SetlistSectionListItem";
+import SetlistSectionHeader from "./SetlistSectionHeader";
 
 interface SetlistSectionListProps {
   sets: Set[];
@@ -31,9 +32,7 @@ const SetlistSectionList = ({
       keyExtractor={(x, i) => `song-${x.name}-${i}`}
       renderItem={({ item }) => <SetlistSectionListItem song={item} />}
       renderSectionHeader={({ section: { title } }) => (
-        <Surface style={styles.sectionHeader} elevation={3}>
-          <Text variant="titleLarge">{title}</Text>
-        </Surface>
+        <SetlistSectionHeader title={title} />
       )}
       stickySectionHeadersEnabled
       ListHeaderComponent={header}
@@ -41,11 +40,5 @@ const SetlistSectionList = ({
     />
   );
 };
-
-const styles = StyleSheet.create({
-  sectionHeader: {
-    padding: 16,
-  },
-});
 
 export default SetlistSectionList;
