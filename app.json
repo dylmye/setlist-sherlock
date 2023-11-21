@@ -17,7 +17,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "icon": "./assets/icon-ios-1024.png"
+      "icon": "./assets/icon-ios-1024.png",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +26,8 @@
         "backgroundColor": "#ffffff",
         "monochromeImage": "./assets/icon-android-1024.png"
       },
-      "package": "com.dylmye.setlists"
+      "package": "com.dylmye.setlists",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

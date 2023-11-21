@@ -7,7 +7,7 @@ import SetlistSearchbar from "./SetlistSearchbar";
 /** Top content for Homepage FlatList */
 const HomepageHeader = () => (
   <View style={[styles.container, styles.title]}>
-    <SetlistSearchbar style={styles.searchInput} />
+    <SetlistSearchbar style={styles.searchInput} redirectToSearchPage />
     <Text variant="headlineSmall" onPress={() => router.push(`/setlist/63df2657`)}>
       Latest Setlists
     </Text>

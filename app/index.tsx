@@ -25,22 +25,20 @@ const Home = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Stack.Screen
-          options={{ title: "Setlist Sherlock", headerShown: false }}
-        />
-        <FlatList<Setlist>
-          data={latestSetlists?.setlist}
-          renderItem={renderSetlist}
-          keyExtractor={(s) => `latest-setlist-${s.id}`}
-          ItemSeparatorComponent={Divider}
-          style={styles.container}
-          onRefresh={() => refetchSetlists()}
-          refreshing={isFetchingSetlists}
-          ListHeaderComponent={<HomepageHeader />}
-        />
-      </View>
+    <SafeAreaView style={styles.container}>
+      <Stack.Screen
+        options={{ title: "Setlist Sherlock", headerShown: false }}
+      />
+      <FlatList<Setlist>
+        data={latestSetlists?.setlist}
+        renderItem={renderSetlist}
+        keyExtractor={(s) => `latest-setlist-${s.id}`}
+        ItemSeparatorComponent={Divider}
+        style={styles.container}
+        onRefresh={() => refetchSetlists()}
+        refreshing={isFetchingSetlists}
+        ListHeaderComponent={<HomepageHeader />}
+      />
     </SafeAreaView>
   );
 };
