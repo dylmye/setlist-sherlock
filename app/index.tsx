@@ -20,10 +20,6 @@ const Home = () => {
     isFetching: isFetchingSetlists,
   } = useGet10SearchSetlistsQuery({ date: today });
 
-  const renderSetlist: ListRenderItem<Setlist> = ({ item }) => (
-    <SetlistListItem {...item} />
-  );
-
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Screen
@@ -31,7 +27,7 @@ const Home = () => {
       />
       <FlatList<Setlist>
         data={latestSetlists?.setlist}
-        renderItem={renderSetlist}
+        renderItem={({ item }) => <SetlistListItem {...item} />}
         keyExtractor={(s) => `latest-setlist-${s.id}`}
         ItemSeparatorComponent={() => <Divider horizontalInset />}
         style={styles.container}

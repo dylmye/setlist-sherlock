@@ -31,7 +31,7 @@ const SetlistSearchbar = ({
 
   return (
     <Searchbar
-      placeholder="Search for a setlist"
+      placeholder="Search artists"
       style={style}
       value={query}
       onChangeText={setQuery}

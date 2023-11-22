@@ -18,12 +18,12 @@ const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
     if (song.cover) {
       d.push(`${song.cover.name} cover`);
     }
-    // if (song.tape) {
-    //   d += "Pre-recorded";
-    // }
-    // if (song.info) {
-    //   d += `${song.info}`;
-    // }
+    if (song.tape) {
+      d.push("Pre-recorded");
+    }
+    if (song.info) {
+      d.push(`${song.info}`);
+    }
 
     return d.join(`\n`);
   };
@@ -32,7 +32,7 @@ const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
     <List.Item
       title={song.name}
       titleStyle={styles.title}
-      description={description}
+      description={description()}
     />
   );
 });
