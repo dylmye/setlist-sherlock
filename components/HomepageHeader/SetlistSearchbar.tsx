@@ -9,6 +9,7 @@ interface SetlistSearchbarProps {
   onSearch?: (search: string) => void;
   initialQuery?: string;
   searchbarProps?: Partial<Exclude<SearchbarProps, 'style' | 'value' | 'onChangeText' | 'onSubmitEditing'>>;
+  loading?: boolean;
 }
 
 /** Homepage search bar for setlists */
@@ -18,6 +19,7 @@ const SetlistSearchbar = ({
   onSearch,
   initialQuery = "",
   searchbarProps = {},
+  loading = false
 }: SetlistSearchbarProps) => {
   const [query, setQuery] = useState(initialQuery);
 
@@ -36,6 +38,7 @@ const SetlistSearchbar = ({
       value={query}
       onChangeText={setQuery}
       onSubmitEditing={onSubmit}
+      loading={loading}
       {...searchbarProps}
     />
   );

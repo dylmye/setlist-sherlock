@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { StyleSheet, ListRenderItem, FlatList, View } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 import { format } from "date-fns";
@@ -21,7 +21,7 @@ const Home = () => {
   } = useGet10SearchSetlistsQuery({ date: today });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <Stack.Screen
         options={{ title: "Setlist Sherlock", headerShown: false }}
       />

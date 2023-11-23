@@ -1,35 +1,23 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { Appbar, Divider } from "react-native-paper";
 
 import SetlistSearchbar from "../../components/HomepageHeader/SetlistSearchbar";
-import {
-  useGet10SearchSetlistsQuery,
-  Setlist,
-} from "../../store/services/setlistFm";
+import { Setlist, setlistFmApi } from "../../store/services/setlistFm";
 import SetlistListItem from "../../components/SetlistListItem";
 
 const Search = () => {
   const params = useLocalSearchParams<{ query?: string }>();
-  const query = useRef<string>("");
-  const { data, refetch, isFetching } = useGet10SearchSetlistsQuery(
-    {
-      artistName: query.current,
-    },
-    {
-      refetchOnMountOrArgChange: true,
-    },
-  );
+  const [trigger, result] = setlistFmApi.useLazyGet10SearchSetlistsQuery();
 
   const onSearch = (newQuery: string) => {
-    query.current = newQuery;
-    refetch();
+    trigger({ artistName: newQuery });
   };
 
   useEffect(() => {
     if (params?.query) {
-      onSearch(params?.query);
+      onSearch(params.query);
     }
   }, []);
 
@@ -42,15 +30,14 @@ const Search = () => {
           style={styles.searchInput}
           initialQuery={params?.query}
           onSearch={onSearch}
+          loading={result?.isFetching}
         />
       </Appbar.Header>
       <FlatList<Setlist>
-        data={data?.setlist}
+        data={result?.currentData?.setlist}
         renderItem={({ item }) => <SetlistListItem {...item} showDate />}
         keyExtractor={(s) => `search-result-setlist-${s.id}`}
         ItemSeparatorComponent={() => <Divider horizontalInset />}
-        refreshing={isFetching}
-        onRefresh={() => refetch()}
       />
     </View>
   );
