@@ -3,7 +3,7 @@
     "name": "Setlist Sherlock",
     "slug": "setlist-sherlock",
     "scheme": "setlist",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#000000",
@@ -19,7 +19,7 @@
       "supportsTablet": true,
       "icon": "./assets/icon-ios-1024.png",
       "bundleIdentifier": "com.dylmye.setlists",
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +28,7 @@
         "monochromeImage": "./assets/icon-android-1024.png"
       },
       "package": "com.dylmye.setlists",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"
