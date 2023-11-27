@@ -1,5 +1,8 @@
 name: Trigger Expo Build (Android)
 on:
+  push:
+    tags:
+      - '**'
   workflow_dispatch:
 
 jobs:
@@ -33,4 +36,4 @@ jobs:
           echo "EXPO_PUBLIC_SETLISTFM_API_KEY=${{ secrets.EXPO_PUBLIC_SETLISTFM_API_KEY }}" >> .env
 
       - name: Build app
-        run: eas build --platform android --non-interactive --no-wait
+        run: eas build -p android --non-interactive --no-wait -m="GitHub Actions - Run $GITHUB_RUN_ID"
