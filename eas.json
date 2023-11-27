@@ -1,24 +1,22 @@
 {
   "cli": {
-    "version": ">= 5.9.0"
+    "version": ">= 5.9.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "node": "18.18.0",
-      "env": {
-        "EXPO_PUBLIC_SETLISTFM_API_KEY": ""
-      }
+      "node": "18.18.0"
     },
     "preview": {
       "distribution": "internal",
-      "node": "18.18.0",
-      "env": {
-        "EXPO_PUBLIC_SETLISTFM_API_KEY": ""
-      }
+      "node": "18.18.0"
     },
-    "production": {}
+    "production": {
+      "node": "18.18.0",
+      "autoIncrement": true
+    }
   },
   "submit": {
     "production": {}
