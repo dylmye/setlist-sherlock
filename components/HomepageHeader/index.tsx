@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { router } from "expo-router";
 
-import SetlistSearchbar from "./SetlistSearchbar";
+import SetlistSearchbar from "../SetlistSearchbar";
 
 /** Top content for Homepage FlatList */
 const HomepageHeader = () => (
