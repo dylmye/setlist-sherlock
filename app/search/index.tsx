@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
-import { Stack, router, useLocalSearchParams } from "expo-router";
-import { Appbar, Divider } from "react-native-paper";
+import { FlatList, StyleSheet } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { Divider } from "react-native-paper";
 
-import SetlistSearchbar from "../../components/SetlistSearchbar";
 import {
   Get10SearchSetlistsApiArg,
   Setlist,
@@ -48,6 +47,7 @@ const Search = () => {
   }, []);
 
   useEffect(() => {
+    console.log("searching with params", JSON.stringify(searchParams));
     trigger(searchParams);
   }, [searchParams]);
 
@@ -73,8 +73,33 @@ const Search = () => {
       />
       <SearchFilterModal
         visible={filterModalVisible}
-        onDismiss={() => setFilterVisible(false)}
-        initialFilters={{}}
+        onDismiss={(values) => {
+          setFilterVisible(false);
+          const filteredValues = Object.keys(
+            values,
+          ).reduce<Get10SearchSetlistsApiArg>((acc, curr) => {
+            if (values[curr as keyof typeof values]) {
+              return {
+                ...acc,
+                [curr]: values[curr as keyof typeof values],
+              };
+            }
+
+            return acc;
+          }, {});
+          setSearchParams({
+            ...filteredValues,
+            ...(searchParams?.artistName
+              ? { artistName: searchParams.artistName }
+              : {}),
+          });
+        }}
+        initialFilters={{
+          cityName: "",
+          year: "",
+          tourName: "",
+          venueName: "",
+        }}
       />
     </SafeAreaView>
   );

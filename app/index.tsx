@@ -12,8 +12,8 @@ import HomepageHeader from "../components/HomepageHeader";
 
 /** Entry point for users - latest setlists view default */
 const Home = () => {
-  // setlist-fm API uses UK date format explicitly instead of RFC y-M-d format
-  const today = useMemo(() => format(new Date(), "d-M-y"), []);
+  // setlist-fm API uses UK date format, two digit padded, explicitly instead of RFC y-M-d format
+  const today = useMemo(() => format(new Date(), "dd-MM-y"), []);
   const {
     data: latestSetlists,
     refetch: refetchSetlists,

@@ -23,7 +23,7 @@ const SetlistListItem = ({
   const showState = venue?.city?.country?.code === "US";
   const stateText = showState ? `, ${venue?.city?.stateCode}` : "";
   const formattedDate =
-    eventDate && format(parse(eventDate, "d-M-y", new Date()), "do MMM y");
+    eventDate && format(parse(eventDate, "dd-MM-y", new Date()), "do MMM y");
 
   return (
     <List.Item

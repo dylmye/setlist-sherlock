@@ -33,6 +33,7 @@ const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
       title={song.name}
       titleStyle={styles.title}
       description={description()}
+      descriptionNumberOfLines={3}
     />
   );
 });

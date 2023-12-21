@@ -18,7 +18,7 @@ const SetlistSectionList = ({
   footer,
 }: SetlistSectionListProps) => {
   const sections: SectionListData<Song>[] = sets?.map((x, i) => ({
-    title: x.name ?? x.encore === 1 ? "Encore" : "Setlist",
+    title: !!x.name ? x.name : x.encore === 1 ? "Encore" : "Setlist",
     data: x.song ?? [],
   }));
 

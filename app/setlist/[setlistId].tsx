@@ -20,8 +20,11 @@ const SetlistDetails = () => {
   const Header = () => <SetlistMetadataList {...setlist} style={styles.metadataCard} />;
   const Footer = () => (
     <View style={styles.footer}>
+      {setlist?.info && (
+        <Text style={styles.infoText} variant="bodyMedium">{setlist?.info}</Text>
+      )}
       <Link asChild href={setlist?.url ?? "https://setlist.fm"}>
-        <Text style={styles.footerText} variant="bodySmall">
+        <Text style={styles.sourceText} variant="bodySmall">
           Source: {setlist?.artist?.name!} setlist on setlist.fm
         </Text>
       </Link>
@@ -66,13 +69,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  // loadState: {
-  //   minHeight: 150,
-  //   display: "flex",
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
   emptySetlistCard: {
     margin: 16,
   },
@@ -81,9 +77,12 @@ const styles = StyleSheet.create({
   },
   footer: {
     margin: 16,
-    marginBottom: 32,
+    marginBottom: 72,
   },
-  footerText: {
+  infoText: {
+    marginBottom: 4,
+  },
+  sourceText: {
     fontWeight: "bold",
   },
   floatingButton: {
