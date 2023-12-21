@@ -32,4 +32,6 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build app
-        run: EXPO_PUBLIC_SETLISTFM_API_KEY=$EXPO_PUBLIC_SETLISTFM_API_KEY eas build -p android --non-interactive --no-wait -m="GitHub Actions - Run $GITHUB_RUN_ID"
+        run: eas build -p android --non-interactive --no-wait -m="GitHub Actions - Run $GITHUB_RUN_ID"
+        env:
+          EXPO_PUBLIC_SETLISTFM_API_KEY: ${{ secrets.EXPO_PUBLIC_SETLISTFM_API_KEY }}
