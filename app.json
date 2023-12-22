@@ -3,7 +3,7 @@
     "name": "Setlist Sherlock",
     "slug": "setlist-sherlock",
     "scheme": "setlist",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#000000",
@@ -27,8 +27,7 @@
         "backgroundColor": "#ffffff",
         "monochromeImage": "./assets/icon-android-1024.png"
       },
-      "package": "com.dylmye.setlists",
-      "versionCode": 3
+      "package": "com.dylmye.setlists"
     },
     "web": {
       "favicon": "./assets/favicon.png"
