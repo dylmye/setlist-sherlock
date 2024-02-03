@@ -25,7 +25,7 @@ const SetlistSearchbar = ({
 
   const onSubmit = () => {
     if (redirectToSearchPage) {
-      router.push(`/search?query=${query}`);
+      router.navigate(`/search?query=${query}`);
       return;
     }
     onSearch?.(query);

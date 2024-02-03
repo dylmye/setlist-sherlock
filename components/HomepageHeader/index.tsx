@@ -8,7 +8,7 @@ import SetlistSearchbar from "../SetlistSearchbar";
 const HomepageHeader = () => (
   <View style={styles.container}>
     <SetlistSearchbar style={styles.searchInput} redirectToSearchPage />
-    <Text variant="headlineSmall" style={styles.title} onPress={() => router.push(`/setlist/63df2657`)}>
+    <Text variant="headlineSmall" style={styles.title} onPress={() => router.navigate(`/setlist/63df2657`)}>
       Latest Setlists
     </Text>
   </View>

@@ -33,7 +33,7 @@ const SetlistListItem = ({
         showDate ? `${formattedDate} \u2022 ` : ""
       }${venue?.name}, ${venue?.city?.name}${stateText}`}
       right={(props) => <List.Icon {...props} icon="chevron-right" />}
-      onPress={() => router.push(`/setlist/${id}`)}
+      onPress={() => router.navigate(`/setlist/${id}`)}
     />
   );
 };
