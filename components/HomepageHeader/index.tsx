@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
-import { router } from "expo-router";
 
 import SetlistSearchbar from "../SetlistSearchbar";
 
@@ -8,7 +7,7 @@ import SetlistSearchbar from "../SetlistSearchbar";
 const HomepageHeader = () => (
   <View style={styles.container}>
     <SetlistSearchbar style={styles.searchInput} redirectToSearchPage />
-    <Text variant="headlineSmall" style={styles.title} onPress={() => router.navigate(`/setlist/63df2657`)}>
+    <Text variant="headlineSmall" style={styles.title}>
       Latest Setlists
     </Text>
   </View>

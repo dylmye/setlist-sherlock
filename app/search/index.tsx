@@ -14,7 +14,7 @@ import SearchHeader from "../../components/SearchHeader";
 import SearchFilterModal from "../../components/SearchFilterModal";
 
 const Search = () => {
-  const params = useLocalSearchParams<{ query?: string }>();
+  const params = useLocalSearchParams<{ query?: string; tourName?: string }>();
   const [trigger, result] = setlistFmApi.useLazyGet10SearchSetlistsQuery();
 
   const [searchParams, setSearchParams] = useState<Get10SearchSetlistsApiArg>(
@@ -33,21 +33,24 @@ const Search = () => {
     return initial;
   }, [filterModalVisible]);
 
-  const onSearch = (newQuery: string) => {
+  const onSearch = (newQuery: string, extras?: Get10SearchSetlistsApiArg) => {
     setSearchParams({
       ...searchParams,
+      ...extras,
       artistName: newQuery,
     });
   };
 
   useEffect(() => {
     if (params?.query && !searchParams?.artistName) {
-      onSearch(params.query);
+      onSearch(
+        params.query,
+        params?.tourName ? { tourName: params?.tourName } : undefined,
+      );
     }
   }, []);
 
   useEffect(() => {
-    console.log("searching with params", JSON.stringify(searchParams));
     trigger(searchParams);
   }, [searchParams]);
 
@@ -64,6 +67,7 @@ const Search = () => {
   return (
     <SafeAreaView style={styles.container} edges={safeAreaEdges}>
       <Stack.Screen options={{ title: "Search Results", headerShown: false }} />
+      {/* TODO: add empty results message */}
       <FlatList<Setlist>
         data={result?.currentData?.setlist}
         renderItem={({ item }) => <SetlistListItem {...item} showDate />}
@@ -99,6 +103,7 @@ const Search = () => {
           year: "",
           tourName: "",
           venueName: "",
+          ...searchParams,
         }}
       />
     </SafeAreaView>

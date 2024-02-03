@@ -1,3 +1,5 @@
+import { Href } from "expo-router/build/link/href";
+
 type SetlistMetadataItem = {
     /** flatlist reference */
     key: string;
@@ -6,7 +8,7 @@ type SetlistMetadataItem = {
     /** human friendly value e.g. Piri */
     value: string;
     /** optional, in-app link for more info */
-    internalLink?: string;
+    internalLink?: Href;
     /** optional, outside link for more info */
     externalLink?: string;
     /** optional, left accessory icon name */

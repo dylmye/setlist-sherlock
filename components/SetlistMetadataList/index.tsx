@@ -7,11 +7,12 @@ import { Card, List } from "react-native-paper";
 import { Setlist } from "../../store/services/setlistFm";
 import SetlistMetadataItem from "./SetlistMetadataItem";
 import { getMapsAddressFromVenue } from "../../utils/geo";
+import { router } from "expo-router";
 
 interface SetlistMetadataListProps
   extends Pick<Setlist, "artist" | "venue" | "eventDate" | "tour"> {
-    style?: StyleProp<ViewStyle>;
-  }
+  style?: StyleProp<ViewStyle>;
+}
 
 /** Card containing information about the setlist e.g. date, artist, location */
 const SetlistMetadataList = ({
@@ -40,7 +41,7 @@ const SetlistMetadataList = ({
         key: "artist-name",
         title: "Artist",
         value: artist?.name ?? "unknown",
-        internalLink: `artist/${artist?.mbid}`,
+        // internalLink: `artist/${artist?.mbid}`,
         iconName: "account-star",
         externalLink: artist?.url,
       },
@@ -52,6 +53,8 @@ const SetlistMetadataList = ({
         title: "Tour",
         value: tour?.name ?? "unknown",
         iconName: "badge-account",
+        // TODO: fix issue where search modal doesn't show default values
+        // internalLink: `search?query=${artist?.name}&tourName=${tour?.name}`,
       });
     }
 
@@ -93,6 +96,9 @@ const SetlistMetadataList = ({
       onPress={() => {
         if (item?.externalLink) {
           Linking.openURL(item?.externalLink);
+        }
+        if (item?.internalLink) {
+          router.push(item.internalLink);
         }
       }}
     />

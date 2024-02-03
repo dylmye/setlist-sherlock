@@ -118,9 +118,11 @@ const SearchFilterModal = ({
               }}
             />
             <View style={styles.actions}>
-              <Button mode="contained-tonal" onPress={() => reset({})}>
+              {/* TODO: fix button not working */}
+              {/* <Button mode="contained-tonal" onPress={() => reset({})}>
                 Clear Filters
-              </Button>
+              </Button> */}
+              <View />
               <Button
                 mode="contained"
                 onPress={handleSubmit(onDismiss, console.error)}
