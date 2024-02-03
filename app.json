@@ -18,8 +18,7 @@
     "ios": {
       "supportsTablet": true,
       "icon": "./assets/icon-ios-1024.png",
-      "bundleIdentifier": "com.dylmye.setlists",
-      "buildNumber": "3"
+      "bundleIdentifier": "com.dylmye.setlists"
     },
     "android": {
       "adaptiveIcon": {
