@@ -1,7 +1,12 @@
 {
   "expo": {
     "name": "Setlist Sherlock",
+    "description": "Find all your favourite artist's gig setlists - powered by Setlist.fm, easily find concert setlists on the go.",
+    "privacy": "public",
+    "githubUrl": "https://github.com/dylmye/setlist-sherlock",
+    "playStoreUrl": "https://play.google.com/store/apps/details?id=com.dylmye.setlists",
     "slug": "setlist-sherlock",
+    "owner": "dylmye",
     "scheme": "setlist",
     "version": "1.1.1",
     "orientation": "portrait",
@@ -15,6 +20,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "sdkVersion": "50",
     "ios": {
       "supportsTablet": true,
       "icon": "./assets/icon-ios-1024.png",
@@ -28,12 +38,9 @@
       },
       "package": "com.dylmye.setlists"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "updates": {
+      "enabled": false
     },
-    "plugins": [
-      "expo-router"
-    ],
     "extra": {
       "router": {
         "origin": false
@@ -42,6 +49,8 @@
         "projectId": "dcb2d835-302a-4ce3-b041-a38008da8319"
       }
     },
-    "owner": "dylmye"
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
