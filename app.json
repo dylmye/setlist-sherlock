@@ -24,7 +24,6 @@
       "android",
       "ios"
     ],
-    "sdkVersion": "50",
     "ios": {
       "supportsTablet": true,
       "icon": "./assets/icon-ios-1024.png",
