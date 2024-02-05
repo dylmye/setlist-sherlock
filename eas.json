@@ -12,7 +12,10 @@
     },
     "preview": {
       "distribution": "internal",
-      "node": "18.18.0"
+      "node": "18.18.0",
+      "ios": {
+        "simulator": true
+      }
     },
     "production": {
       "node": "18.18.0",

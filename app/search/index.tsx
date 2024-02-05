@@ -68,6 +68,7 @@ const Search = () => {
     <SafeAreaView style={styles.container} edges={safeAreaEdges}>
       <Stack.Screen options={{ title: "Search Results", headerShown: false }} />
       {/* TODO: add empty results message */}
+      {/* TODO: add bottom padding for gesture displays */}
       <FlatList<Setlist>
         data={result?.currentData?.setlist}
         renderItem={({ item }) => <SetlistListItem {...item} showDate />}
