@@ -36,3 +36,6 @@ yarn-error.*
 
 # secrets
 .env
+
+# external provider's files - grab them from source instead - see README
+store/open-api-configs/spotify.yml
