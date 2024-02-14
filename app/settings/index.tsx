@@ -1,19 +1,53 @@
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import { discovery as spotifyDiscovery, clientId as spotifyClientId } from '../../store/oauth-configs/spotify';
+import { Stack, router, useFocusEffect } from "expo-router";
+import { getItem } from "expo-secure-store";
+import { useState } from "react";
+import { StyleSheet, View, ListRenderItem, FlatList } from "react-native";
+import { List, Text } from "react-native-paper";
+import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";
+
+interface SettingItem {
+  label: string;
+  value: React.ReactNode;
+  onPress: () => void;
+}
 
 const SettingsPage = () => {
-  const [request, response, promptAsync] = useAuthRequest(
-    {
-      clientId: spotifyClientId ?? 'NO_SPOTIFY_CLIENT_ID',
-      scopes: ['user-read-email', 'playlist-modify-public'],
-      redirectUri: makeRedirectUri({
-        scheme: 'setlist-sherlock'
-      }),
-    },
-    spotifyDiscovery
+  const renderSetting: ListRenderItem<SettingItem> = ({ item, index }) => (
+    <List.Item
+      title={item.label}
+      right={(props) => <Text {...props}>{item.value}</Text>}
+      onPress={item.onPress}
+    />
   );
 
-  return <></>;
+  const [spotifyHasSetup, setSpotifySetupState] = useState(
+    !!getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY),
+  );
+
+  const settings: SettingItem[] = [
+    {
+      label: "Spotify",
+      value: spotifyHasSetup ? "Connected" : "Click to set up",
+      onPress: () => router.navigate("/settings/spotify"),
+    },
+  ];
+
+  useFocusEffect(() => {
+    setSpotifySetupState(!!getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY));
+  });
+
+  return (
+    <View style={styles.container}>
+      <Stack.Screen options={{ title: "Settings" }} />
+      <FlatList<SettingItem> data={settings} renderItem={renderSetting} />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default SettingsPage;

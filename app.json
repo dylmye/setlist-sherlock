@@ -4,10 +4,9 @@
     "description": "Find all your favourite artist's gig setlists - powered by Setlist.fm, easily find concert setlists on the go.",
     "privacy": "public",
     "githubUrl": "https://github.com/dylmye/setlist-sherlock",
-    "playStoreUrl": "https://play.google.com/store/apps/details?id=com.dylmye.setlists",
     "slug": "setlist-sherlock",
     "owner": "dylmye",
-    "scheme": "setlist",
+    "scheme": "setlist-sherlock",
     "version": "1.1.1",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -35,6 +34,7 @@
         "backgroundColor": "#ffffff",
         "monochromeImage": "./assets/icon-android-1024.png"
       },
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.dylmye.setlists",
       "package": "com.dylmye.setlists"
     },
     "updates": {

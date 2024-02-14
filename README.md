@@ -19,7 +19,7 @@ The following environment variables are required in a `.env` file in the root di
 | Name                          | Value                         |
 | ----------------------------- | ----------------------------- |
 | EXPO_PUBLIC_SETLISTFM_API_KEY | Setlist.fm API key from [here](https://api.setlist.fm/docs/) |
-| EXPO_PUBLIC_SPOTIFY_API_KEY   | Spotify API key from [here](https://developer.spotify.com/documentation/web-api) |
+| EXPO_PUBLIC_SPOTIFY_API_KEY   | Spotify client ID from [here](https://developer.spotify.com/documentation/web-api) |
 
 ### Install
 
