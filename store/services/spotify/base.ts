@@ -34,18 +34,22 @@ const baseQueryWithReauth: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
+  const refreshToken = await getItemAsync(SPOTIFY_REFRESH_TOKEN_STORAGE_KEY);
 
-  if (result.error && result.error.status === 401 && !!SPOTIFY_REFRESH_TOKEN_STORAGE_KEY) {
+  if (result.error && result.error.status === 401 && !!refreshToken) {
     try {
       const refresh = await refreshAsync(
         {
-          refreshToken: SPOTIFY_REFRESH_TOKEN_STORAGE_KEY,
-          clientId: spotifyClientId ?? 'NO_SPOTIFY_CLIENT_ID',
+          refreshToken,
+          clientId: spotifyClientId ?? "NO_SPOTIFY_CLIENT_ID",
         },
         spotifyDiscovery,
       );
       await setItemAsync(SPOTIFY_BEARER_TOKEN_STORAGE_KEY, refresh.accessToken);
-      await setItemAsync(SPOTIFY_REFRESH_TOKEN_STORAGE_KEY, refresh.refreshToken!);
+      await setItemAsync(
+        SPOTIFY_REFRESH_TOKEN_STORAGE_KEY,
+        refresh.refreshToken!,
+      );
     } catch (e) {
       console.error(e);
       api.abort("Unable to refresh Spotify token");

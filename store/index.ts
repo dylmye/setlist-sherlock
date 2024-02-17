@@ -10,7 +10,9 @@ export const store = configureStore({
     [spotifyApi.reducerPath]: spotifyApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(setlistFmApi.middleware)
+    getDefaultMiddleware()
+      .concat(setlistFmApi.middleware)
+      .concat(spotifyApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -8,7 +8,7 @@ const config: ConfigFile = {
   filterEndpoints: [
     "postUsersByUserIdPlaylists", // create-playlist
     "postPlaylistsByPlaylistIdTracks", // add-tracks-to-playlist
-    "getTracks", // get-several-tracks
+    "search", // search
   ],
   exportName: "spotifyApi",
   hooks: true,

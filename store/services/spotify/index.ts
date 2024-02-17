@@ -1,10 +1,17 @@
 import { spotifyApi as api } from "./base";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getTracks: build.query<GetTracksApiResponse, GetTracksApiArg>({
+    search: build.query<SearchApiResponse, SearchApiArg>({
       query: (queryArg) => ({
-        url: `/tracks`,
-        params: { market: queryArg.market, ids: queryArg.ids },
+        url: `/search`,
+        params: {
+          q: queryArg.q,
+          type: queryArg["type"],
+          market: queryArg.market,
+          limit: queryArg.limit,
+          offset: queryArg.offset,
+          include_external: queryArg.includeExternal,
+        },
       }),
     }),
     postPlaylistsByPlaylistIdTracks: build.mutation<
@@ -32,12 +39,30 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as spotifyApi };
-export type GetTracksApiResponse = /** status 200 A set of tracks */ {
-  tracks: TrackObject[];
+export type SearchApiResponse = /** status 200 Search response */ {
+  tracks?: PagingTrackObject;
+  artists?: PagingArtistObject;
+  albums?: PagingSimplifiedAlbumObject;
+  playlists?: PagingPlaylistObject;
+  shows?: PagingSimplifiedShowObject;
+  episodes?: PagingSimplifiedEpisodeObject;
+  audiobooks?: PagingSimplifiedAudiobookObject;
 };
-export type GetTracksApiArg = {
+export type SearchApiArg = {
+  q: string;
+  type: (
+    | "album"
+    | "artist"
+    | "playlist"
+    | "track"
+    | "show"
+    | "episode"
+    | "audiobook"
+  )[];
   market?: string;
-  ids: string;
+  limit?: number;
+  offset?: number;
+  includeExternal?: "audio";
 };
 export type PostPlaylistsByPlaylistIdTracksApiResponse =
   /** status 201 A snapshot ID for the playlist */ {
@@ -64,6 +89,14 @@ export type PostUsersByUserIdPlaylistsApiArg = {
     description?: string;
     [key: string]: any;
   };
+};
+export type PagingObject = {
+  href: string;
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
 };
 export type ExternalUrlObject = {
   spotify?: string;
@@ -155,9 +188,14 @@ export type TrackObject = {
   uri?: string;
   is_local?: boolean;
 };
-export type ErrorObject = {
-  status: number;
-  message: string;
+export type PagingTrackObject = PagingObject & {
+  items?: TrackObject[];
+};
+export type PagingArtistObject = PagingObject & {
+  items?: ArtistObject[];
+};
+export type PagingSimplifiedAlbumObject = PagingObject & {
+  items?: SimplifiedAlbumObject[];
 };
 export type PlaylistUserObject = {
   external_urls?: ExternalUrlObject;
@@ -170,13 +208,54 @@ export type PlaylistUserObject = {
 export type PlaylistOwnerObject = PlaylistUserObject & {
   display_name?: string | null;
 };
-export type PagingObject = {
+export type PlaylistTracksRefObject = {
+  href?: string;
+  total?: number;
+};
+export type SimplifiedPlaylistObject = {
+  collaborative?: boolean;
+  description?: string;
+  external_urls?: ExternalUrlObject;
+  href?: string;
+  id?: string;
+  images?: ImageObject[];
+  name?: string;
+  owner?: PlaylistOwnerObject;
+  public?: boolean;
+  snapshot_id?: string;
+  tracks?: PlaylistTracksRefObject;
+  type?: string;
+  uri?: string;
+};
+export type PagingPlaylistObject = PagingObject & {
+  items?: SimplifiedPlaylistObject[];
+};
+export type CopyrightObject = {
+  text?: string;
+  type?: string;
+};
+export type ShowBase = {
+  available_markets: string[];
+  copyrights: CopyrightObject[];
+  description: string;
+  html_description: string;
+  explicit: boolean;
+  external_urls: ExternalUrlObject;
   href: string;
-  limit: number;
-  next: string | null;
-  offset: number;
-  previous: string | null;
-  total: number;
+  id: string;
+  images: ImageObject[];
+  is_externally_hosted: boolean;
+  languages: string[];
+  media_type: string;
+  name: string;
+  publisher: string;
+  type: "show";
+  uri: string;
+  total_episodes: number;
+};
+export type SimplifiedShowObject = ShowBase;
+export type PagingSimplifiedShowObject = PagingObject & {
+  items?: SimplifiedShowObject[];
 };
 export type ResumePointObject = {
   fully_played?: boolean;
@@ -207,30 +286,45 @@ export type EpisodeBase = {
   uri: string;
   restrictions?: EpisodeRestrictionObject;
 };
-export type CopyrightObject = {
-  text?: string;
-  type?: string;
+export type SimplifiedEpisodeObject = EpisodeBase;
+export type PagingSimplifiedEpisodeObject = PagingObject & {
+  items?: SimplifiedEpisodeObject[];
 };
-export type ShowBase = {
+export type AuthorObject = {
+  name?: string;
+};
+export type NarratorObject = {
+  name?: string;
+};
+export type AudiobookBase = {
+  authors: AuthorObject[];
   available_markets: string[];
   copyrights: CopyrightObject[];
   description: string;
   html_description: string;
+  edition?: string;
   explicit: boolean;
   external_urls: ExternalUrlObject;
   href: string;
   id: string;
   images: ImageObject[];
-  is_externally_hosted: boolean;
   languages: string[];
   media_type: string;
   name: string;
+  narrators: NarratorObject[];
   publisher: string;
-  type: "show";
+  type: "audiobook";
   uri: string;
-  total_episodes: number;
+  total_chapters: number;
 };
-export type SimplifiedShowObject = ShowBase;
+export type SimplifiedAudiobookObject = AudiobookBase;
+export type PagingSimplifiedAudiobookObject = PagingObject & {
+  items?: SimplifiedAudiobookObject[];
+};
+export type ErrorObject = {
+  status: number;
+  message: string;
+};
 export type EpisodeObject = EpisodeBase & {
   show: SimplifiedShowObject;
 };
@@ -266,7 +360,7 @@ export type PlaylistObject = {
   uri?: string;
 };
 export const {
-  useGetTracksQuery,
+  useSearchQuery,
   usePostPlaylistsByPlaylistIdTracksMutation,
   usePostUsersByUserIdPlaylistsMutation,
 } = injectedRtkApi;
