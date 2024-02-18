@@ -39,7 +39,12 @@ const SpotifySettingsPage = () => {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: spotifyClientId ?? "NO_SPOTIFY_CLIENT_ID",
-      scopes: ["user-read-email", "playlist-modify-public"],
+      scopes: [
+        "user-read-email",
+        "playlist-modify-public",
+        "user-library-modify",
+        "user-library-read",
+      ],
       redirectUri,
     },
     spotifyDiscovery,
