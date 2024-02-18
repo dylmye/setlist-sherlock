@@ -14,6 +14,9 @@ const injectedRtkApi = api.injectEndpoints({
         },
       }),
     }),
+    getMe: build.query<GetMeApiResponse, GetMeApiArg>({
+      query: () => ({ url: `/me` }),
+    }),
     postPlaylistsByPlaylistIdTracks: build.mutation<
       PostPlaylistsByPlaylistIdTracksApiResponse,
       PostPlaylistsByPlaylistIdTracksApiArg
@@ -64,6 +67,8 @@ export type SearchApiArg = {
   offset?: number;
   includeExternal?: "audio";
 };
+export type GetMeApiResponse = /** status 200 A user */ PrivateUserObject;
+export type GetMeApiArg = void;
 export type PostPlaylistsByPlaylistIdTracksApiResponse =
   /** status 201 A snapshot ID for the playlist */ {
     snapshot_id?: string;
@@ -325,6 +330,24 @@ export type ErrorObject = {
   status: number;
   message: string;
 };
+export type ExplicitContentSettingsObject = {
+  filter_enabled?: boolean;
+  filter_locked?: boolean;
+};
+export type PrivateUserObject = {
+  country?: string;
+  display_name?: string;
+  email?: string;
+  explicit_content?: ExplicitContentSettingsObject;
+  external_urls?: ExternalUrlObject;
+  followers?: FollowersObject;
+  href?: string;
+  id?: string;
+  images?: ImageObject[];
+  product?: string;
+  type?: string;
+  uri?: string;
+};
 export type EpisodeObject = EpisodeBase & {
   show: SimplifiedShowObject;
 };
@@ -361,6 +384,7 @@ export type PlaylistObject = {
 };
 export const {
   useSearchQuery,
+  useGetMeQuery,
   usePostPlaylistsByPlaylistIdTracksMutation,
   usePostUsersByUserIdPlaylistsMutation,
 } = injectedRtkApi;

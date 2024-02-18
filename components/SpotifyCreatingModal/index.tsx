@@ -1,0 +1,64 @@
+import { Modal, StyleSheet, View } from "react-native";
+import {
+  ActivityIndicator,
+  MD2Colors,
+  Surface,
+  Text,
+} from "react-native-paper";
+
+interface SpotifyCreatingModalProps {
+  visible: boolean;
+}
+
+/** Additional filters for setlists */
+const SpotifyCreatingModal = ({ visible }: SpotifyCreatingModalProps) => {
+  return (
+    <Modal
+      animationType="slide"
+      visible={visible}
+      statusBarTranslucent
+      transparent
+      hardwareAccelerated
+    >
+      <View style={styles.parentContainer}>
+        <Surface elevation={3} style={styles.dialog}>
+          <ActivityIndicator
+            animating
+            size="small"
+            style={styles.spinner}
+            color={MD2Colors.green300}
+          />
+          <Text variant="bodyMedium" style={styles.text}>
+            Adding to Spotify...
+          </Text>
+          <Text variant="bodySmall" style={styles.text}>
+            This will take up to a minute, please be patient
+          </Text>
+        </Surface>
+      </View>
+    </Modal>
+  );
+};
+
+const styles = StyleSheet.create({
+  parentContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  dialog: {
+    padding: 24,
+    borderRadius: 12,
+  },
+  spinner: {
+    marginBottom: 6,
+  },
+  text: {
+    textAlign: "center",
+    paddingBottom: 6,
+  },
+});
+
+export default SpotifyCreatingModal;

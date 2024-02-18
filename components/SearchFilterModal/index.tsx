@@ -109,7 +109,7 @@ const SearchFilterModal = ({
               }}
               controllerProps={{
                 rules: {
-                  // regex: any number between 1000-2999 (todo: add 3 before the year 3000)
+                  // regex: any number between 1000-2999 (TODO: add 3 before the year 3000)
                   pattern: {
                     value: /^(1|2)\d{3}/,
                     message: "Please specify a valid year."

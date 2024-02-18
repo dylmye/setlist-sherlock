@@ -18,6 +18,7 @@ import {
   clientId as spotifyClientId,
   BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY,
   REFRESH_TOKEN_STORAGE_KEY as SPOTIFY_REFRESH_TOKEN_STORAGE_KEY,
+  SPOTIFY_USERNAME_STORAGE_KEY,
 } from "../../store/oauth-configs/spotify";
 import { Button, ButtonProps, Text } from "react-native-paper";
 import { useEffect, useState } from "react";
@@ -55,6 +56,7 @@ const SpotifySettingsPage = () => {
     const onDelete = async () => {
       await deleteItemAsync(SPOTIFY_BEARER_TOKEN_STORAGE_KEY);
       await deleteItemAsync(SPOTIFY_REFRESH_TOKEN_STORAGE_KEY);
+      await deleteItemAsync(SPOTIFY_USERNAME_STORAGE_KEY);
     };
     onDelete();
     setLoading(false);

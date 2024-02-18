@@ -9,6 +9,7 @@ const config: ConfigFile = {
     "postUsersByUserIdPlaylists", // create-playlist
     "postPlaylistsByPlaylistIdTracks", // add-tracks-to-playlist
     "search", // search
+    "getMe", // get-current-users-profile
   ],
   exportName: "spotifyApi",
   hooks: true,
