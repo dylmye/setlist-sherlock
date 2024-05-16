@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Share, StyleSheet, ToastAndroid, View } from "react-native";
-import { ActivityIndicator, Appbar, FAB, Text } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Appbar,
+  Divider,
+  FAB,
+  List,
+  Text,
+} from "react-native-paper";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import * as Linking from "expo-linking";
 import { getItem } from "expo-secure-store";
@@ -12,6 +19,7 @@ import SetlistSectionList from "../../components/SetlistSectionList";
 import SetlistMetadataList from "../../components/SetlistMetadataList";
 import { useGeneratePlaylistFromSongs } from "../../utils/playlists";
 import SpotifyCreatingModal from "../../components/SpotifyCreatingModal";
+import { isAfter, parse } from "date-fns";
 
 /** View for setlist set, metadata, links */
 const SetlistDetails = () => {
@@ -23,16 +31,22 @@ const SetlistDetails = () => {
   const createSpotifyPlaylistFromSongs = useGeneratePlaylistFromSongs(setlist!);
 
   const setlistEmpty = !isLoading && !setlist?.sets?.set?.length;
+  const setlistInPast =
+    setlist?.eventDate &&
+    isAfter(new Date(), parse(setlist.eventDate, "d-M-y", new Date()));
   const hasSpotifySetup = getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY);
   const showPlaylistAddButton = !isLoading && !setlistEmpty && hasSpotifySetup;
 
   const onShareSetlistUrl = async () => {
-    await Share.share({
-      url: setlist?.url ?? `https://setlist.fm/`,
-      message: `Here's what ${setlist?.artist?.name} played at ${setlist?.venue?.name}: ${setlist?.url}`,
-    }, {
-       dialogTitle: "Share this setlist",
-    });
+    await Share.share(
+      {
+        url: setlist?.url ?? `https://setlist.fm/`,
+        message: `Here's what ${setlist?.artist?.name} played at ${setlist?.venue?.name}: ${setlist?.url}`,
+      },
+      {
+        dialogTitle: "Share this setlist",
+      },
+    );
   };
 
   const onExportToSpotify = async () => {
@@ -56,6 +70,15 @@ const SetlistDetails = () => {
         <Text style={styles.infoText} variant="bodyMedium">
           {setlist?.info}
         </Text>
+      )}
+      {setlistInPast && (
+        // https://www.concertarchives.org/past-concert-search-engine?utf8=%E2%9C%93&search=[artist name here]+[yyyy-mm-dd]
+        <List.Item
+          title="Find photos and videos of this gig"
+          description="From Concert Archives"
+          titleNumberOfLines={3}
+          right={props => <List.Icon {...props} icon="chevron-right" />}
+        />
       )}
       <Link asChild href={setlist?.url ?? "https://setlist.fm"}>
         <Text style={styles.sourceText} variant="bodySmall">

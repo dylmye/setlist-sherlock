@@ -160,7 +160,7 @@ const SpotifySettingsPage = () => {
             disabled={loading}
             onPress={onPressConnect}
           >
-            {loading ? "Connecting..." : "Connect Spotify"}
+            {loading ? "Connecting..." : "Connect with Spotify"}
           </Button>
         )}
       </View>

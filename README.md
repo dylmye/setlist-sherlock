@@ -16,16 +16,18 @@ This app is built on the [Expo](https://expo.dev) framework.
 
 The following environment variables are required in a `.env` file in the root directory:
 
-| Name                          | Value                         |
-| ----------------------------- | ----------------------------- |
-| EXPO_PUBLIC_SETLISTFM_API_KEY | Setlist.fm API key from [here](https://api.setlist.fm/docs/) |
-| EXPO_PUBLIC_SPOTIFY_API_KEY   | Spotify client ID from [here](https://developer.spotify.com/documentation/web-api) |
+| Name                                       | Value                                                                              |
+| ------------------------------------------ | ---------------------------------------------------------------------------------- |
+| EXPO_PUBLIC_SETLISTFM_API_KEY              | Setlist.fm API key from [here](https://api.setlist.fm/docs/)                       |
+| EXPO_PUBLIC_SPOTIFY_API_KEY                | Spotify client ID from [here](https://developer.spotify.com/documentation/web-api) |
+| EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT | The URL (Lambda invocation endpoint etc) to grab a developer token from.           |
 
 ### Install
 
 Requirements:
-* node v18+
-* yarn
+
+- node v18+
+- yarn
 
 ```bash
 $ yarn install

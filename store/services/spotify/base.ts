@@ -18,6 +18,8 @@ import {
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://api.spotify.com/v1/",
   prepareHeaders: async (headers) => {
+    headers.set("Origin", "https://setlist-sherlock.dylmye.me");
+
     const token = await getItemAsync(SPOTIFY_BEARER_TOKEN_STORAGE_KEY);
 
     if (token) {

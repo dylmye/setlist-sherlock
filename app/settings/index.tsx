@@ -25,11 +25,16 @@ const SettingsPage = () => {
   );
 
   const settings: SettingItem[] = [
+    // {
+    //   label: "Spotify",
+    //   value: spotifyHasSetup ? "Connected" : "Set up",
+    //   onPress: () => router.navigate("/settings/spotify"),
+    // },
     {
-      label: "Spotify",
-      value: spotifyHasSetup ? "Connected" : "Click to set up",
-      onPress: () => router.navigate("/settings/spotify"),
-    },
+      label: "Apple Music",
+      value: "Set up",
+      onPress: () => router.navigate("/settings/appleMusic")
+    }
   ];
 
   useFocusEffect(() => {

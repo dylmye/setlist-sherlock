@@ -26,7 +26,10 @@
     "ios": {
       "supportsTablet": true,
       "icon": "./assets/icon-ios-1024.png",
-      "bundleIdentifier": "com.dylmye.setlists"
+      "bundleIdentifier": "com.dylmye.setlists",
+      "infoPlist": {
+        "NSAppleMusicUsageDescription": "Allow Setlist Sherlock to access your Apple Music data to save setlists as playlists"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -34,6 +37,22 @@
         "backgroundColor": "#ffffff",
         "monochromeImage": "./assets/icon-android-1024.png"
       },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "musicsdk",
+              "pathPattern": "/authenticateresult.*",
+              "host": "${applicationId}"
+            }
+          ],
+          "category": [
+            "android.intent.category.DEFAULT",
+            "android.intent.category.BROWSABLE"
+          ]
+        }
+      ],
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.dylmye.setlists",
       "package": "com.dylmye.setlists"
     },
