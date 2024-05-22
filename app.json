@@ -28,7 +28,8 @@
       "icon": "./assets/icon-ios-1024.png",
       "bundleIdentifier": "com.dylmye.setlists",
       "infoPlist": {
-        "NSAppleMusicUsageDescription": "Allow Setlist Sherlock to access your Apple Music data to save setlists as playlists"
+        "NSAppleMusicUsageDescription": "Allow Setlist Sherlock to access your Apple Music data to save setlists as playlists",
+        "NSPhotoLibraryUsageDescription": "Setlist Sherlock does not require access to the photo library"
       }
     },
     "android": {

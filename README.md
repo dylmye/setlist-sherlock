@@ -72,6 +72,8 @@ Instructions for creating a production build locally [are available here](https:
 
 App icon by Olga from Noun Project (CC BY 3.0.)
 
-**Setlist Sherlock is not connected to or affiliated with Setlist.fm, Live Nation or any of the artists' whose setlists are available or featured in the app.**
+Thanks to [Lomray Software](https://lomray.com/) for their [Apple Music package](https://github.com/Lomray-Software/react-native-apple-music)!
+
+**Setlist Sherlock is not connected to or affiliated with Setlist.fm, Live Nation, Spotify, Apple or any of the artists' whose setlists are available or featured in the app.**
 
 See attached software licence for important warranty information.
