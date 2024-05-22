@@ -20,11 +20,13 @@ import {
   REFRESH_TOKEN_STORAGE_KEY as SPOTIFY_REFRESH_TOKEN_STORAGE_KEY,
   SPOTIFY_USERNAME_STORAGE_KEY,
 } from "../../store/oauth-configs/spotify";
-import { Button, ButtonProps, Text } from "react-native-paper";
+import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
 import { useEffect, useState } from "react";
 import { coolDownAsync, warmUpAsync } from "expo-web-browser";
 
 const SpotifySettingsPage = () => {
+  const theme = useTheme();
+
   const [hasSetUp, setSetupState] = useState(
     !!getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY),
   );
@@ -150,7 +152,7 @@ const SpotifySettingsPage = () => {
             : "Connect your Spotify account to save setlists as playlists."}
         </Text>
         {hasSetUp ? (
-          <Button {...buttonProps} onPress={onPressDisconnect}>
+          <Button {...buttonProps} buttonColor={theme.colors.error} onPress={onPressDisconnect}>
             Disconnect Spotify
           </Button>
         ) : (

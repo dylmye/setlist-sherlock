@@ -11,6 +11,7 @@ import {
   DEV_TOKEN_EXPIRY_STORAGE_KEY as APPLE_MUSIC_DEV_TOKEN_EXPIRY_STORAGE_KEY,
   USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY,
 } from "../store/oauth-configs/appleMusic";
+import { getLocales } from "expo-localization";
 
 interface AuthIntentResult {
   /** if not successful, the enum value of why it failed */
@@ -26,13 +27,23 @@ interface AuthIntentResult {
 /**
  * On iOS, confirm authorised status. On Android, call
  * Apple Music app to get a user token and store it.
+ *
+ * NB: Tokens are only required for Android. iOS will automatically
+ * decorate requests when authorised.
  * @returns Whether user is now authorised
  */
 export const authorise = async (): Promise<boolean> => {
   if (Platform.OS === "ios") {
     const res = await Auth.authorize();
-    return res === "authorized";
+    if (res === "authorized") {
+      // set this token to show authorised/unauth state on settings,
+      // also for api
+      await setItemAsync(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY, "IOS");
+      return true;
+    }
+    return false;
   }
+
   if (!process.env.EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT) {
     console.error("No dev token endpoint available");
     return false;
@@ -108,16 +119,194 @@ export const authorise = async (): Promise<boolean> => {
       extras!.music_user_token!,
     );
 
-    console.log(
-      "dev token",
-      devToken.token,
-      "user token",
-      extras!.music_user_token!,
-    );
-
     return res.resultCode === -1;
   } catch (e) {
     console.error(e);
     return false;
   }
+};
+
+/** These are ISO codes returned by the /storefronts endpoint. The inclusion of these regions in this code is not a position by the developer relating to the status or favourability of the country, all codes are provided directly by Apple Inc. */
+const storefrontRegionCodes = [
+  "dz" /** algeria */,
+  "ao" /** angola */,
+  "ai" /** anguilla */,
+  "ag" /** antigua and barbuda */,
+  "ar" /** argentina */,
+  "am" /** armenia */,
+  "au" /** australia */,
+  "at" /** austria */,
+  "az" /** azerbaijan */,
+  "bs" /** bahamas */,
+  "bh" /** bahrain */,
+  "bb" /** barbados */,
+  "by" /** belarus */,
+  "be" /** belgium */,
+  "bz" /** belize */,
+  "bj" /** benin */,
+  "bm" /** bermuda */,
+  "bt" /** bhutan */,
+  "bo" /** bolivia */,
+  "ba" /** bosnia and herzegovina */,
+  "bw" /** botswana */,
+  "br" /** brazil */,
+  "vg" /** british virgin islands */,
+  "bg" /** bulgaria */,
+  "kh" /** cambodia */,
+  "cm" /** cameroon */,
+  "ca" /** canada */,
+  "cv" /** cape verde */,
+  "ky" /** cayman islands */,
+  "td" /** chad */,
+  "cl" /** chile */,
+  "cn" /** china mainland */,
+  "co" /** colombia */,
+  "cr" /** costa rica */,
+  "hr" /** croatia */,
+  "cy" /** cyprus */,
+  "cz" /** czechia */,
+  "ci" /** côte d'ivoire */,
+  "cd" /** dem. rep. congo */,
+  "dk" /** denmark */,
+  "dm" /** dominica */,
+  "do" /** dominican republic */,
+  "ec" /** ecuador */,
+  "eg" /** egypt */,
+  "sv" /** el salvador */,
+  "ee" /** estonia */,
+  "sz" /** eswatini */,
+  "fj" /** fiji */,
+  "fi" /** finland */,
+  "fr" /** france */,
+  "ga" /** gabon */,
+  "gm" /** gambia */,
+  "ge" /** georgia */,
+  "de" /** germany */,
+  "gh" /** ghana */,
+  "gd" /** grenada */,
+  "gt" /** guatemala */,
+  "gw" /** guinea-bissau */,
+  "gy" /** guyana */,
+  "hn" /** honduras */,
+  "hk" /** hong kong */,
+  "hu" /** hungary */,
+  "is" /** iceland */,
+  "in" /** india */,
+  "id" /** indonesia */,
+  "iq" /** iraq */,
+  "ie" /** ireland */,
+  "il" /** israel */,
+  "it" /** italy */,
+  "jm" /** jamaica */,
+  "jp" /** japan */,
+  "jo" /** jordan */,
+  "kz" /** kazakhstan */,
+  "ke" /** kenya */,
+  "kr" /** south korea */,
+  "xk" /** kosovo */,
+  "kw" /** kuwait */,
+  "kg" /** kyrgyzstan */,
+  "la" /** laos */,
+  "lv" /** latvia */,
+  "lb" /** lebanon */,
+  "lr" /** liberia */,
+  "ly" /** libya */,
+  "lt" /** lithuania */,
+  "lu" /** luxembourg */,
+  "mo" /** macao */,
+  "mg" /** madagascar */,
+  "mw" /** malawi */,
+  "my" /** malaysia */,
+  "mv" /** maldives */,
+  "ml" /** mali */,
+  "mt" /** malta */,
+  "mr" /** mauritania */,
+  "mu" /** mauritius */,
+  "mx" /** mexico */,
+  "fm" /** micronesia */,
+  "md" /** moldova */,
+  "mn" /** mongolia */,
+  "me" /** montenegro */,
+  "ms" /** monteserrat */,
+  "ma" /** morocco */,
+  "mz" /** mozambique */,
+  "mm" /** myanmar */,
+  "na" /** namibia */,
+  "np" /** nepal */,
+  "nl" /** netherlands */,
+  "nz" /** new zealand */,
+  "ni" /** nicaragua */,
+  "ne" /** niger */,
+  "ng" /** nigeria */,
+  "mk" /** north macedonia */,
+  "no" /** norway */,
+  "om" /** oman */,
+  "pa" /** panama */,
+  "pg" /** papua new guinea */,
+  "py" /** paraguay */,
+  "pe" /** peru */,
+  "ph" /** phillippines */,
+  "pl" /** poland */,
+  "pt" /** portugal */,
+  "qa" /** qatar */,
+  "cg" /** rep. congo */,
+  "ro" /** romania */,
+  "ru" /** russia */,
+  "rw" /** rwanda */,
+  "sa" /** saudi arabia */,
+  "sn" /** senegal */,
+  "rs" /** serbia */,
+  "sc" /** seychelles */,
+  "sl" /** sierra leone */,
+  "sg" /** singapore */,
+  "sk" /** slovakia */,
+  "si" /** slovenia */,
+  "sb" /** solomon islands */,
+  "za" /** south africa */,
+  "es" /** spain */,
+  "lk" /** sri lanka */,
+  "kn" /** st kitts and nevis */,
+  "lc" /** st lucia */,
+  "vc" /** st vincent and the grenadines */,
+  "sr" /** suriname */,
+  "se" /** sweden */,
+  "ch" /** switzerland */,
+  "tw" /** taiwan */,
+  "tj" /** tajikistan */,
+  "tz" /** tanzania */,
+  "th" /** thailand */,
+  "to" /** tonga */,
+  "tt" /** trinidad and tobago */,
+  "tn" /** tunisia */,
+  "tm" /** turkmenistan */,
+  "tc" /** turks and caicos */,
+  "tr" /** turkey */,
+  "ae" /** uae */,
+  "ug" /** uganda */,
+  "ua" /** ukraine */,
+  "gb" /** united kingdom */,
+  "us" /** united states */,
+  "uy" /** uruguay */,
+  "uz" /** uzbekistan */,
+  "vu" /** vanuatu */,
+  "ve" /** venezuela */,
+  "vn" /** vietname */,
+  "ye" /** yemen */,
+  "zm" /** zambia */,
+  "zw" /** zimbabwe */
+];
+
+/** Returns the device's region code if it's in the storefront region code list, otherwise default to `us`. */
+export const getUserStorefrontCode = () => {
+  const deviceRegion = getLocales()[0].regionCode?.toLowerCase();
+
+  if (!deviceRegion) {
+    return "us";
+  }
+
+  if (storefrontRegionCodes.includes(deviceRegion)) {
+    return deviceRegion;
+  };
+
+  return "us";
 };

@@ -7,6 +7,7 @@ import {
 } from "../store/services/spotify";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { SPOTIFY_USERNAME_STORAGE_KEY } from "../store/oauth-configs/spotify";
+import { appleMusicApi, useCreateNewLibraryPlaylistMutation } from "../store/services/appleMusic";
 
 interface SongNameItem {
   artist: string;
@@ -41,7 +42,7 @@ export const getSongNamesFromSets = (
  * @param setlist The setlist to transform to a playlist
  * @returns Whether the operation was successful
  */
-export const useGeneratePlaylistFromSongs = (
+export const useGenerateSpotifyPlaylistFromSongs = (
   setlist: Setlist,
 ): (() => Promise<boolean>) => {
   const [spotifySearchTrigger] = spotifyApi.useLazySearchQuery();
@@ -154,6 +155,66 @@ export const useGeneratePlaylistFromSongs = (
       return false;
     }
     const success = await addTracksToPlaylist(playlistId, trackIds);
+    return success;
+  }, [setlist]);
+};
+
+export const useGenerateAppleMusicPlaylistFromSongs = (
+  setlist: Setlist,
+): (() => Promise<boolean>) => {
+  const [appleMusicSearchTrigger] = appleMusicApi.useLazySearchQuery();
+  const [addCreatePlaylistWithTracksTrigger] = useCreateNewLibraryPlaylistMutation();
+
+  return useCallback(async () => {
+    const getTrackIds = async (): Promise<string[]> => {
+      if (!setlist?.sets?.set) {
+        return [];
+      }
+      const songNames = getSongNamesFromSets(
+        setlist.sets.set,
+        setlist?.artist?.name!,
+      );
+      const trackIds: string[] = [];
+      for (const songName of songNames) {
+        try {
+          const res = await appleMusicSearchTrigger(
+            `"${songName.artist}" - "${songName.song}"`,
+            false,
+          );
+          const trackResults = res.data?.results?.songs?.data;
+          if (trackResults?.length) {
+            trackIds.push(trackResults[0].id!);
+          }
+        } catch (e) {
+          console.error(
+            `Unable to fetch track ${songName.song} for setlist ${setlist?.id}:`,
+            e,
+          );
+          break;
+        }
+      }
+      return trackIds;
+    };
+    const createPlaylistWithTrackIds = async (trackIds: string[]): Promise<boolean> => {
+      try {
+        const res = await addCreatePlaylistWithTracksTrigger({
+          name: `${setlist.artist?.name} live at ${setlist.venue?.name}`,
+          description: `Setlist from ${setlist.artist?.name}'s ${setlist.eventDate} gig at ${setlist.venue?.name}. Get Setlist Sherlock: https://onelink.to/yefmaw - Source: ${setlist.url}`,
+          songIds: trackIds,
+        }).unwrap();
+        return true;
+      } catch (e) {
+        console.error("Unable to create playlist", e);
+        return false;
+      }
+    };
+
+    const trackIds = await getTrackIds();
+    if (!trackIds.length) {
+      console.error("Couldn't create playlist - no tracks found");
+      return false;
+    }
+    const success = await createPlaylistWithTrackIds(trackIds);
     return success;
   }, [setlist]);
 };

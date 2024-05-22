@@ -6,12 +6,14 @@ import {
   Text,
 } from "react-native-paper";
 
-interface SpotifyCreatingModalProps {
+interface PlaylistCreatingModalProps {
+  /** eg. spotify, apple-music */
+  provider: string;
   visible: boolean;
 }
 
-/** Additional filters for setlists */
-const SpotifyCreatingModal = ({ visible }: SpotifyCreatingModalProps) => {
+/** Loading state dialog for playlist creation */
+const PlaylistCreatingModal = ({ provider, visible }: PlaylistCreatingModalProps) => {
   return (
     <Modal
       animationType="slide"
@@ -26,10 +28,10 @@ const SpotifyCreatingModal = ({ visible }: SpotifyCreatingModalProps) => {
             animating
             size="small"
             style={styles.spinner}
-            color={MD2Colors.green300}
+            color={provider === "spotify" ? MD2Colors.green300 : undefined}
           />
           <Text variant="bodyMedium" style={styles.text}>
-            Adding to Spotify...
+            Adding to {provider}...
           </Text>
           <Text variant="bodySmall" style={styles.text}>
             This will take up to a minute, please be patient
@@ -61,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SpotifyCreatingModal;
+export default PlaylistCreatingModal;

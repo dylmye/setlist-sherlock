@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import { deleteItemAsync, getItem } from "expo-secure-store";
-import { Auth } from "@lomray/react-native-apple-music";
 import { Stack } from "expo-router";
-import { Button, ButtonProps } from "react-native-paper";
+import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
 
 import {
   USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY,
@@ -13,14 +12,21 @@ import {
 import { authorise } from "../../utils/appleMusic";
 
 const AppleMusicSettingsPage = () => {
+  const theme = useTheme();
+
   const [hasSetUp, setSetupState] = useState(
     !!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY),
   );
   const [loading, setLoading] = useState(false);
 
-  const onPressConnect = () => {
+  const onPressConnect = async () => {
     setLoading(true);
     ToastAndroid.show("Log in with Apple to continue.", ToastAndroid.SHORT);
+    try {
+      await authorise();
+    } catch (error) {
+      console.error("Authorization failed:", error);
+    }
   };
 
   const onPressDisconnect = () => {
@@ -44,18 +50,30 @@ const AppleMusicSettingsPage = () => {
     icon: "music",
   };
 
-  const onPress = async () => {
-    try {
-      await authorise();
-    } catch (error) {
-      console.error("Authorization failed:", error);
-    }
-  };
-
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: "Apple Music" }} />
-      <Button {...buttonProps} onPress={onPress}>Connect with Apple Music</Button>
+      <View style={[styles.container, styles.centredContainer]}>
+        <Text style={styles.copy} variant="bodyMedium">
+          {hasSetUp
+            ? "You've connected your Apple Music account. Now you can press the share button on any setlist to get your playlist!"
+            : "Connect your Apple Music account to save setlists as playlists."}
+        </Text>
+        {hasSetUp ? (
+          <Button {...buttonProps} buttonColor={theme.colors.error} onPress={onPressDisconnect}>
+            Disconnect Apple Music
+          </Button>
+        ) : (
+          <Button
+          {...buttonProps}
+          loading={loading}
+          disabled={loading}
+          onPress={onPressConnect}
+        >
+          Connect with Apple Music
+        </Button>
+        )}
+      </View>
     </View>
   );
 };

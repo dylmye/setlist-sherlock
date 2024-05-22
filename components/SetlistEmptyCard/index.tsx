@@ -16,7 +16,7 @@ const SetlistEmptyCard = ({ style }: SetlistEmptyCardProps) => (
     />
     <Card.Content>
       <Text variant="bodyMedium">
-        Check back later or add it yourself by clicking the pencil button.
+        Check back later or add it yourself by clicking the pencil button (Setlist.fm account required.)
       </Text>
     </Card.Content>
   </Card>
