@@ -33,7 +33,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Set eas.json file
-        uses: jossef/action-set-json-field@v2.1
+        uses: jossef/action-set-json-field@v2.2
         with:
           file: eas.json
           field: build.production.env.EXPO_PUBLIC_SETLISTFM_API_KEY

@@ -71,7 +71,22 @@
       "expo-router",
       "expo-secure-store",
       "expo-localization",
-      ["expo-asset", { "assets": ["./assets/songkick.png"] }]
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./assets/songkick.png"
+          ]
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.0"
+          }
+        }
+      ]
     ]
   }
 }
