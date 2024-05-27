@@ -32,12 +32,26 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Set eas.json file
+      - name: Set eas.json file - EXPO_PUBLIC_SETLISTFM_API_KEY
         uses: jossef/action-set-json-field@v2.2
         with:
           file: eas.json
           field: build.production.env.EXPO_PUBLIC_SETLISTFM_API_KEY
           value: ${{ secrets.EXPO_PUBLIC_SETLISTFM_API_KEY }}
+
+      - name: Set eas.json file - EXPO_PUBLIC_SPOTIFY_API_KEY
+        uses: jossef/action-set-json-field@v2.2
+        with:
+          file: eas.json
+          field: build.production.env.EXPO_PUBLIC_SPOTIFY_API_KEY
+          value: ${{ secrets.EXPO_PUBLIC_SPOTIFY_API_KEY }}
+
+      - name: Set eas.json file - EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT
+        uses: jossef/action-set-json-field@v2.2
+        with:
+          file: eas.json
+          field: build.production.env.EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT
+          value: ${{ secrets.EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT }}
 
       - name: Build app
         run: eas build -p android --non-interactive --no-wait -m="GitHub Actions - Run $GITHUB_RUN_ID"
