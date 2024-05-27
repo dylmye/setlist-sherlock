@@ -18,6 +18,7 @@ const HomepageHeader = () => {
         <Menu
           visible={menuVisible}
           onDismiss={closeMenu}
+          anchorPosition="bottom"
           anchor={
             <Appbar.Action
               icon="dots-vertical"
@@ -32,7 +33,7 @@ const HomepageHeader = () => {
             closeMenu();
             router.navigate("/settings");
           }} title="Settings" />
-          <Menu.Item onPress={() => {}} title="About" />
+          {/* <Menu.Item onPress={() => {}} title="About" /> */}
         </Menu>
       </View>
       <Text variant="headlineSmall" style={styles.title}>

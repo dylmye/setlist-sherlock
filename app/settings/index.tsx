@@ -30,11 +30,11 @@ const SettingsPage = () => {
   )
 
   const settings: SettingItem[] = [
-    // {
-    //   label: "Spotify",
-    //   value: spotifyHasSetup ? "Connected" : "Set up",
-    //   onPress: () => router.navigate("/settings/spotify"),
-    // },
+    {
+      label: "Spotify (Validation Testing Only)",
+      value: spotifyHasSetup ? "Connected" : "Set up",
+      onPress: () => router.navigate("/settings/spotify"),
+    },
     {
       label: "Apple Music",
       value: appleMusicHasSetup ? "Connected" : "Set up",
@@ -44,6 +44,7 @@ const SettingsPage = () => {
 
   useFocusEffect(() => {
     setSpotifySetupState(!!getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY));
+    setAppleMusicSetupState(!!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY));
   });
 
   // @TODO: when there's >1 category of settings, use a SectionList instead
