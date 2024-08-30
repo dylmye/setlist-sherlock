@@ -38,6 +38,16 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.body,
       }),
     }),
+    putPlaylistsByPlaylistIdFollowers: build.mutation<
+      PutPlaylistsByPlaylistIdFollowersApiResponse,
+      PutPlaylistsByPlaylistIdFollowersApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/playlists/${queryArg.playlistId}/followers`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -92,6 +102,15 @@ export type PostUsersByUserIdPlaylistsApiArg = {
     public?: boolean;
     collaborative?: boolean;
     description?: string;
+    [key: string]: any;
+  };
+};
+export type PutPlaylistsByPlaylistIdFollowersApiResponse =
+  /** status 200 Playlist followed */ void;
+export type PutPlaylistsByPlaylistIdFollowersApiArg = {
+  playlistId: string;
+  body: {
+    public?: boolean;
     [key: string]: any;
   };
 };
@@ -387,4 +406,5 @@ export const {
   useGetMeQuery,
   usePostPlaylistsByPlaylistIdTracksMutation,
   usePostUsersByUserIdPlaylistsMutation,
+  usePutPlaylistsByPlaylistIdFollowersMutation,
 } = injectedRtkApi;

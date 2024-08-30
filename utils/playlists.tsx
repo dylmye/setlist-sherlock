@@ -4,10 +4,12 @@ import {
   spotifyApi,
   usePostPlaylistsByPlaylistIdTracksMutation,
   usePostUsersByUserIdPlaylistsMutation,
+  usePutPlaylistsByPlaylistIdFollowersMutation,
 } from "../store/services/spotify";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { SPOTIFY_USERNAME_STORAGE_KEY } from "../store/oauth-configs/spotify";
 import { appleMusicApi, useCreateNewLibraryPlaylistMutation } from "../store/services/appleMusic";
+import { openURL } from "expo-linking";
 
 interface SongNameItem {
   artist: string;
@@ -50,6 +52,7 @@ export const useGenerateSpotifyPlaylistFromSongs = (
   const [addTracksToPlaylistTrigger] =
     usePostPlaylistsByPlaylistIdTracksMutation();
   const [spotifyMeTrigger] = spotifyApi.useLazyGetMeQuery();
+  const [followPlaylistTrigger] = usePutPlaylistsByPlaylistIdFollowersMutation();
 
   return useCallback(async () => {
     const getTrackIds = async (): Promise<string[]> => {
@@ -140,6 +143,20 @@ export const useGenerateSpotifyPlaylistFromSongs = (
         return false;
       }
     };
+    const followPlaylist = async (playlistId: string): Promise<boolean> => {
+      try {
+        await followPlaylistTrigger({
+          playlistId,
+          body: {
+            public: true,
+          }
+        });
+        return true;
+      } catch (e) {
+        console.error("Unable to follow playlist", e);
+        return false;
+      }
+    };
 
     const trackIds = await getTrackIds();
     if (!trackIds.length) {
@@ -155,6 +172,11 @@ export const useGenerateSpotifyPlaylistFromSongs = (
       return false;
     }
     const success = await addTracksToPlaylist(playlistId, trackIds);
+    if (success) {
+      await followPlaylist(playlistId);
+      await openURL(`https://open.spotify.com/playlist/${playlistId}`);
+    }
+
     return success;
   }, [setlist]);
 };
@@ -195,17 +217,17 @@ export const useGenerateAppleMusicPlaylistFromSongs = (
       }
       return trackIds;
     };
-    const createPlaylistWithTrackIds = async (trackIds: string[]): Promise<boolean> => {
+    const createPlaylistWithTrackIds = async (trackIds: string[]): Promise<string|null> => {
       try {
         const res = await addCreatePlaylistWithTracksTrigger({
           name: `${setlist.artist?.name} live at ${setlist.venue?.name}`,
           description: `Setlist from ${setlist.artist?.name}'s ${setlist.eventDate} gig at ${setlist.venue?.name}. Get Setlist Sherlock: https://onelink.to/yefmaw - Source: ${setlist.url}`,
           songIds: trackIds,
         }).unwrap();
-        return true;
+        return res.data?.[0]?.href;
       } catch (e) {
         console.error("Unable to create playlist", e);
-        return false;
+        return null;
       }
     };
 
@@ -214,7 +236,10 @@ export const useGenerateAppleMusicPlaylistFromSongs = (
       console.error("Couldn't create playlist - no tracks found");
       return false;
     }
-    const success = await createPlaylistWithTrackIds(trackIds);
-    return success;
+    const playlistUrl = await createPlaylistWithTrackIds(trackIds);
+    if (playlistUrl) {
+      await openURL(playlistUrl);
+    }
+    return !!playlistUrl;
   }, [setlist]);
 };

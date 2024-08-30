@@ -31,7 +31,7 @@ const SettingsPage = () => {
 
   const settings: SettingItem[] = [
     {
-      label: "Spotify (Validation Testing Only)",
+      label: "Spotify",
       value: spotifyHasSetup ? "Connected" : "Set up",
       onPress: () => router.navigate("/settings/spotify"),
     },
