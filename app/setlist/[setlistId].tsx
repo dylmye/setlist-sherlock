@@ -19,6 +19,7 @@ import SetlistEmptyCard from "../../components/SetlistEmptyCard";
 import SetlistSectionList from "../../components/SetlistSectionList";
 import SetlistMetadataList from "../../components/SetlistMetadataList";
 import AddToPlaylistAppbarAction from "../../components/AddToPlaylistAppbarAction";
+import { openBrowserAsync } from "expo-web-browser";
 
 /** View for setlist set, metadata, links */
 const SetlistDetails = () => {
@@ -74,55 +75,53 @@ const SetlistDetails = () => {
           Across the web
         </List.Subheader>
         {setlistInPast && (
-          <Link
-            asChild
-            href={`https://www.concertarchives.org/past-concert-search-engine?utf8=%E2%9C%93&search=${encodeURIComponent(
-              setlist?.artist?.name!,
-            )}+${setlist?.eventDate}#concert-table`}
-          >
-            <List.Item
-              title="Find photos and videos from this gig"
-              description="From Concert Archives"
-              left={(props) => <List.Icon color={props.color} icon="camera" />}
-              titleNumberOfLines={3}
-              right={(props) => <List.Icon {...props} icon="chevron-right" />}
-            />
-          </Link>
-        )}
-        <Link
-          asChild
-          href={
-            !setlistInPast
-              ? `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
-                  setlist?.artist?.name!,
-                )}%20${setlist?.venue?.name}&type=events`
-              : `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
-                  setlist?.artist?.name!,
-                )}&type=artists`
-          }
-        >
           <List.Item
-            title={
-              !setlistInPast
-                ? "Find tickets for this gig"
-                : `Find upcoming ${setlist?.artist?.name} tour dates`
-            }
-            description="On Songkick"
-            left={() => (
-              <List.Icon
-                icon={({ color, size }) => (
-                  <Image
-                    source="songkick"
-                    style={{ width: size, height: size }}
-                    tintColor={color}
-                  />
-                )}
-              />
-            )}
+            title="Find photos and videos from this gig"
+            description="From Concert Archives"
+            left={(props) => <List.Icon color={props.color} icon="camera" />}
             titleNumberOfLines={3}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
+            onPress={async () =>
+              openBrowserAsync(
+                `https://www.concertarchives.org/past-concert-search-engine?utf8=%E2%9C%93&search=${encodeURIComponent(
+                  setlist?.artist?.name!,
+                )}+${setlist?.eventDate}#concert-table`,
+              )
+            }
           />
-        </Link>
+        )}
+        <List.Item
+          title={
+            !setlistInPast
+              ? "Find tickets for this gig"
+              : `Find upcoming ${setlist?.artist?.name} tour dates`
+          }
+          description="On Songkick"
+          left={() => (
+            <List.Icon
+              icon={({ color, size }) => (
+                <Image
+                  source="songkick"
+                  style={{ width: size, height: size }}
+                  tintColor={color}
+                />
+              )}
+            />
+          )}
+          titleNumberOfLines={3}
+          right={(props) => <List.Icon {...props} icon="chevron-right" />}
+          onPress={async () =>
+            openBrowserAsync(
+              !setlistInPast
+                ? `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
+                    setlist?.artist?.name!,
+                  )}%20${setlist?.venue?.name}&type=events`
+                : `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
+                    setlist?.artist?.name!,
+                  )}&type=artists`,
+            )
+          }
+        />
       </List.Section>
     </View>
   );
@@ -144,6 +143,7 @@ const SetlistDetails = () => {
           headerRight: () =>
             setlist && (
               <>
+                <Appbar.Action icon="star" accessibilityLabel="Add this setlist to your favourites" />
                 <AddToPlaylistAppbarAction
                   setlist={setlist}
                   show={!isLoading && networkIsAvailable && !setlistEmpty}

@@ -41,9 +41,9 @@ const SetlistMetadataList = ({
         key: "artist-name",
         title: "Artist",
         value: artist?.name ?? "unknown",
-        // internalLink: `artist/${artist?.mbid}`,
+        internalLink: `artist/${artist?.mbid}`,
         iconName: "account-star",
-        externalLink: artist?.url,
+        // externalLink: artist?.url,
       },
     ];
 
@@ -64,7 +64,6 @@ const SetlistMetadataList = ({
         title: "Venue",
         value: venue?.name,
         iconName: "stadium-variant",
-        externalLink: venue?.url,
       });
       d.push({
         key: "venue-location",
