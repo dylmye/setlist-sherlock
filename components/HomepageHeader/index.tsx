@@ -5,8 +5,12 @@ import { Appbar, Button, Divider, Menu, Text } from "react-native-paper";
 import SetlistSearchbar from "../SetlistSearchbar";
 import { router } from "expo-router";
 
+interface Props {
+  showForYouHeader: boolean;
+}
+
 /** Top content for Homepage FlatList */
-const HomepageHeader = () => {
+const HomepageHeader = ({ showForYouHeader }: Props) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
@@ -29,16 +33,21 @@ const HomepageHeader = () => {
             />
           }
         >
-          <Menu.Item onPress={() => {
-            closeMenu();
-            router.navigate("/settings");
-          }} title="Settings" />
+          <Menu.Item
+            onPress={() => {
+              closeMenu();
+              router.navigate("/settings");
+            }}
+            title="Settings"
+          />
           {/* <Menu.Item onPress={() => {}} title="About" /> */}
         </Menu>
       </View>
-      <Text variant="headlineSmall" style={styles.title}>
-        Latest Setlists
-      </Text>
+      {showForYouHeader && (
+        <Text variant="headlineSmall" style={styles.title}>
+          For You
+        </Text>
+      )}
     </View>
   );
 };
