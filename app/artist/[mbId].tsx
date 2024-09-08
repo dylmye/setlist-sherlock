@@ -21,17 +21,28 @@ const ArtistPage = () => {
 
   return (
     <>
-      <Stack.Screen options={{ title: artistData ? `${artistData?.name}'s latest setlists` : "" }} />
+      <Stack.Screen
+        options={{
+          title: artistData ? `${artistData?.name}'s latest setlists` : "",
+        }}
+      />
       <View style={styles.container}>
         <FlatList<Setlist>
           data={setlistsData?.setlist}
-          renderItem={({ item }) => <SetlistListItem {...item} showDate />}
+          renderItem={({ item }) => (
+            <SetlistListItem
+              id={item?.id}
+              artist={{ name: item.venue?.name }}
+              eventDate={item?.eventDate}
+              showDate
+            />
+          )}
           keyExtractor={(s) => `setlist-artist-${mbId}-${s.id}`}
           ItemSeparatorComponent={() => <Divider horizontalInset />}
           style={styles.container}
           onRefresh={() => refetch()}
           refreshing={isFetching}
-         />
+        />
       </View>
     </>
   );

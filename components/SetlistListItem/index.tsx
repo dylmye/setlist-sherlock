@@ -20,18 +20,22 @@ const SetlistListItem = ({
   eventDate,
   showDate = false,
 }: SetlistListItemProps) => {
-  const showState = venue?.city?.country?.code === "US";
+  const showState = ["US", "CA"].includes(venue?.city?.country?.code ?? "");
   const stateText = showState ? `, ${venue?.city?.stateCode}` : "";
   const formattedDate =
     eventDate && format(parse(eventDate, "dd-MM-y", new Date()), "do MMM y");
+
+  const venueText = venue
+    ? `${venue?.name}, ${venue?.city?.name}${stateText}`
+    : "";
 
   return (
     <List.Item
       title={artist?.name}
       titleStyle={style.title}
       description={`${
-        showDate ? `${formattedDate} \u2022 ` : ""
-      }${venue?.name}, ${venue?.city?.name}${stateText}`}
+        showDate ? `${formattedDate} ${!!venueText ? `\u2022` : ""} ` : ""
+      }${venueText}`}
       right={(props) => <List.Icon {...props} icon="chevron-right" />}
       onPress={() => router.navigate(`/setlist/${id}`)}
     />

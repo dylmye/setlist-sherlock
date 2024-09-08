@@ -12,6 +12,7 @@ import SetlistListItem from "../../components/SetlistListItem";
 import { Edge, SafeAreaView } from "react-native-safe-area-context";
 import SearchHeader from "../../components/SearchHeader";
 import SearchFilterModal from "../../components/SearchFilterModal";
+import NoSearchResultsCard from "../../components/NoSearchResultsCard";
 
 const Search = () => {
   const params = useLocalSearchParams<{ query?: string; tourName?: string }>();
@@ -75,6 +76,7 @@ const Search = () => {
         keyExtractor={(s) => `search-result-setlist-${s.id}`}
         ItemSeparatorComponent={() => <Divider horizontalInset />}
         ListHeaderComponent={<ListHeader />}
+        ListEmptyComponent={<NoSearchResultsCard />}
       />
       <SearchFilterModal
         visible={filterModalVisible}
