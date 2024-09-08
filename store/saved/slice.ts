@@ -23,9 +23,9 @@ export const savedSlice = createSlice({
         return;
       }
 
-      let newSetlists = [...state.setlists];
-      newSetlists.push(action.payload);
-      // newSetlists.sort((x, y) => parse(x.eventDate, "d-M-y")) @TODO
+      state.setlists.push(action.payload);
+      state.setlists.sort((a, b) => (parse(b.eventDate!, "d-M-y", new Date()).valueOf() - parse(a.eventDate!, "d-M-y", new Date()).valueOf()));
+      state.setlistIds = state.setlists.map(({ id }) => id!);
     },
     removeSetlistById: (state, action: PayloadAction<string>) => {
       const indexToRemove = state.setlistIds.findIndex(x => x === action.payload);

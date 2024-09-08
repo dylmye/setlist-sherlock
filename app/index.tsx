@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { StyleSheet, SectionList, SectionBase } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { StyleSheet, SectionList, SectionBase, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 import { format } from "date-fns";
@@ -8,6 +8,7 @@ import { Divider, Text } from "react-native-paper";
 import { useGet10SearchSetlistsQuery, Setlist } from "../store/services/setlistFm";
 import SetlistListItem from "../components/SetlistListItem";
 import HomepageHeader from "../components/HomepageHeader";
+import { useKeyboardVisible } from "../hooks/keyboard";
 
 interface HomepageSection extends SectionBase<Setlist> {
   index: number; // Stupid `renderSectionHeader` doesn't provide index so we DIY
@@ -18,6 +19,7 @@ interface HomepageSection extends SectionBase<Setlist> {
 
 /** Entry point for users - latest setlists view default */
 const Home = () => {
+  const isKeyboardVisible = useKeyboardVisible();
   // setlist-fm API uses UK date format, two digit padded, explicitly instead of RFC y-M-d format
   const today = useMemo(() => format(new Date(), "dd-MM-y"), []);
   const {
@@ -54,7 +56,7 @@ const Home = () => {
         sections={sections}
         renderSectionHeader={({ section }) =>
           section?.index === 0 ? (
-            <HomepageHeader showForYouHeader={!!section?.data?.length} />
+            <HomepageHeader showForYouHeader={!!section?.data?.length} actionButtonsHidden={isKeyboardVisible} />
           ) : (
             <Text variant="headlineSmall" style={styles.title}>
               {section.title}

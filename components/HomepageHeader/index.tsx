@@ -1,56 +1,47 @@
-import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Appbar, Button, Divider, Menu, Text } from "react-native-paper";
+import { Appbar, Text } from "react-native-paper";
 
 import SetlistSearchbar from "../SetlistSearchbar";
 import { router } from "expo-router";
 
 interface Props {
   showForYouHeader: boolean;
+  actionButtonsHidden: boolean;
 }
 
 /** Top content for Homepage FlatList */
-const HomepageHeader = ({ showForYouHeader }: Props) => {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const openMenu = () => setMenuVisible(true);
-  const closeMenu = () => setMenuVisible(false);
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.topbar}>
-        <SetlistSearchbar style={styles.searchInput} redirectToSearchPage />
-        <Menu
-          visible={menuVisible}
-          onDismiss={closeMenu}
-          anchorPosition="bottom"
-          anchor={
-            <Appbar.Action
-              icon="dots-vertical"
-              onPress={openMenu}
-              accessibilityLabel={`${
-                menuVisible ? "Close" : "Open"
-              } Settings Menu`}
-            />
-          }
-        >
-          <Menu.Item
+const HomepageHeader = ({ showForYouHeader, actionButtonsHidden }: Props) => (
+  <View style={styles.container}>
+    <View style={styles.topbar}>
+      <SetlistSearchbar style={styles.searchInput} redirectToSearchPage />
+      {/* @TODO: transition slide/fade in/out depending on value */}
+      {/* Also @TODO: add saved page that shows value of saved state! */}
+      {!actionButtonsHidden && (
+        <>
+          <Appbar.Action
+            icon="star"
+            accessibilityLabel="View saved setlists"
             onPress={() => {
-              closeMenu();
+              router.navigate("/saved");
+            }}
+          />
+          <Appbar.Action
+            icon="cog"
+            accessibilityLabel="Open Settings Menu"
+            onPress={() => {
               router.navigate("/settings");
             }}
-            title="Settings"
           />
-          {/* <Menu.Item onPress={() => {}} title="About" /> */}
-        </Menu>
-      </View>
-      {showForYouHeader && (
-        <Text variant="headlineSmall" style={styles.title}>
-          For You
-        </Text>
+        </>
       )}
     </View>
-  );
-};
+    {showForYouHeader && (
+      <Text variant="headlineSmall" style={styles.title}>
+        For You
+      </Text>
+    )}
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
