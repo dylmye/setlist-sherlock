@@ -4,12 +4,14 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { setlistFmApi } from "./services/setlistFm";
 import { spotifyApi } from "./services/spotify";
 import { appleMusicApi } from "./services/appleMusic";
+import { savedSlice } from "./saved/slice";
 
 export const store = configureStore({
   reducer: {
     [setlistFmApi.reducerPath]: setlistFmApi.reducer,
     [spotifyApi.reducerPath]: spotifyApi.reducer,
     [appleMusicApi.reducerPath]: appleMusicApi.reducer,
+    saved: savedSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -17,8 +19,5 @@ export const store = configureStore({
       .concat(spotifyApi.middleware)
       .concat(appleMusicApi.middleware),
 });
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
 
 setupListeners(store.dispatch);

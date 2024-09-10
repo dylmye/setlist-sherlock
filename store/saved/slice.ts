@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Setlist } from "../services/setlistFm";
 import { parse } from "date-fns";
+import { RootState } from "../types";
 
 type PartialSetlist = Pick<Setlist, 'id' | 'artist' | 'eventDate'>;
 
@@ -47,5 +48,7 @@ export const savedSlice = createSlice({
 });
 
 export const { addSetlist, clearList, removeSetlistById } = savedSlice.actions;
+
+export const selectSavedSetlists = (state: RootState) => state.saved.setlists;
 
 export default savedSlice.reducer;

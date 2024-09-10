@@ -12,6 +12,7 @@ interface SettingItem {
   onPress: () => void;
 }
 
+/** Settings controls, accessible from homepage */
 const SettingsPage = () => {
   const renderSetting: ListRenderItem<SettingItem> = ({ item, index }) => (
     <List.Item

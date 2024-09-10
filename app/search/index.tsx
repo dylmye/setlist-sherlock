@@ -14,6 +14,7 @@ import SearchHeader from "../../components/SearchHeader";
 import SearchFilterModal from "../../components/SearchFilterModal";
 import NoSearchResultsCard from "../../components/NoSearchResultsCard";
 
+/** Search results for setlists from user input */
 const Search = () => {
   const params = useLocalSearchParams<{ query?: string; tourName?: string }>();
   const [trigger, result] = setlistFmApi.useLazyGet10SearchSetlistsQuery();

@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
-import { Appbar, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 
 import SetlistSearchbar from "../SetlistSearchbar";
-import { router } from "expo-router";
+import HeaderActionButtons from "./actionButtons";
 
 interface Props {
   showForYouHeader: boolean;
@@ -10,38 +10,21 @@ interface Props {
 }
 
 /** Top content for Homepage FlatList */
-const HomepageHeader = ({ showForYouHeader, actionButtonsHidden }: Props) => (
-  <View style={styles.container}>
-    <View style={styles.topbar}>
-      <SetlistSearchbar style={styles.searchInput} redirectToSearchPage />
-      {/* @TODO: transition slide/fade in/out depending on value */}
-      {/* Also @TODO: add saved page that shows value of saved state! */}
-      {!actionButtonsHidden && (
-        <>
-          <Appbar.Action
-            icon="star"
-            accessibilityLabel="View saved setlists"
-            onPress={() => {
-              router.navigate("/saved");
-            }}
-          />
-          <Appbar.Action
-            icon="cog"
-            accessibilityLabel="Open Settings Menu"
-            onPress={() => {
-              router.navigate("/settings");
-            }}
-          />
-        </>
+const HomepageHeader = ({ showForYouHeader, actionButtonsHidden }: Props) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.topbar}>
+        <SetlistSearchbar style={styles.searchInput} redirectToSearchPage />
+        <HeaderActionButtons visible={!actionButtonsHidden} />
+      </View>
+      {showForYouHeader && (
+        <Text variant="headlineSmall" style={styles.title}>
+          For You
+        </Text>
       )}
     </View>
-    {showForYouHeader && (
-      <Text variant="headlineSmall" style={styles.title}>
-        For You
-      </Text>
-    )}
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -61,6 +44,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
+  },
+  actions: {
+    display: "flex",
+    flexDirection: "row",
   },
 });
 
