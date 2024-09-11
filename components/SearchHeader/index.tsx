@@ -21,7 +21,7 @@ const SearchHeader = ({
   loading,
 }: SearchHeaderProps) => (
   <View style={styles.container}>
-    <Appbar.BackAction onPress={() => router.back()} />
+    <Appbar.BackAction onPress={() => router.back()} isLeading />
     <SetlistSearchbar
       style={styles.searchInput}
       initialQuery={initialQuery}

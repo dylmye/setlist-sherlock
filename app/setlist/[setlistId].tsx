@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Share, StyleSheet, View } from "react-native";
 import {
   ActivityIndicator,
@@ -6,29 +6,42 @@ import {
   Divider,
   FAB,
   List,
+  Snackbar,
   Text,
 } from "react-native-paper";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, router, Stack, useLocalSearchParams } from "expo-router";
 import * as Linking from "expo-linking";
 import { isAfter, parse } from "date-fns";
 import { getNetworkStateAsync } from "expo-network";
 import { Image } from "expo-image";
+import { openBrowserAsync } from "expo-web-browser";
 
 import { useGet10SetlistBySetlistIdQuery } from "../../store/services/setlistFm";
 import SetlistEmptyCard from "../../components/SetlistEmptyCard";
 import SetlistSectionList from "../../components/SetlistSectionList";
 import SetlistMetadataList from "../../components/SetlistMetadataList";
 import AddToPlaylistAppbarAction from "../../components/AddToPlaylistAppbarAction";
-import { openBrowserAsync } from "expo-web-browser";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import {
+  unsaveSetlistById,
+  selectSetlistIsSaved,
+  saveSetlist,
+} from "../../store/saved/slice";
 
 /** View for setlist set, metadata, links */
 const SetlistDetails = () => {
+  const dispatch = useAppDispatch();
   const { setlistId } = useLocalSearchParams<{ setlistId: string }>();
+
   const { data: setlist, isLoading } = useGet10SetlistBySetlistIdQuery({
     setlistId: setlistId!,
   });
   const [networkIsAvailable, setNetworkState] = useState(false);
 
+  const [savedSnackbarVisible, setSavedSnackbarVisible] = useState(false);
+  const isSaved = useAppSelector((store) =>
+    selectSetlistIsSaved(store, setlistId!),
+  );
   const setlistEmpty = !isLoading && !setlist?.sets?.set?.length;
   const setlistInPast =
     setlist?.eventDate &&
@@ -126,6 +139,23 @@ const SetlistDetails = () => {
     </View>
   );
 
+  const toggleSaveState = useCallback(() => {
+    if (isSaved) {
+      dispatch(unsaveSetlistById(setlistId!));
+      setSavedSnackbarVisible(true);
+      return;
+    }
+    dispatch(
+      saveSetlist({
+        id: setlistId!,
+        artist: setlist?.artist,
+        eventDate: setlist?.eventDate,
+        venue: setlist?.venue,
+      }),
+    );
+    setSavedSnackbarVisible(true);
+  }, [isSaved, setlistId, setlist]);
+
   useEffect(() => {
     const setNetworkStatus = async () => {
       const state = await getNetworkStateAsync();
@@ -143,7 +173,15 @@ const SetlistDetails = () => {
           headerRight: () =>
             setlist && (
               <>
-                <Appbar.Action icon="star" accessibilityLabel="Add this setlist to your favourites" />
+                <Appbar.Action
+                  icon={isSaved ? "star" : "star-outline"}
+                  accessibilityLabel={
+                    isSaved
+                      ? "This setlist is in your saved list"
+                      : "Save this setlist to your saved list"
+                  }
+                  onPress={toggleSaveState}
+                />
                 <AddToPlaylistAppbarAction
                   setlist={setlist}
                   show={!isLoading && networkIsAvailable && !setlistEmpty}
@@ -182,6 +220,24 @@ const SetlistDetails = () => {
           style={styles.floatingButton}
         />
       )}
+      <Snackbar
+        visible={savedSnackbarVisible}
+        onDismiss={() => setSavedSnackbarVisible(false)}
+        action={
+          isSaved
+            ? {
+                label: "View",
+                onPress: () => {
+                  router.navigate("/saved");
+                },
+              }
+            : undefined
+        }
+      >
+        {isSaved
+          ? "Added to your saved setlists"
+          : "Removed from your saved setlists"}
+      </Snackbar>
     </View>
   );
 };
