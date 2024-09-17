@@ -27,16 +27,16 @@ The following environment variables are required in a `.env` file in the root di
 Requirements:
 
 - node v18+
-- yarn
+- bun
 
 ```bash
-$ yarn install
+$ bun install
 ```
 
 ### Create Development Build
 
 ```bash
-$ yarn start
+$ bun run start
 ```
 
 Add a `--go` flag if you want to use the Expo Go app.
@@ -47,8 +47,8 @@ Fortunately Setlist.fm actually maintain their OpenAPI reference properly, so we
 
 To update our Setlist.fm RTK Query config:
 
-0. Make sure you have `ts-node` installed globally - `yarn global add ts-node`
-1. Run `yarn generate:api:setlistfm`
+0. Make sure you have `ts-node` installed globally - `bun install -g ts-node`
+1. Run `bun run generate:api:setlistfm`
 2. Overwrite with any patches as needed: check what's currently marked with "manually edited to match actual schema"
 
 ### Updating Spotify API config
@@ -59,8 +59,8 @@ To update the Spotify API:
 
 0. Grab the latest `fixed-spotify-open-api.yml` from [here](https://github.com/sonallux/spotify-web-api/releases)
 1. Replace the file in `store/open-api-configs` named `spotify.yml`
-2. Make sure you have `ts-node` installed globally - `yarn global add ts-node`
-3. Run `yarn generate:api:spotify`
+2. Make sure you have `ts-node` installed globally - `bun install -g ts-node`
+3. Run `bun run generate:api:spotify`
 
 ## Build
 
