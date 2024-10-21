@@ -5,7 +5,7 @@ import { getNetworkStateAsync } from "expo-network";
 import { Link, router, Stack, useLocalSearchParams } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import React, { useCallback, useEffect, useState } from "react";
-import { Share, StyleSheet, View } from "react-native";
+import { Platform, Share, StyleSheet, View } from "react-native";
 import {
   ActivityIndicator,
   Appbar,
@@ -210,12 +210,11 @@ const SetlistDetails = () => {
       ) : (
         <ActivityIndicator animating size="large" />
       )}
-      {!isLoading && (
+      {/* Apple reviewers don't like external links */}
+      {!(Platform.OS === "ios") && !isLoading && (
         <FAB
           icon="pencil"
-          onPress={() =>
-            Linking.openURL(`${setlist?.url}` ?? "https://setlist.fm")
-          }
+          onPress={() => Linking.openURL(setlist?.url ?? "https://setlist.fm")}
           accessibilityLabel="Edit this setlist on the Setlist FM website"
           style={styles.floatingButton}
         />
