@@ -7,7 +7,7 @@ const PaperNavigationBar = ({
   route,
   options,
   navigation,
-  back
+  back,
 }: NativeStackHeaderProps) => {
   const title = getHeaderTitle(options, route.name);
   const RightAction = options?.headerRight!;
@@ -16,7 +16,7 @@ const PaperNavigationBar = ({
     <Appbar.Header>
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
       <Appbar.Content title={title} />
-      {!!options?.headerRight ? <RightAction canGoBack={false} /> : null}
+      {options?.headerRight ? <RightAction canGoBack={false} /> : null}
     </Appbar.Header>
   );
 };

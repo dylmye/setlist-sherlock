@@ -1,7 +1,7 @@
+import { Stack } from "expo-router";
+import { deleteItemAsync, getItem } from "expo-secure-store";
 import { useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
-import { deleteItemAsync, getItem } from "expo-secure-store";
-import { Stack } from "expo-router";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
 
 import {
@@ -60,18 +60,22 @@ const AppleMusicSettingsPage = () => {
             : "Connect your Apple Music account to save setlists as playlists."}
         </Text>
         {hasSetUp ? (
-          <Button {...buttonProps} buttonColor={theme.colors.error} onPress={onPressDisconnect}>
+          <Button
+            {...buttonProps}
+            buttonColor={theme.colors.error}
+            onPress={onPressDisconnect}
+          >
             Disconnect Apple Music
           </Button>
         ) : (
           <Button
-          {...buttonProps}
-          loading={loading}
-          disabled={loading}
-          onPress={onPressConnect}
-        >
-          Connect with Apple Music
-        </Button>
+            {...buttonProps}
+            loading={loading}
+            disabled={loading}
+            onPress={onPressConnect}
+          >
+            Connect with Apple Music
+          </Button>
         )}
       </View>
     </View>

@@ -16,7 +16,8 @@ const SetlistEmptyCard = ({ style }: SetlistEmptyCardProps) => (
     />
     <Card.Content>
       <Text variant="bodyMedium">
-        Check back later or add it yourself by clicking the pencil button (Setlist.fm account required.)
+        Check back later or add it yourself by clicking the pencil button
+        (Setlist.fm account required.)
       </Text>
     </Card.Content>
   </Card>
@@ -25,7 +26,7 @@ const SetlistEmptyCard = ({ style }: SetlistEmptyCardProps) => (
 const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
-    paddingTop: 8
+    paddingTop: 8,
   },
 });
 

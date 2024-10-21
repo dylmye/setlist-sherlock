@@ -1,8 +1,8 @@
 import { DiscoveryDocument } from "expo-auth-session";
 
 export const discovery: DiscoveryDocument = {
-  authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-  tokenEndpoint: 'https://accounts.spotify.com/api/token',
+  authorizationEndpoint: "https://accounts.spotify.com/authorize",
+  tokenEndpoint: "https://accounts.spotify.com/api/token",
 };
 
 // standard exports

@@ -1,17 +1,20 @@
-import { StyleSheet, ToastAndroid, View } from "react-native";
 import {
   AccessTokenRequestConfig,
   exchangeCodeAsync,
   makeRedirectUri,
   useAuthRequest,
 } from "expo-auth-session";
+import { Stack } from "expo-router";
 import {
   deleteItemAsync,
   getItem,
   getItemAsync,
   setItemAsync,
 } from "expo-secure-store";
-import { Stack } from "expo-router";
+import { coolDownAsync, warmUpAsync } from "expo-web-browser";
+import { useEffect, useState } from "react";
+import { StyleSheet, ToastAndroid, View } from "react-native";
+import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
 
 import {
   discovery as spotifyDiscovery,
@@ -20,9 +23,6 @@ import {
   REFRESH_TOKEN_STORAGE_KEY as SPOTIFY_REFRESH_TOKEN_STORAGE_KEY,
   SPOTIFY_USERNAME_STORAGE_KEY,
 } from "../../store/oauth-configs/spotify";
-import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
-import { useEffect, useState } from "react";
-import { coolDownAsync, warmUpAsync } from "expo-web-browser";
 
 const SpotifySettingsPage = () => {
   const theme = useTheme();
@@ -152,7 +152,11 @@ const SpotifySettingsPage = () => {
             : "Connect your Spotify account to save setlists as playlists."}
         </Text>
         {hasSetUp ? (
-          <Button {...buttonProps} buttonColor={theme.colors.error} onPress={onPressDisconnect}>
+          <Button
+            {...buttonProps}
+            buttonColor={theme.colors.error}
+            onPress={onPressDisconnect}
+          >
             Disconnect Spotify
           </Button>
         ) : (

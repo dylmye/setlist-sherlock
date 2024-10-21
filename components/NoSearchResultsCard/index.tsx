@@ -1,4 +1,4 @@
-import { StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 
 /** Message to display when no setlist data has been detected */
@@ -12,10 +12,12 @@ const NoSearchResultsCard = () => (
     />
     <Card.Content>
       <Text variant="bodyMedium">
-        There may be a spelling mistake in your search, or nobody has added the setlist you're looking for to Setlist.fm yet.
+        There may be a spelling mistake in your search, or nobody has added the
+        setlist you're looking for to Setlist.fm yet.
       </Text>
       <Text variant="bodyMedium">
-        Remember to only enter the artist's name in the search box (and use the filters for location and date.)
+        Remember to only enter the artist's name in the search box (and use the
+        filters for location and date.)
       </Text>
     </Card.Content>
   </Card>

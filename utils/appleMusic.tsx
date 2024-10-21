@@ -1,17 +1,17 @@
 import { Auth } from "@lomray/react-native-apple-music";
-import { startActivityAsync } from "expo-intent-launcher";
-import { Platform } from "react-native";
-import { applicationId } from "expo-application";
-import { setItemAsync } from "expo-secure-store";
 import { add, getUnixTime } from "date-fns";
+import { applicationId } from "expo-application";
+import { startActivityAsync } from "expo-intent-launcher";
+import { getLocales } from "expo-localization";
+import { setItemAsync } from "expo-secure-store";
+import { Platform } from "react-native";
 
-import MusicKitUserTokenError from "../types/MusicKitUserTokenError";
 import {
   DEV_TOKEN_STORAGE_KEY as APPLE_MUSIC_DEV_TOKEN_STORAGE_KEY,
   DEV_TOKEN_EXPIRY_STORAGE_KEY as APPLE_MUSIC_DEV_TOKEN_EXPIRY_STORAGE_KEY,
   USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY,
 } from "../store/oauth-configs/appleMusic";
-import { getLocales } from "expo-localization";
+import MusicKitUserTokenError from "../types/MusicKitUserTokenError";
 
 interface AuthIntentResult {
   /** if not successful, the enum value of why it failed */
@@ -293,7 +293,7 @@ const storefrontRegionCodes = [
   "vn" /** vietname */,
   "ye" /** yemen */,
   "zm" /** zambia */,
-  "zw" /** zimbabwe */
+  "zw" /** zimbabwe */,
 ];
 
 /** Returns the device's region code if it's in the storefront region code list, otherwise default to `us`. */
@@ -306,7 +306,7 @@ export const getUserStorefrontCode = () => {
 
   if (storefrontRegionCodes.includes(deviceRegion)) {
     return deviceRegion;
-  };
+  }
 
   return "us";
 };

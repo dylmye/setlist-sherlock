@@ -1,18 +1,18 @@
+import { Stack, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
-import { Stack, useLocalSearchParams } from "expo-router";
 import { Divider } from "react-native-paper";
+import { Edge, SafeAreaView } from "react-native-safe-area-context";
 
+import NoSearchResultsCard from "../../components/NoSearchResultsCard";
+import SearchFilterModal from "../../components/SearchFilterModal";
+import SearchHeader from "../../components/SearchHeader";
+import SetlistListItem from "../../components/SetlistListItem";
 import {
   Get10SearchSetlistsApiArg,
   Setlist,
   setlistFmApi,
 } from "../../store/services/setlistFm";
-import SetlistListItem from "../../components/SetlistListItem";
-import { Edge, SafeAreaView } from "react-native-safe-area-context";
-import SearchHeader from "../../components/SearchHeader";
-import SearchFilterModal from "../../components/SearchFilterModal";
-import NoSearchResultsCard from "../../components/NoSearchResultsCard";
 
 /** Search results for setlists from user input */
 const Search = () => {

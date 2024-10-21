@@ -1,13 +1,13 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FlatList, StyleSheet, View } from "react-native";
+import { Divider } from "react-native-paper";
 
+import SetlistListItem from "../../components/SetlistListItem";
 import {
   useGet10ArtistByMbidQuery,
   useGet10ArtistByMbidSetlistsQuery,
+  Setlist,
 } from "../../store/services/setlistFm";
-import { Setlist } from "../../store/services/setlistFm";
-import SetlistListItem from "../../components/SetlistListItem";
-import { Divider } from "react-native-paper";
 
 /** View for artist */
 const ArtistPage = () => {

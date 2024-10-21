@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Keyboard, Platform } from 'react-native';
+import { useState, useEffect } from "react";
+import { Keyboard, Platform } from "react-native";
 
 /**
  * @see https://stackoverflow.com/a/72805382
@@ -12,13 +12,13 @@ export const useKeyboardVisible = () => {
     const keyboardWillShowListener = Keyboard.addListener(
       // WillShow/Hide events not available on Android
       // @see https://reactnative.dev/docs/keyboard.html#addlistener
-      !isAndroid ? 'keyboardWillShow' : 'keyboardDidShow',
+      !isAndroid ? "keyboardWillShow" : "keyboardDidShow",
       () => {
         setKeyboardVisible(true);
       },
     );
     const keyboardWillHideListener = Keyboard.addListener(
-      !isAndroid ? 'keyboardWillHide' : 'keyboardDidHide',
+      !isAndroid ? "keyboardWillHide" : "keyboardDidHide",
       () => {
         setKeyboardVisible(false);
       },
@@ -32,4 +32,3 @@ export const useKeyboardVisible = () => {
 
   return isKeyboardVisible;
 };
-

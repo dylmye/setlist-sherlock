@@ -1,5 +1,6 @@
 import { setlistFmApi as api } from "./api";
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     // @TODO  https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#performing-multiple-requests-with-a-single-query
@@ -8,7 +9,6 @@ const injectedRtkApi = api.injectEndpoints({
     //        Then return all 5 (or less)
     // get5TopArtistsLatestSetlist: build.query({
     //   async queryFn(_arg, api, extraOptions, baseQuery) {
-
     //   },
     // })
   }),

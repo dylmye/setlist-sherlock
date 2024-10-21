@@ -5,8 +5,8 @@ import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { refreshAsync } from "expo-auth-session";
+import { getItemAsync, setItemAsync } from "expo-secure-store";
 
 import {
   REFRESH_TOKEN_STORAGE_KEY as SPOTIFY_REFRESH_TOKEN_STORAGE_KEY,

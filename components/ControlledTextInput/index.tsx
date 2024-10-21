@@ -9,7 +9,7 @@ import { HelperText, TextInput, TextInputProps } from "react-native-paper";
 interface ControlledTextInputProps {
   control: Control;
   fieldName: string;
-  label: TextInputProps['label'];
+  label: TextInputProps["label"];
   clearable?: boolean;
   textInputProps?: Partial<TextInputProps>;
   controllerProps?: Partial<Exclude<ControllerProps, "control" | "render">>;

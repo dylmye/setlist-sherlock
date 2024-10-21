@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
+import { StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
 
 import SetlistSearchbar from "../SetlistSearchbar";
@@ -28,7 +28,10 @@ const SearchHeader = ({
       onSearch={onSearch}
       loading={loading}
     />
-    <Appbar.Action icon={hasAdvancedFilters ? "filter" : "filter-outline"} onPress={onPressFilter} />
+    <Appbar.Action
+      icon={hasAdvancedFilters ? "filter" : "filter-outline"}
+      onPress={onPressFilter}
+    />
   </View>
 );
 

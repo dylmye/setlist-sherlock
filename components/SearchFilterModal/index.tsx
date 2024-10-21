@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import {
   Dimensions,
   KeyboardAvoidingView,
@@ -12,7 +13,6 @@ import {
   Text,
   TextInputProps,
 } from "react-native-paper";
-import { useForm } from "react-hook-form";
 
 import { Get10SearchSetlistsApiArg } from "../../store/services/setlistFm";
 import ControlledTextInput from "../ControlledTextInput";
@@ -35,7 +35,6 @@ const SearchFilterModal = ({
   const {
     handleSubmit,
     control,
-    reset,
     formState: { errors },
   } = useForm<Partial<Get10SearchSetlistsApiArg>>({
     defaultValues: initialFilters,
@@ -112,8 +111,8 @@ const SearchFilterModal = ({
                   // regex: any number between 1000-2999 (TODO: add 3 before the year 3000)
                   pattern: {
                     value: /^(1|2)\d{3}/,
-                    message: "Please specify a valid year."
-                  }
+                    message: "Please specify a valid year.",
+                  },
                 },
               }}
             />

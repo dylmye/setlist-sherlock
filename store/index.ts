@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import {
@@ -9,19 +10,18 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { savedSlice } from "./saved/slice";
+import { appleMusicApi } from "./services/appleMusic";
 import { setlistFmApi } from "./services/setlistFm";
 import { spotifyApi } from "./services/spotify";
-import { appleMusicApi } from "./services/appleMusic";
-import { savedSlice } from "./saved/slice";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   version: 1,
   storage: AsyncStorage,
-  whitelist: ['saved'],
-}
+  whitelist: ["saved"],
+};
 
 const rootReducer = combineReducers({
   [setlistFmApi.reducerPath]: setlistFmApi.reducer,

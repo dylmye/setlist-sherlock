@@ -1,9 +1,8 @@
-import { SectionList, SectionListData, StyleSheet, View } from "react-native";
-import { Surface, Text } from "react-native-paper";
+import { SectionList, SectionListData } from "react-native";
 
-import { Set, Song } from "../../store/services/setlistFm";
-import SetlistSectionListItem from "./SetlistSectionListItem";
 import SetlistSectionHeader from "./SetlistSectionHeader";
+import SetlistSectionListItem from "./SetlistSectionListItem";
+import { Set, Song } from "../../store/services/setlistFm";
 
 interface SetlistSectionListProps {
   sets: Set[];
@@ -18,7 +17,7 @@ const SetlistSectionList = ({
   footer,
 }: SetlistSectionListProps) => {
   const sections: SectionListData<Song>[] = sets?.map((x, i) => ({
-    title: !!x.name ? x.name : x.encore === 1 ? "Encore" : "Setlist",
+    title: x.name ? x.name : x.encore === 1 ? "Encore" : "Setlist",
     data: x.song ?? [],
   }));
 

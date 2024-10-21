@@ -11,7 +11,7 @@ interface SetlistSectionListItemProps {
 /** Indivial item for setlist song item */
 const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
   const description = () => {
-    let d = [];
+    const d = [];
     if (song.with) {
       d.push(`with ${song.with.name}`);
     }

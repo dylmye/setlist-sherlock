@@ -8,7 +8,12 @@ interface SetlistSearchbarProps {
   redirectToSearchPage?: boolean;
   onSearch?: (search: string) => void;
   initialQuery?: string;
-  searchbarProps?: Partial<Exclude<SearchbarProps, 'style' | 'value' | 'onChangeText' | 'onSubmitEditing'>>;
+  searchbarProps?: Partial<
+    Exclude<
+      SearchbarProps,
+      "style" | "value" | "onChangeText" | "onSubmitEditing"
+    >
+  >;
   loading?: boolean;
 }
 
@@ -19,7 +24,7 @@ const SetlistSearchbar = ({
   onSearch,
   initialQuery = "",
   searchbarProps = {},
-  loading = false
+  loading = false,
 }: SetlistSearchbarProps) => {
   const [query, setQuery] = useState(initialQuery);
 

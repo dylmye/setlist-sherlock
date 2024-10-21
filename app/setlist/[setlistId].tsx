@@ -1,3 +1,9 @@
+import { isAfter, parse } from "date-fns";
+import { Image } from "expo-image";
+import * as Linking from "expo-linking";
+import { getNetworkStateAsync } from "expo-network";
+import { Link, router, Stack, useLocalSearchParams } from "expo-router";
+import { openBrowserAsync } from "expo-web-browser";
 import React, { useCallback, useEffect, useState } from "react";
 import { Share, StyleSheet, View } from "react-native";
 import {
@@ -9,24 +15,18 @@ import {
   Snackbar,
   Text,
 } from "react-native-paper";
-import { Link, router, Stack, useLocalSearchParams } from "expo-router";
-import * as Linking from "expo-linking";
-import { isAfter, parse } from "date-fns";
-import { getNetworkStateAsync } from "expo-network";
-import { Image } from "expo-image";
-import { openBrowserAsync } from "expo-web-browser";
 
-import { useGet10SetlistBySetlistIdQuery } from "../../store/services/setlistFm";
-import SetlistEmptyCard from "../../components/SetlistEmptyCard";
-import SetlistSectionList from "../../components/SetlistSectionList";
-import SetlistMetadataList from "../../components/SetlistMetadataList";
 import AddToPlaylistAppbarAction from "../../components/AddToPlaylistAppbarAction";
+import SetlistEmptyCard from "../../components/SetlistEmptyCard";
+import SetlistMetadataList from "../../components/SetlistMetadataList";
+import SetlistSectionList from "../../components/SetlistSectionList";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import {
   unsaveSetlistById,
   selectSetlistIsSaved,
   saveSetlist,
 } from "../../store/saved/slice";
+import { useGet10SetlistBySetlistIdQuery } from "../../store/services/setlistFm";
 
 /** View for setlist set, metadata, links */
 const SetlistDetails = () => {

@@ -1,13 +1,13 @@
-import React, { useMemo } from "react";
-import { FlatList, ListRenderItem, StyleProp, ViewStyle } from "react-native";
 import { format, parse } from "date-fns";
 import * as Linking from "expo-linking";
+import { router } from "expo-router";
+import React, { useMemo } from "react";
+import { FlatList, ListRenderItem, StyleProp, ViewStyle } from "react-native";
 import { Card, List } from "react-native-paper";
 
-import { Setlist } from "../../store/services/setlistFm";
 import SetlistMetadataItem from "./SetlistMetadataItem";
+import { Setlist } from "../../store/services/setlistFm";
 import { getMapsAddressFromVenue } from "../../utils/geo";
-import { router } from "expo-router";
 
 interface SetlistMetadataListProps
   extends Pick<Setlist, "artist" | "venue" | "eventDate" | "tour"> {

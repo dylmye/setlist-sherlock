@@ -13,7 +13,10 @@ interface PlaylistCreatingModalProps {
 }
 
 /** Loading state dialog for playlist creation */
-const PlaylistCreatingModal = ({ provider, visible }: PlaylistCreatingModalProps) => {
+const PlaylistCreatingModal = ({
+  provider,
+  visible,
+}: PlaylistCreatingModalProps) => {
   return (
     <Modal
       animationType="slide"

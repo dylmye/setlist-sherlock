@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
+import { format, parse } from "date-fns";
 import { router } from "expo-router";
+import { StyleSheet } from "react-native";
 import { List } from "react-native-paper";
 
 import { Setlist } from "../../store/services/setlistFm";
-import { format, parse } from "date-fns";
 
 type SetlistData = Pick<Setlist, "id" | "artist" | "venue"> &
   Partial<Pick<Setlist, "eventDate">>;
@@ -34,7 +34,7 @@ const SetlistListItem = ({
       title={artist?.name}
       titleStyle={style.title}
       description={`${
-        showDate ? `${formattedDate} ${!!venueText ? `\u2022` : ""} ` : ""
+        showDate ? `${formattedDate} ${venueText ? `\u2022` : ""} ` : ""
       }${venueText}`}
       right={(props) => <List.Icon {...props} icon="chevron-right" />}
       onPress={() => router.navigate(`/setlist/${id}`)}

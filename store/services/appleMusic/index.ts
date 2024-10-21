@@ -1,13 +1,19 @@
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  fetchBaseQuery,
+  createApi,
+} from "@reduxjs/toolkit/query/react";
 import { deleteItemAsync, getItemAsync } from "expo-secure-store";
+import { Platform } from "react-native";
 
+import { authorise, getUserStorefrontCode } from "../../../utils/appleMusic";
 import {
   USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY,
   DEV_TOKEN_STORAGE_KEY as APPLE_MUSIC_DEV_TOKEN_STORAGE_KEY,
   DEV_TOKEN_EXPIRY_STORAGE_KEY as APPLE_MUSIC_DEV_TOKEN_EXPIRY_STORAGE_KEY,
 } from "../../oauth-configs/appleMusic";
-import { Platform } from "react-native";
-import { authorise, getUserStorefrontCode } from "../../../utils/appleMusic";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://api.music.apple.com/v1/",
@@ -48,7 +54,7 @@ const baseQueryWithReauth: BaseQueryFn<
     result = await baseQuery(args, api, extraOptions);
   }
   return result;
-}
+};
 
 /**
  * @see https://developer.apple.com/documentation/applemusicapi
@@ -62,19 +68,25 @@ export const appleMusicApi = createApi({
         const regionCode = getUserStorefrontCode();
         return {
           url: `catalog/${regionCode}/search`,
-          params: typeof queryArg === "string" ? {
-            term: queryArg,
-            limit: 1,
-            types: "songs",
-          } : {
-            term: queryArg.term,
-            limit: queryArg?.limit ?? 1,
-            types: queryArg?.types ?? "songs"
-          }
-        }
-      }
+          params:
+            typeof queryArg === "string"
+              ? {
+                  term: queryArg,
+                  limit: 1,
+                  types: "songs",
+                }
+              : {
+                  term: queryArg.term,
+                  limit: queryArg?.limit ?? 1,
+                  types: queryArg?.types ?? "songs",
+                },
+        };
+      },
     }),
-    createNewLibraryPlaylist: build.mutation<LibraryPlaylistsResponse, LibraryPlaylistCreationArg>({
+    createNewLibraryPlaylist: build.mutation<
+      LibraryPlaylistsResponse,
+      LibraryPlaylistCreationArg
+    >({
       query: (queryArg) => ({
         url: "me/library/playlists",
         method: "POST",
@@ -83,17 +95,19 @@ export const appleMusicApi = createApi({
             name: queryArg.name,
             description: queryArg?.description ?? undefined,
           },
-          relationships: !!queryArg?.songIds?.length ? {
-            tracks: {
-              data: queryArg.songIds.map(s => ({
-                id: s,
-                type: "songs",
-              })),
-            }
-          } : undefined,
-        } as LibraryPlaylistCreationRequest
-      })
-    })
+          relationships: queryArg?.songIds?.length
+            ? {
+                tracks: {
+                  data: queryArg.songIds.map((s) => ({
+                    id: s,
+                    type: "songs",
+                  })),
+                },
+              }
+            : undefined,
+        } as LibraryPlaylistCreationRequest,
+      }),
+    }),
   }),
 });
 
@@ -109,7 +123,7 @@ export type SearchApiArg = {
   /** The list of the types of resources to include in the results. */
   types?: SearchRequestTypes[];
   /** A list of modifications to apply to the request. */
-  with?: ("topResults")[];
+  with?: "topResults"[];
 };
 
 export type SearchApiResponse = {
@@ -124,7 +138,7 @@ export type SearchApiResponse = {
     "record-labels"?: any;
     songs?: {
       /** The resources for the search result. */
-      data: ({
+      data: {
         /** The identifier for the song. */
         id: string;
         /** This value is always `songs`. */
@@ -135,7 +149,7 @@ export type SearchApiResponse = {
         attributes: SongsAttributesObject;
         /** (untyped) The relationships for the song. */
         relationships: any;
-      })[];
+      }[];
       /** The relative location to fetch the search result. */
       href: string;
       /** A relative cursor to fetch the next paginated collection of resources in the result, if more exist. */
@@ -144,13 +158,13 @@ export type SearchApiResponse = {
     stations?: any;
     top?: any;
   };
-}
+};
 
 export type LibraryPlaylistCreationArg = {
   name: string;
   description?: string;
   songIds?: string[];
-}
+};
 
 type LibraryPlaylistCreationRequest = {
   attributes: {
@@ -164,12 +178,16 @@ type LibraryPlaylistCreationRequest = {
     /** The songs and music videos the user adds to the playlist for the creation request. */
     tracks: {
       /** A dictionary that includes strings for the identifier and type of the new playlist. */
-      data: ({
+      data: {
         /** The unique identifier for the track. This ID can be a catalog identifier or a library identifier, depending on the track type. */
         id: string;
         /** The type of the track to be added. */
-        type: "library-music-videos" | "library-songs" | "music-videos" | "songs";
-      })[];
+        type:
+          | "library-music-videos"
+          | "library-songs"
+          | "music-videos"
+          | "songs";
+      }[];
     };
     /** (untyped) The library playlist folder which contains the created playlist. */
     parent?: any;
@@ -246,11 +264,24 @@ type SongsAttributesObject = {
   workName?: string;
 };
 
-type SearchRequestTypes = "activities" | "albums" | "apple-curators" | "artists" | "curators" | "music-videos" | "playlists" | "record-labels" | "songs" | "stations";
+type SearchRequestTypes =
+  | "activities"
+  | "albums"
+  | "apple-curators"
+  | "artists"
+  | "curators"
+  | "music-videos"
+  | "playlists"
+  | "record-labels"
+  | "songs"
+  | "stations";
 
-type AudioVariants = "dolby-atmos" | "dolby-audio" | "hi-res-lossless" | "lossless" | "lossy-stereo";
+type AudioVariants =
+  | "dolby-atmos"
+  | "dolby-audio"
+  | "hi-res-lossless"
+  | "lossless"
+  | "lossy-stereo";
 
-export const {
-  useCreateNewLibraryPlaylistMutation,
-  useSearchQuery,
-} = appleMusicApi;
+export const { useCreateNewLibraryPlaylistMutation, useSearchQuery } =
+  appleMusicApi;

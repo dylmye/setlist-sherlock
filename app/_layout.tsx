@@ -1,11 +1,12 @@
-import { useColorScheme } from "react-native";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import {
   ThemeProvider,
   DarkTheme as DarkNavTheme,
   DefaultTheme as LightNavTheme,
 } from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useColorScheme } from "react-native";
 import {
   PaperProvider,
   adaptNavigationTheme,
@@ -13,15 +14,12 @@ import {
   MD3LightTheme as LightPaperTheme,
   ActivityIndicator,
 } from "react-native-paper";
-import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import { Provider } from "react-redux";
-import {
-  persistStore,
-} from "redux-persist";
+import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { store } from "../store";
 import PaperNavigationBar from "../components/PaperNavigationBar";
+import { store } from "../store";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: LightNavTheme,
@@ -50,7 +48,7 @@ const AppLayout = () => {
             <Stack
               screenOptions={{
                 header: (props) => <PaperNavigationBar {...props} />,
-              }} 
+              }}
             />
           </PaperProvider>
         </ThemeProvider>

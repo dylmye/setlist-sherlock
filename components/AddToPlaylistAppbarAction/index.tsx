@@ -1,12 +1,15 @@
+import { getItem } from "expo-secure-store";
 import { useEffect, useMemo, useState } from "react";
 import { ToastAndroid } from "react-native";
-import { getItem } from "expo-secure-store";
 import { Appbar } from "react-native-paper";
 
-import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
+import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";
 import { Setlist } from "../../store/services/setlistFm";
-import { useGenerateAppleMusicPlaylistFromSongs, useGenerateSpotifyPlaylistFromSongs } from "../../utils/playlists";
+import {
+  useGenerateAppleMusicPlaylistFromSongs,
+  useGenerateSpotifyPlaylistFromSongs,
+} from "../../utils/playlists";
 import PlaylistCreatingModal from "../PlaylistCreatingModal";
 
 interface AddToPlaylistAppbarActionProps {
@@ -24,9 +27,9 @@ const AddToPlaylistAppbarAction = ({
   const hasAppleMusicSetup = !!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY);
   const [provider, setProvider] = useState<string | null>(null);
 
-  const createSpotifyPlaylist =
-    useGenerateSpotifyPlaylistFromSongs(setlist);
-  const createAppleMusicPlaylist = useGenerateAppleMusicPlaylistFromSongs(setlist);
+  const createSpotifyPlaylist = useGenerateSpotifyPlaylistFromSongs(setlist);
+  const createAppleMusicPlaylist =
+    useGenerateAppleMusicPlaylistFromSongs(setlist);
 
   const showButton = useMemo(
     () => show && (hasSpotifySetup || hasAppleMusicSetup),
@@ -35,7 +38,8 @@ const AddToPlaylistAppbarAction = ({
 
   const onPressExport = async () => {
     setLoading(true);
-    const action: () => Promise<boolean> = provider === "spotify" ? createSpotifyPlaylist : createAppleMusicPlaylist;
+    const action: () => Promise<boolean> =
+      provider === "spotify" ? createSpotifyPlaylist : createAppleMusicPlaylist;
     const success = await action();
     ToastAndroid.show(
       success
@@ -56,7 +60,6 @@ const AddToPlaylistAppbarAction = ({
     }
     if (hasAppleMusicSetup) {
       setProvider("apple-music");
-      return;
     }
   }, []);
 

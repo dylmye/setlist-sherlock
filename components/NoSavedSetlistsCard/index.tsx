@@ -1,4 +1,4 @@
-import { StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 
 /** Message to display when no setlist data has been detected */
@@ -12,7 +12,8 @@ const NoSavedSetlistsCard = () => (
     />
     <Card.Content>
       <Text variant="bodyMedium">
-        Search for your favourite setlists, then add them by clicking on the {`\u2b50`} button.
+        Search for your favourite setlists, then add them by clicking on the{" "}
+        {`\u2b50`} button.
       </Text>
     </Card.Content>
   </Card>

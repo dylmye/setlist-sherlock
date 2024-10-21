@@ -1,4 +1,12 @@
+import { openURL } from "expo-linking";
+import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { useCallback } from "react";
+
+import { SPOTIFY_USERNAME_STORAGE_KEY } from "../store/oauth-configs/spotify";
+import {
+  appleMusicApi,
+  useCreateNewLibraryPlaylistMutation,
+} from "../store/services/appleMusic";
 import { Set, Setlist } from "../store/services/setlistFm";
 import {
   spotifyApi,
@@ -6,10 +14,6 @@ import {
   usePostUsersByUserIdPlaylistsMutation,
   usePutPlaylistsByPlaylistIdFollowersMutation,
 } from "../store/services/spotify";
-import { getItemAsync, setItemAsync } from "expo-secure-store";
-import { SPOTIFY_USERNAME_STORAGE_KEY } from "../store/oauth-configs/spotify";
-import { appleMusicApi, useCreateNewLibraryPlaylistMutation } from "../store/services/appleMusic";
-import { openURL } from "expo-linking";
 
 interface SongNameItem {
   artist: string;
@@ -52,7 +56,8 @@ export const useGenerateSpotifyPlaylistFromSongs = (
   const [addTracksToPlaylistTrigger] =
     usePostPlaylistsByPlaylistIdTracksMutation();
   const [spotifyMeTrigger] = spotifyApi.useLazyGetMeQuery();
-  const [followPlaylistTrigger] = usePutPlaylistsByPlaylistIdFollowersMutation();
+  const [followPlaylistTrigger] =
+    usePutPlaylistsByPlaylistIdFollowersMutation();
 
   return useCallback(async () => {
     const getTrackIds = async (): Promise<string[]> => {
@@ -149,7 +154,7 @@ export const useGenerateSpotifyPlaylistFromSongs = (
           playlistId,
           body: {
             public: true,
-          }
+          },
         });
         return true;
       } catch (e) {
@@ -185,7 +190,8 @@ export const useGenerateAppleMusicPlaylistFromSongs = (
   setlist: Setlist,
 ): (() => Promise<boolean>) => {
   const [appleMusicSearchTrigger] = appleMusicApi.useLazySearchQuery();
-  const [addCreatePlaylistWithTracksTrigger] = useCreateNewLibraryPlaylistMutation();
+  const [addCreatePlaylistWithTracksTrigger] =
+    useCreateNewLibraryPlaylistMutation();
 
   return useCallback(async () => {
     const getTrackIds = async (): Promise<string[]> => {
@@ -217,7 +223,9 @@ export const useGenerateAppleMusicPlaylistFromSongs = (
       }
       return trackIds;
     };
-    const createPlaylistWithTrackIds = async (trackIds: string[]): Promise<string|null> => {
+    const createPlaylistWithTrackIds = async (
+      trackIds: string[],
+    ): Promise<string | null> => {
       try {
         const res = await addCreatePlaylistWithTracksTrigger({
           name: `${setlist.artist?.name} live at ${setlist.venue?.name}`,
