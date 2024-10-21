@@ -50,7 +50,7 @@ const AppLayout = () => {
             <Stack
               screenOptions={{
                 header: (props) => <PaperNavigationBar {...props} />,
-              }}
+              }} 
             />
           </PaperProvider>
         </ThemeProvider>

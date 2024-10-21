@@ -1,4 +1,4 @@
-import { Href } from "expo-router/build/link/href";
+import { Href } from "expo-router";
 
 type SetlistMetadataItem = {
     /** flatlist reference */
