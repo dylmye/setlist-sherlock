@@ -1,3 +1,4 @@
+import { t } from "@lingui/macro";
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
@@ -37,14 +38,14 @@ const HeaderActionButtons = ({ visible }: HeaderActionButtonsProps) => {
       >
         <Appbar.Action
           icon="star"
-          accessibilityLabel="View saved setlists"
+          accessibilityLabel={t`View saved setlists`}
           onPress={() => {
             router.navigate("/saved");
           }}
         />
         <Appbar.Action
           icon="cog"
-          accessibilityLabel="Open Settings Menu"
+          accessibilityLabel={t`Open Settings Menu`}
           onPress={() => {
             router.navigate("/settings");
           }}

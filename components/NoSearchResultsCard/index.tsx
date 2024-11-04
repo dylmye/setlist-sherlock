@@ -1,3 +1,4 @@
+import { t, Trans } from "@lingui/macro";
 import { StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 
@@ -5,19 +6,23 @@ import { Card, Text } from "react-native-paper";
 const NoSearchResultsCard = () => (
   <Card style={styles.container} mode="contained">
     <Card.Title
-      title="Couldn't find any setlists for your search."
+      title={t`Couldn't find any setlists for your search.`}
       titleVariant="titleMedium"
       titleStyle={styles.title}
       titleNumberOfLines={0}
     />
     <Card.Content>
       <Text variant="bodyMedium">
-        There may be a spelling mistake in your search, or nobody has added the
-        setlist you're looking for to Setlist.fm yet.
+        <Trans>
+          There may be a spelling mistake in your search, or nobody has added
+          the setlist you're looking for to Setlist.fm yet.
+        </Trans>
       </Text>
       <Text variant="bodyMedium">
-        Remember to only enter the artist's name in the search box (and use the
-        filters for location and date.)
+        <Trans>
+          Remember to only enter the artist's name in the search box (and use
+          the filters for location and date.)
+        </Trans>
       </Text>
     </Card.Content>
   </Card>

@@ -3,6 +3,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Divider } from "react-native-paper";
 import { Edge, SafeAreaView } from "react-native-safe-area-context";
+import { useLingui } from "@lingui/react";
+import { t } from "@lingui/macro";
 
 import NoSearchResultsCard from "../../components/NoSearchResultsCard";
 import SearchFilterModal from "../../components/SearchFilterModal";
@@ -16,6 +18,7 @@ import {
 
 /** Search results for setlists from user input */
 const Search = () => {
+  const { i18n } = useLingui();
   const params = useLocalSearchParams<{ query?: string; tourName?: string }>();
   const [trigger, result] = setlistFmApi.useLazyGet10SearchSetlistsQuery();
 
@@ -68,7 +71,7 @@ const Search = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={safeAreaEdges}>
-      <Stack.Screen options={{ title: "Search Results", headerShown: false }} />
+      <Stack.Screen options={{ title: t(i18n)`Search Results`, headerShown: false }} />
       {/* TODO: add empty results message */}
       {/* TODO: add bottom padding for gesture displays */}
       <FlatList<Setlist>

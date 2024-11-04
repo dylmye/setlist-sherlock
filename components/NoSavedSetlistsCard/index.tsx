@@ -1,3 +1,4 @@
+import { t, Trans } from "@lingui/macro";
 import { StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 
@@ -5,15 +6,17 @@ import { Card, Text } from "react-native-paper";
 const NoSavedSetlistsCard = () => (
   <Card style={styles.container} mode="contained">
     <Card.Title
-      title="You haven't saved any setlists yet."
+      title={t`You haven't saved any setlists yet.`}
       titleVariant="titleMedium"
       titleStyle={styles.title}
       titleNumberOfLines={0}
     />
     <Card.Content>
       <Text variant="bodyMedium">
-        Search for your favourite setlists, then add them by clicking on the{" "}
-        {`\u2b50`} button.
+        <Trans>
+          Search for your favourite setlists, then add them by clicking on the{" "}
+          {`\u2b50`} button.
+        </Trans>
       </Text>
     </Card.Content>
   </Card>

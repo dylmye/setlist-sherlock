@@ -3,6 +3,9 @@
   <h1>Setlist Sherlock</h1>
   <a href='https://play.google.com/store/apps/details?id=com.dylmye.setlists&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' style="width: 10rem" /></a>
 </div>
+<div align="center">
+  <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fdylmye%2Fsetlist-sherlock?ref=badge_shield&issueType=license"><img alt="FOSSA License Scan Result" src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdylmye%2Fsetlist-sherlock.svg?type=shield&issueType=license" /></a>
+</div>
 
 Find and read concert setlists with ease. Powered by Setlists.fm.
 

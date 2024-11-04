@@ -15,6 +15,8 @@ import { coolDownAsync, warmUpAsync } from "expo-web-browser";
 import { useEffect, useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
+import { useLingui } from "@lingui/react";
+import { t, Trans } from "@lingui/macro";
 
 import {
   discovery as spotifyDiscovery,
@@ -25,6 +27,7 @@ import {
 } from "../../store/oauth-configs/spotify";
 
 const SpotifySettingsPage = () => {
+  const { i18n } = useLingui();
   const theme = useTheme();
 
   const [hasSetUp, setSetupState] = useState(
@@ -54,7 +57,10 @@ const SpotifySettingsPage = () => {
 
   const onPressConnect = () => {
     setLoading(true);
-    ToastAndroid.show("Log in with Spotify to continue.", ToastAndroid.SHORT);
+    ToastAndroid.show(
+      t(i18n)`Log in with Spotify to continue.`,
+      ToastAndroid.SHORT,
+    );
     promptAsync();
   };
 
@@ -69,7 +75,7 @@ const SpotifySettingsPage = () => {
     setLoading(false);
     setSetupState(false);
     ToastAndroid.show(
-      "Successfully disconnected from Spotify.",
+      t(i18n)`Successfully disconnected from Spotify.`,
       ToastAndroid.SHORT,
     );
   };
@@ -122,7 +128,7 @@ const SpotifySettingsPage = () => {
         () => {
           setLoading(false);
           ToastAndroid.show(
-            "Successfully connected Spotify.",
+            t(i18n)`Successfully connected to Spotify.`,
             ToastAndroid.SHORT,
           );
         },
@@ -131,7 +137,7 @@ const SpotifySettingsPage = () => {
 
     if (response?.type === "cancel" || response?.type === "dismiss") {
       ToastAndroid.show(
-        "Spotify log in cancelled, please try again.",
+        t(i18n)`Spotify log in cancelled, please try again.`,
         ToastAndroid.SHORT,
       );
       setLoading(false);
@@ -147,9 +153,16 @@ const SpotifySettingsPage = () => {
       <Stack.Screen options={{ title: "Spotify" }} />
       <View style={[styles.container, styles.centredContainer]}>
         <Text style={styles.copy} variant="bodyMedium">
-          {hasSetUp
-            ? "You've connected your Spotify. Now you can press the share button on any setlist to get your playlist!"
-            : "Connect your Spotify account to save setlists as playlists."}
+          {hasSetUp ? (
+            <Trans>
+              You've connected your Spotify. Now you can press the share button
+              on any setlist to get your playlist!
+            </Trans>
+          ) : (
+            <Trans>
+              Connect your Spotify account to save setlists as playlists.
+            </Trans>
+          )}
         </Text>
         {hasSetUp ? (
           <Button
@@ -166,7 +179,7 @@ const SpotifySettingsPage = () => {
             disabled={loading}
             onPress={onPressConnect}
           >
-            {loading ? "Connecting..." : "Connect with Spotify"}
+            {loading ? t(i18n)`Connecting...` : t(i18n)`Connect with Spotify`}
           </Button>
         )}
       </View>

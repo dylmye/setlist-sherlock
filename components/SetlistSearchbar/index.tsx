@@ -1,3 +1,4 @@
+import { t } from "@lingui/macro";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { StyleProp, ViewStyle } from "react-native";
@@ -38,7 +39,7 @@ const SetlistSearchbar = ({
 
   return (
     <Searchbar
-      placeholder="Search artists"
+      placeholder={t`Search artists`}
       style={style}
       value={query}
       onChangeText={setQuery}

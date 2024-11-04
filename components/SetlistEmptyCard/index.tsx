@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro";
 import { StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { Card, Text } from "react-native-paper";
 
@@ -16,8 +17,10 @@ const SetlistEmptyCard = ({ style }: SetlistEmptyCardProps) => (
     />
     <Card.Content>
       <Text variant="bodyMedium">
-        Check back later or add it yourself by clicking the pencil button
-        (Setlist.fm account required.)
+        <Trans>
+          Check back later or add it yourself by clicking the pencil button
+          (Setlist.fm account required.)
+        </Trans>
       </Text>
     </Card.Content>
   </Card>
