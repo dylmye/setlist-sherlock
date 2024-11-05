@@ -53,9 +53,9 @@ const AppLayout = () => {
   }, [i18n, setApiLanguage]);
 
   return (
-    <I18nProvider i18n={i18n}>
-      <Provider store={store}>
-        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+    <Provider store={store}>
+      <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <I18nProvider i18n={i18n}>
           <ThemeProvider
             value={systemTheme === "dark" ? DarkTheme : LightTheme}
           >
@@ -69,9 +69,9 @@ const AppLayout = () => {
               />
             </PaperProvider>
           </ThemeProvider>
-        </PersistGate>
-      </Provider>
-    </I18nProvider>
+        </I18nProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 
