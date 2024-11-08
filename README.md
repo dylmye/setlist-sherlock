@@ -1,14 +1,11 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/dylmye/setlist-sherlock/main/assets/icon-marketing-512.png" style="width: 4rem; height: auto; border-radius: 1000px">
   <h1>Setlist Sherlock</h1>
-  <div>
-    <a href="https://play.google.com/store/apps/details?id=com.dylmye.setlists&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' style="width: 10rem; vertical-align: middle; object-fit: contain;" /></a>
-    <a href="https://apps.apple.com/gb/app/setlist-sherlock/id6477339282?itscg=30200&itsct=apps_box_badge&mttnsubad=6477339282" style="display: inline-block;"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/en-us?releaseDate=1727827200" alt="Get it on the App Store" style="width: 9rem; vertical-align: middle; object-fit: contain;" /></a>
-    <hr />
-  </div>
 </div>
 <div align="center">
   <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fdylmye%2Fsetlist-sherlock?ref=badge_shield&issueType=license"><img alt="FOSSA License Scan Result" src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdylmye%2Fsetlist-sherlock.svg?type=shield&issueType=license" /></a>
+  <a href="https://apps.apple.com/gb/app/setlist-sherlock/id6477339282?itscg=30200&itsct=apps_box_badge&mttnsubad=6477339282"><img alt="App Store" src="https://img.shields.io/itunes/v/6477339282?style=flat&logo=apple&logoColor=%23000000&label=App%20Store&labelColor=%23f9f9f9&color=%23ffffff"></a>
+  <a href="https://play.google.com/store/apps/details?id=com.dylmye.setlists&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img src="https://img.shields.io/badge/Google_Play-0F9D58?style=flat&logo=google-play&logoColor=white"></a>
 </div>
 
 <br />
