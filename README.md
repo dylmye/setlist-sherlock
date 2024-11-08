@@ -78,11 +78,19 @@ Instructions for creating a production build locally [are available here](https:
 
 This app wouldn't be possible without:
 
-<div style="width: 15rem">
+<table style="width: 15rem">
+  <tr>
+    <td>
+    <a href="https://lokalise.com" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <img src="readme_assets/lokalise.png" alt="Lokalise logo">
+      <strong>Lokalise</strong>
+      <p>Translations Provider</p>
+    </td>
+  </tr>
 
 | <!-- -->                                        | 
 | ----------------------------------------------- |
-| <strong>![](readme_assets/lokalise.png) <br /> [Lokalise](https://lokalise.com/)</strong> |
+| <strong>![]() <br /> [Lokalise](https://lokalise.com/)</strong> |
 
 </div>
 
