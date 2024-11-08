@@ -87,10 +87,7 @@ This app wouldn't be possible without:
       <p>Translations Provider</p>
     </td>
   </tr>
-
-| <!-- -->                                        | 
-| ----------------------------------------------- |
-| <strong>![]() <br /> [Lokalise](https://lokalise.com/)</strong> |
+</table>
 
 </div>
 
