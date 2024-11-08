@@ -82,7 +82,7 @@ This app wouldn't be possible without:
   <tr>
     <td>
     <a href="https://lokalise.com" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-      <img src="readme_assets/lokalise.png" alt="Lokalise logo">
+      <img src="readme_assets/lokalise.png" alt="Lokalise logo" style="width: 10rem">
       <strong>Lokalise</strong>
       <p>Translations Provider</p>
     </td>
