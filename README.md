@@ -80,11 +80,14 @@ This app wouldn't be possible without:
 
 <table style="width: 15rem">
   <tr>
-    <td>
-    <a href="https://lokalise.com" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-      <img src="readme_assets/lokalise.png" alt="Lokalise logo" style="width: 10rem">
-      <strong>Lokalise</strong>
-      <p>Translations Provider</p>
+    <td style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <a href="https://lokalise.com">
+        <img src="readme_assets/lokalise.png" alt="Lokalise logo" style="width: 10rem">
+      </a>
+      <p style="display: flex; flex-direction: column;text-align: center">
+        <a href="https://lokalise.com"><strong>Lokalise</strong></a>
+        <span>Translations Provider</span>
+      </p>
     </td>
   </tr>
 </table>
