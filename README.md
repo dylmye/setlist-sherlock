@@ -78,9 +78,9 @@ Instructions for creating a production build locally [are available here](https:
 
 This app wouldn't be possible without:
 
-| <!-- -->                                        | <!-- --> |
-| ----------------------------------------------- | -------- |
-| <strong>![](readme_assets/lokalise.png) <br /> [Lokalise](https://lokalise.com/)</strong> | <!-- --> |
+| <!-- -->                                        | 
+| ----------------------------------------------- |
+| <strong>![](readme_assets/lokalise.png) <br /> [Lokalise](https://lokalise.com/)</strong> |
 
 ## Disclaimer
 
