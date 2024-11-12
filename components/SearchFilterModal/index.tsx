@@ -70,7 +70,9 @@ const SearchFilterModal = ({
             elevation={5}
           >
             <View style={styles.titleBar}>
-              <Text variant="titleMedium">More Filters</Text>
+              <Text variant="titleMedium">
+                <Trans>More Filters</Trans>
+              </Text>
               <IconButton
                 icon="close"
                 size={18}

@@ -170,7 +170,9 @@ const SpotifySettingsPage = () => {
             buttonColor={theme.colors.error}
             onPress={onPressDisconnect}
           >
-            Disconnect Spotify
+            <Trans>
+              Disconnect Spotify
+            </Trans>
           </Button>
         ) : (
           <Button
