@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   searchInput: {
-    // marginBottom: 16,
     flex: 1,
   },
 });

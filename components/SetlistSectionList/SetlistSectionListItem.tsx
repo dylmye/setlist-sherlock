@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { List } from "react-native-paper";
 
 import { Song } from "../../store/services/setlistFm";
+import { t } from "@lingui/macro";
 
 interface SetlistSectionListItemProps {
   song: Song;
@@ -13,13 +14,19 @@ const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
   const description = () => {
     const d = [];
     if (song.with) {
-      d.push(`with ${song.with.name}`);
+      d.push(
+        t({
+          comment:
+            'Text displayed under a song with a featured guest. E.g. "with The Beatles"',
+          message: `with ${song.with.name}`,
+        }),
+      );
     }
     if (song.cover) {
-      d.push(`${song.cover.name} cover`);
+      d.push(t`${song.cover.name} cover`);
     }
     if (song.tape) {
-      d.push("Pre-recorded");
+      d.push(t`Pre-recorded`);
     }
     if (song.info) {
       d.push(`${song.info}`);

@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { FlatList, View } from "react-native";
+import { t } from "@lingui/macro";
 
 import NoSavedSetlistsCard from "../../components/NoSavedSetlistsCard";
 import SetlistListItem from "../../components/SetlistListItem";
@@ -11,7 +12,7 @@ const SavedSetlists = () => {
   const setlists = useAppSelector(selectSavedSetlists);
   return (
     <View>
-      <Stack.Screen options={{ title: "Saved setlists" }} />
+      <Stack.Screen options={{ title: t`Saved setlists` }} />
       <FlatList
         data={setlists}
         renderItem={({ item }) => <SetlistListItem {...item} showDate />}

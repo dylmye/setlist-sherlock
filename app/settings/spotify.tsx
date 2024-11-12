@@ -15,6 +15,7 @@ import { coolDownAsync, warmUpAsync } from "expo-web-browser";
 import { useEffect, useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
+import { t, Trans } from "@lingui/macro";
 
 import {
   discovery as spotifyDiscovery,
@@ -54,7 +55,10 @@ const SpotifySettingsPage = () => {
 
   const onPressConnect = () => {
     setLoading(true);
-    ToastAndroid.show("Log in with Spotify to continue.", ToastAndroid.SHORT);
+    ToastAndroid.show(
+      t`Log in with Spotify to continue.`,
+      ToastAndroid.SHORT,
+    );
     promptAsync();
   };
 
@@ -69,7 +73,7 @@ const SpotifySettingsPage = () => {
     setLoading(false);
     setSetupState(false);
     ToastAndroid.show(
-      "Successfully disconnected from Spotify.",
+      t`Successfully disconnected from Spotify.`,
       ToastAndroid.SHORT,
     );
   };
@@ -122,7 +126,7 @@ const SpotifySettingsPage = () => {
         () => {
           setLoading(false);
           ToastAndroid.show(
-            "Successfully connected Spotify.",
+            t`Successfully connected to Spotify.`,
             ToastAndroid.SHORT,
           );
         },
@@ -131,7 +135,7 @@ const SpotifySettingsPage = () => {
 
     if (response?.type === "cancel" || response?.type === "dismiss") {
       ToastAndroid.show(
-        "Spotify log in cancelled, please try again.",
+        t`Spotify log in cancelled, please try again.`,
         ToastAndroid.SHORT,
       );
       setLoading(false);
@@ -147,9 +151,16 @@ const SpotifySettingsPage = () => {
       <Stack.Screen options={{ title: "Spotify" }} />
       <View style={[styles.container, styles.centredContainer]}>
         <Text style={styles.copy} variant="bodyMedium">
-          {hasSetUp
-            ? "You've connected your Spotify. Now you can press the share button on any setlist to get your playlist!"
-            : "Connect your Spotify account to save setlists as playlists."}
+          {hasSetUp ? (
+            <Trans>
+              You've connected your Spotify. Now you can press the share button
+              on any setlist to get your playlist!
+            </Trans>
+          ) : (
+            <Trans>
+              Connect your Spotify account to save setlists as playlists.
+            </Trans>
+          )}
         </Text>
         {hasSetUp ? (
           <Button
@@ -157,7 +168,9 @@ const SpotifySettingsPage = () => {
             buttonColor={theme.colors.error}
             onPress={onPressDisconnect}
           >
-            Disconnect Spotify
+            <Trans>
+              Disconnect Spotify
+            </Trans>
           </Button>
         ) : (
           <Button
@@ -166,7 +179,7 @@ const SpotifySettingsPage = () => {
             disabled={loading}
             onPress={onPressConnect}
           >
-            {loading ? "Connecting..." : "Connect with Spotify"}
+            {loading ? t`Connecting...` : t`Connect with Spotify`}
           </Button>
         )}
       </View>

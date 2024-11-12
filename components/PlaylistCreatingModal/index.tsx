@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro";
 import { Modal, StyleSheet, View } from "react-native";
 import {
   ActivityIndicator,
@@ -34,10 +35,10 @@ const PlaylistCreatingModal = ({
             color={provider === "spotify" ? MD2Colors.green300 : undefined}
           />
           <Text variant="bodyMedium" style={styles.text}>
-            Adding to {provider}...
+            <Trans>Adding to {provider}...</Trans>
           </Text>
           <Text variant="bodySmall" style={styles.text}>
-            This will take up to a minute, please be patient
+            <Trans>This will take up to a minute, please be patient</Trans>
           </Text>
         </Surface>
       </View>

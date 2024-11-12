@@ -2,6 +2,7 @@ import { getItem } from "expo-secure-store";
 import { useEffect, useMemo, useState } from "react";
 import { ToastAndroid } from "react-native";
 import { Appbar } from "react-native-paper";
+import { t } from "@lingui/macro";
 
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
 import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";
@@ -43,8 +44,8 @@ const AddToPlaylistAppbarAction = ({
     const success = await action();
     ToastAndroid.show(
       success
-        ? "Your playlist has been created!"
-        : `Unable to create ${provider} playlist. Please try again.`,
+        ? t`Your playlist has been created!`
+        : t`Unable to create ${provider} playlist. Please try again.`,
       ToastAndroid.SHORT,
     );
     setLoading(false);
@@ -72,7 +73,7 @@ const AddToPlaylistAppbarAction = ({
       <Appbar.Action
         icon="playlist-plus"
         onPress={onPressExport}
-        accessibilityLabel="Add this setlist to your Spotify"
+        accessibilityLabel={t`Add this setlist to your Spotify`}
       />
       <PlaylistCreatingModal
         provider={provider ?? "apple-music"}

@@ -1,0 +1,300 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-11-05 22:15+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: it_IT\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: components/SetlistSectionList/SetlistSectionListItem.tsx:26
+msgid "{0} cover"
+msgstr ""
+
+#. e.g. The Beatles setlist
+#: app/setlist/[setlistId].tsx:199
+msgid "{0} setlist"
+msgstr ""
+
+#: app/artist/[mbId].tsx:27
+msgid "{0}'s latest setlists"
+msgstr ""
+
+#: components/AddToPlaylistAppbarAction/index.tsx:76
+msgid "Add this setlist to your Spotify"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:267
+msgid "Added to your saved setlists"
+msgstr ""
+
+#: components/PlaylistCreatingModal/index.tsx:38
+msgid "Adding to {provider}..."
+msgstr ""
+
+#: components/SearchFilterModal/index.tsx:132
+msgid "Apply"
+msgstr ""
+
+#: components/SetlistMetadataList/index.tsx:43
+msgid "Artist"
+msgstr ""
+
+#: app/settings/appleMusic.tsx:32
+msgid "Authorisation failed:"
+msgstr ""
+
+#: components/SetlistEmptyCard/index.tsx:20
+msgid "Check back later or add it yourself by clicking the pencil button (Setlist.fm account required.)"
+msgstr ""
+
+#: components/SearchFilterModal/index.tsx:85
+msgid "City"
+msgstr ""
+
+#: app/settings/appleMusic.tsx:88
+msgid "Connect with Apple Music"
+msgstr ""
+
+#: app/settings/spotify.tsx:182
+msgid "Connect with Spotify"
+msgstr ""
+
+#: app/settings/appleMusic.tsx:68
+msgid "Connect your Apple Music account to save setlists as playlists."
+msgstr ""
+
+#: app/settings/spotify.tsx:160
+msgid "Connect your Spotify account to save setlists as playlists."
+msgstr ""
+
+#: app/settings/index.tsx:38
+#: app/settings/index.tsx:43
+msgid "Connected"
+msgstr ""
+
+#: app/settings/spotify.tsx:182
+msgid "Connecting..."
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:248
+msgid "Copy the contents of this setlist to your clipboard"
+msgstr ""
+
+#: components/NoSearchResultsCard/index.tsx:9
+msgid "Couldn't find any setlists for your search."
+msgstr ""
+
+#: components/SetlistMetadataList/index.tsx:37
+msgid "Date"
+msgstr ""
+
+#: app/settings/appleMusic.tsx:79
+msgid "Disconnect Apple Music"
+msgstr ""
+
+#: app/settings/spotify.tsx:171
+msgid "Disconnect Spotify"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:118
+msgid "Find photos and videos from this gig"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:135
+msgid "Find tickets for this gig"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:136
+msgid "Find upcoming {0} tour dates"
+msgstr ""
+
+#: app/index.tsx:38
+#: components/HomepageHeader/index.tsx:23
+msgid "For You"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:119
+msgid "From Concert Archives"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:78
+msgid "Here's what {0} played at {1}: {2}"
+msgstr ""
+
+#: app/index.tsx:54
+msgid "Homepage"
+msgstr ""
+
+#: app/index.tsx:45
+msgid "Latest"
+msgstr ""
+
+#: components/SetlistMetadataList/index.tsx:71
+msgid "Location"
+msgstr ""
+
+#: app/settings/appleMusic.tsx:26
+msgid "Log in with Apple to continue."
+msgstr ""
+
+#: app/settings/spotify.tsx:59
+msgid "Log in with Spotify to continue."
+msgstr ""
+
+#: components/SearchFilterModal/index.tsx:74
+msgid "More Filters"
+msgstr ""
+
+#: components/SetlistEmptyCard/index.tsx:13
+msgid "Nobody's added a setlist for this concert yet."
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:138
+msgid "On Songkick"
+msgstr ""
+
+#: components/HomepageHeader/actionButtons.tsx:48
+msgid "Open Settings Menu"
+msgstr ""
+
+#: components/SearchFilterModal/index.tsx:117
+msgid "Please specify a valid year."
+msgstr ""
+
+#: components/SetlistSectionList/SetlistSectionListItem.tsx:29
+msgid "Pre-recorded"
+msgstr ""
+
+#: components/NoSearchResultsCard/index.tsx:22
+msgid "Remember to only enter the artist's name in the search box (and use the filters for location and date.)"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:268
+msgid "Removed from your saved setlists"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:212
+msgid "Save this setlist to your saved list"
+msgstr ""
+
+#: app/saved/index.tsx:15
+msgid "Saved setlists"
+msgstr ""
+
+#: components/SetlistSearchbar/index.tsx:42
+msgid "Search artists"
+msgstr ""
+
+#: components/NoSavedSetlistsCard/index.tsx:16
+msgid "Search for your favourite setlists, then add them by clicking on the ⭐ button."
+msgstr ""
+
+#: app/search/index.tsx:72
+msgid "Search Results"
+msgstr ""
+
+#: app/settings/index.tsx:38
+#: app/settings/index.tsx:43
+msgid "Set up"
+msgstr ""
+
+#: app/settings/index.tsx:57
+msgid "Settings"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:223
+msgid "Share the link to this setlist"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:82
+msgid "Share this setlist"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:104
+msgid "Source: {0} setlist on setlist.fm"
+msgstr ""
+
+#: app/settings/spotify.tsx:138
+msgid "Spotify log in cancelled, please try again."
+msgstr ""
+
+#: app/settings/spotify.tsx:129
+msgid "Successfully connected to Spotify."
+msgstr ""
+
+#: app/settings/appleMusic.tsx:47
+msgid "Successfully disconnected from Apple Music."
+msgstr ""
+
+#: app/settings/spotify.tsx:76
+msgid "Successfully disconnected from Spotify."
+msgstr ""
+
+#: components/NoSearchResultsCard/index.tsx:16
+msgid "There may be a spelling mistake in your search, or nobody has added the setlist you're looking for to Setlist.fm yet."
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:211
+msgid "This setlist is in your saved list"
+msgstr ""
+
+#: components/PlaylistCreatingModal/index.tsx:41
+msgid "This will take up to a minute, please be patient"
+msgstr ""
+
+#: components/SetlistMetadataList/index.tsx:54
+msgid "Tour"
+msgstr ""
+
+#: components/SearchFilterModal/index.tsx:92
+msgid "Tour Name"
+msgstr ""
+
+#: components/AddToPlaylistAppbarAction/index.tsx:48
+msgid "Unable to create {provider} playlist. Please try again."
+msgstr ""
+
+#: components/SearchFilterModal/index.tsx:99
+#: components/SetlistMetadataList/index.tsx:65
+msgid "Venue"
+msgstr ""
+
+#: app/setlist/[setlistId].tsx:258
+msgid "View"
+msgstr ""
+
+#: components/HomepageHeader/actionButtons.tsx:41
+msgid "View saved setlists"
+msgstr ""
+
+#. Text displayed under a song with a featured guest. E.g. "with The Beatles"
+#: components/SetlistSectionList/SetlistSectionListItem.tsx:18
+msgid "with {0}"
+msgstr ""
+
+#: components/SearchFilterModal/index.tsx:106
+msgid "Year"
+msgstr ""
+
+#: components/NoSavedSetlistsCard/index.tsx:9
+msgid "You haven't saved any setlists yet."
+msgstr ""
+
+#: app/settings/appleMusic.tsx:63
+msgid "You've connected your Apple Music account. Now you can press the share button on any setlist to get your playlist!"
+msgstr ""
+
+#: app/settings/spotify.tsx:155
+msgid "You've connected your Spotify. Now you can press the share button on any setlist to get your playlist!"
+msgstr ""
+
+#: components/AddToPlaylistAppbarAction/index.tsx:47
+msgid "Your playlist has been created!"
+msgstr ""

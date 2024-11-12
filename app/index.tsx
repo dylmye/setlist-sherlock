@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { StyleSheet, SectionList, SectionBase } from "react-native";
 import { Divider, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { t } from "@lingui/macro";
 
 import HomepageHeader from "../components/HomepageHeader";
 import SetlistListItem from "../components/SetlistListItem";
@@ -34,14 +35,14 @@ const Home = () => {
   const sections: HomepageSection[] = [
     {
       index: 0,
-      title: "For You",
+      title: t`For You`,
       key: "for-you",
       data: forYouSetlists ?? [],
       loading: true,
     },
     {
       index: 1,
-      title: "Latest",
+      title: t`Latest`,
       key: "latest",
       data: latestSetlists?.setlist ?? [],
       loading: isFetchingSetlists,
@@ -50,7 +51,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <Stack.Screen options={{ title: "Homepage", headerShown: false }} />
+      <Stack.Screen options={{ title: t`Homepage`, headerShown: false }} />
       <SectionList<Setlist, HomepageSection>
         sections={sections}
         renderSectionHeader={({ section }) =>

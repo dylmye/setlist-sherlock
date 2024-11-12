@@ -3,6 +3,7 @@ import { Text } from "react-native-paper";
 
 import SetlistSearchbar from "../SetlistSearchbar";
 import HeaderActionButtons from "./actionButtons";
+import { Trans } from "@lingui/macro";
 
 interface Props {
   showForYouHeader: boolean;
@@ -19,7 +20,7 @@ const HomepageHeader = ({ showForYouHeader, actionButtonsHidden }: Props) => {
       </View>
       {showForYouHeader && (
         <Text variant="headlineSmall" style={styles.title}>
-          For You
+          <Trans>For You</Trans>
         </Text>
       )}
     </View>

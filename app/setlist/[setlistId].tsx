@@ -1,11 +1,10 @@
 import { isAfter, parse } from "date-fns";
 import { Image } from "expo-image";
-import * as Linking from "expo-linking";
 import { getNetworkStateAsync } from "expo-network";
 import { Link, router, Stack, useLocalSearchParams } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
-import React, { useCallback, useEffect, useState } from "react";
-import { Platform, Share, StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Share, StyleSheet, View } from "react-native";
 import {
   ActivityIndicator,
   Appbar,
@@ -15,6 +14,8 @@ import {
   Snackbar,
   Text,
 } from "react-native-paper";
+import * as Clipboard from "expo-clipboard";
+import { t, Trans } from "@lingui/macro";
 
 import AddToPlaylistAppbarAction from "../../components/AddToPlaylistAppbarAction";
 import SetlistEmptyCard from "../../components/SetlistEmptyCard";
@@ -50,18 +51,41 @@ const SetlistDetails = () => {
     // event location.
     isAfter(new Date(), parse(`${setlist.eventDate} Z`, "d-M-y X", new Date()));
 
+  const plaintextSetlistContents = useMemo<string>(() => {
+    const allSets = setlist?.sets?.set;
+    if (isLoading || !allSets?.length) {
+      return "";
+    }
+
+    return allSets
+      .map((x) => x.song!)
+      .flat()
+      .reduce<string[]>((acc, curr) => {
+        if (!curr.name) {
+          return acc;
+        }
+        acc.push(curr.name);
+        return acc;
+      }, [] as string[])
+      .join(`\n`);
+  }, [setlist?.sets?.set, isLoading]);
+
   const onShareSetlistUrl = async () => {
     await Share.share(
       {
         url: setlist?.url ?? `https://setlist.fm/`,
         message: setlistInPast
-          ? `Here's what ${setlist?.artist?.name} played at ${setlist?.venue?.name}: ${setlist?.url}`
+          ? t`Here's what ${setlist?.artist?.name} played at ${setlist?.venue?.name}: ${setlist?.url}`
           : setlist?.url,
       },
       {
-        dialogTitle: "Share this setlist",
+        dialogTitle: t`Share this setlist`,
       },
     );
+  };
+
+  const onCopySetlist = async () => {
+    await Clipboard.setStringAsync(plaintextSetlistContents);
   };
 
   const Header = () => (
@@ -77,7 +101,9 @@ const SetlistDetails = () => {
           </Text>
           <Link asChild href={setlist?.url ?? "https://setlist.fm"}>
             <Text style={styles.sourceText} variant="bodySmall">
-              Source: {setlist?.artist?.name!} setlist on setlist.fm
+              <Trans>
+                Source: {setlist?.artist?.name!} setlist on setlist.fm
+              </Trans>
             </Text>
           </Link>
         </>
@@ -89,8 +115,8 @@ const SetlistDetails = () => {
         </List.Subheader>
         {setlistInPast && (
           <List.Item
-            title="Find photos and videos from this gig"
-            description="From Concert Archives"
+            title={t`Find photos and videos from this gig`}
+            description={t`From Concert Archives`}
             left={(props) => <List.Icon color={props.color} icon="camera" />}
             titleNumberOfLines={3}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
@@ -106,10 +132,10 @@ const SetlistDetails = () => {
         <List.Item
           title={
             !setlistInPast
-              ? "Find tickets for this gig"
-              : `Find upcoming ${setlist?.artist?.name} tour dates`
+              ? t`Find tickets for this gig`
+              : t`Find upcoming ${setlist?.artist?.name} tour dates`
           }
-          description="On Songkick"
+          description={t`On Songkick`}
           left={() => (
             <List.Icon
               icon={({ color, size }) => (
@@ -169,7 +195,12 @@ const SetlistDetails = () => {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: setlist ? `${setlist?.artist?.name} setlist` : "",
+          title: setlist
+            ? t({
+                comment: "e.g. The Beatles setlist",
+                message: `${setlist?.artist?.name} setlist`,
+              })
+            : "",
           headerRight: () =>
             setlist && (
               <>
@@ -177,8 +208,8 @@ const SetlistDetails = () => {
                   icon={isSaved ? "star" : "star-outline"}
                   accessibilityLabel={
                     isSaved
-                      ? "This setlist is in your saved list"
-                      : "Save this setlist to your saved list"
+                      ? t`This setlist is in your saved list`
+                      : t`Save this setlist to your saved list`
                   }
                   onPress={toggleSaveState}
                 />
@@ -189,7 +220,7 @@ const SetlistDetails = () => {
                 <Appbar.Action
                   icon="share"
                   onPress={onShareSetlistUrl}
-                  accessibilityLabel="Share the link to this setlist"
+                  accessibilityLabel={t`Share the link to this setlist`}
                 />
               </>
             ),
@@ -210,12 +241,11 @@ const SetlistDetails = () => {
       ) : (
         <ActivityIndicator animating size="large" />
       )}
-      {/* Apple reviewers don't like external links */}
-      {!(Platform.OS === "ios") && !isLoading && (
+      {!isLoading && !setlistEmpty && (
         <FAB
-          icon="pencil"
-          onPress={() => Linking.openURL(setlist?.url ?? "https://setlist.fm")}
-          accessibilityLabel="Edit this setlist on the Setlist FM website"
+          icon="content-copy"
+          onPress={onCopySetlist}
+          accessibilityLabel={t`Copy the contents of this setlist to your clipboard`}
           style={styles.floatingButton}
         />
       )}
@@ -225,7 +255,7 @@ const SetlistDetails = () => {
         action={
           isSaved
             ? {
-                label: "View",
+                label: t`View`,
                 onPress: () => {
                   router.navigate("/saved");
                 },
@@ -234,8 +264,8 @@ const SetlistDetails = () => {
         }
       >
         {isSaved
-          ? "Added to your saved setlists"
-          : "Removed from your saved setlists"}
+          ? t`Added to your saved setlists`
+          : t`Removed from your saved setlists`}
       </Snackbar>
     </View>
   );

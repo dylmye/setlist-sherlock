@@ -23,7 +23,6 @@
       "node": "18.18.0",
       "autoIncrement": true,
       "env": {
-        "EXPO_PUBLIC_SETLISTFM_API_KEY": ""
       }
     }
   },

@@ -1,6 +1,7 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Divider } from "react-native-paper";
+import { t } from "@lingui/macro";
 
 import SetlistListItem from "../../components/SetlistListItem";
 import {
@@ -23,7 +24,7 @@ const ArtistPage = () => {
     <>
       <Stack.Screen
         options={{
-          title: artistData ? `${artistData?.name}'s latest setlists` : "",
+          title: artistData ? t`${artistData?.name}'s latest setlists` : "",
         }}
       />
       <View style={styles.container}>

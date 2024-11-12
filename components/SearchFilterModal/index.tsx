@@ -16,6 +16,7 @@ import {
 
 import { Get10SearchSetlistsApiArg } from "../../store/services/setlistFm";
 import ControlledTextInput from "../ControlledTextInput";
+import { t, Trans } from "@lingui/macro";
 
 interface SearchFilterModalProps {
   visible: boolean;
@@ -69,7 +70,9 @@ const SearchFilterModal = ({
             elevation={5}
           >
             <View style={styles.titleBar}>
-              <Text variant="titleMedium">More Filters</Text>
+              <Text variant="titleMedium">
+                <Trans>More Filters</Trans>
+              </Text>
               <IconButton
                 icon="close"
                 size={18}
@@ -79,28 +82,28 @@ const SearchFilterModal = ({
             <ControlledTextInput
               control={control}
               fieldName="cityName"
-              label="City"
+              label={t`City`}
               errors={errors}
               textInputProps={defaultTextInputProps}
             />
             <ControlledTextInput
               control={control}
               fieldName="tourName"
-              label="Tour Name"
+              label={t`Tour Name`}
               errors={errors}
               textInputProps={defaultTextInputProps}
             />
             <ControlledTextInput
               control={control}
               fieldName="venueName"
-              label="Venue"
+              label={t`Venue`}
               errors={errors}
               textInputProps={defaultTextInputProps}
             />
             <ControlledTextInput
               control={control}
               fieldName="year"
-              label="Year"
+              label={t`Year`}
               errors={errors}
               textInputProps={{
                 ...defaultTextInputProps,
@@ -111,7 +114,7 @@ const SearchFilterModal = ({
                   // regex: any number between 1000-2999 (TODO: add 3 before the year 3000)
                   pattern: {
                     value: /^(1|2)\d{3}/,
-                    message: "Please specify a valid year.",
+                    message: t`Please specify a valid year.`,
                   },
                 },
               }}
@@ -126,7 +129,7 @@ const SearchFilterModal = ({
                 mode="contained"
                 onPress={handleSubmit(onDismiss, console.error)}
               >
-                Apply
+                <Trans>Apply</Trans>
               </Button>
             </View>
           </Surface>

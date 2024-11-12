@@ -17,9 +17,12 @@ import {
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
 
 import PaperNavigationBar from "../components/PaperNavigationBar";
 import { store } from "../store";
+import { useSetLanguages } from "../utils/i18n";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: LightNavTheme,
@@ -31,6 +34,7 @@ const AppLayout = () => {
   const { theme: m3Theme } = useMaterial3Theme({
     fallbackSourceColor: "#C8E6C9",
   });
+  const i18n = useSetLanguages();
 
   const paperTheme =
     systemTheme === "dark"
@@ -42,16 +46,21 @@ const AppLayout = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-        <ThemeProvider value={systemTheme === "dark" ? DarkTheme : LightTheme}>
-          <PaperProvider theme={paperTheme}>
-            <StatusBar style="auto" />
-            <Stack
-              screenOptions={{
-                header: (props) => <PaperNavigationBar {...props} />,
-              }}
-            />
-          </PaperProvider>
-        </ThemeProvider>
+        <I18nProvider i18n={i18n}>
+          <ThemeProvider
+            value={systemTheme === "dark" ? DarkTheme : LightTheme}
+          >
+            <PaperProvider theme={paperTheme}>
+              <StatusBar style="auto" />
+              <Stack
+                screenOptions={{
+                  // @ts-expect-error dumb expo router - rn paper mismatch of rnav versions
+                  header: (props) => <PaperNavigationBar {...props} />,
+                }}
+              />
+            </PaperProvider>
+          </ThemeProvider>
+        </I18nProvider>
       </PersistGate>
     </Provider>
   );

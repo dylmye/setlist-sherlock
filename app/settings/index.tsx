@@ -3,6 +3,7 @@ import { getItem } from "expo-secure-store";
 import { useState } from "react";
 import { StyleSheet, View, ListRenderItem, FlatList } from "react-native";
 import { List, Text } from "react-native-paper";
+import { t } from "@lingui/macro";
 
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
 import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";
@@ -34,12 +35,12 @@ const SettingsPage = () => {
   const settings: SettingItem[] = [
     {
       label: "Spotify",
-      value: spotifyHasSetup ? "Connected" : "Set up",
+      value: spotifyHasSetup ? t`Connected` : t`Set up`,
       onPress: () => router.navigate("/settings/spotify"),
     },
     {
       label: "Apple Music",
-      value: appleMusicHasSetup ? "Connected" : "Set up",
+      value: appleMusicHasSetup ? t`Connected` : t`Set up`,
       onPress: () => router.navigate("/settings/appleMusic"),
     },
   ];
@@ -53,7 +54,7 @@ const SettingsPage = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Settings" }} />
+      <Stack.Screen options={{ title: t`Settings` }} />
       <FlatList<SettingItem> data={settings} renderItem={renderSetting} />
     </View>
   );

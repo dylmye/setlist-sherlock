@@ -3,6 +3,7 @@ import { deleteItemAsync, getItem } from "expo-secure-store";
 import { useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
+import { t, Trans } from "@lingui/macro";
 
 import {
   USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY,
@@ -21,11 +22,14 @@ const AppleMusicSettingsPage = () => {
 
   const onPressConnect = async () => {
     setLoading(true);
-    ToastAndroid.show("Log in with Apple to continue.", ToastAndroid.SHORT);
+    ToastAndroid.show(
+      t`Log in with Apple to continue.`,
+      ToastAndroid.SHORT,
+    );
     try {
       await authorise();
     } catch (error) {
-      console.error("Authorization failed:", error);
+      console.error(t`Authorisation failed:`, error);
     }
   };
 
@@ -40,7 +44,7 @@ const AppleMusicSettingsPage = () => {
     setLoading(false);
     setSetupState(false);
     ToastAndroid.show(
-      "Successfully disconnected from Apple Music.",
+      t`Successfully disconnected from Apple Music.`,
       ToastAndroid.SHORT,
     );
   };
@@ -55,9 +59,16 @@ const AppleMusicSettingsPage = () => {
       <Stack.Screen options={{ title: "Apple Music" }} />
       <View style={[styles.container, styles.centredContainer]}>
         <Text style={styles.copy} variant="bodyMedium">
-          {hasSetUp
-            ? "You've connected your Apple Music account. Now you can press the share button on any setlist to get your playlist!"
-            : "Connect your Apple Music account to save setlists as playlists."}
+          {hasSetUp ? (
+            <Trans>
+              You've connected your Apple Music account. Now you can press the
+              share button on any setlist to get your playlist!
+            </Trans>
+          ) : (
+            <Trans>
+              Connect your Apple Music account to save setlists as playlists.
+            </Trans>
+          )}
         </Text>
         {hasSetUp ? (
           <Button
@@ -65,7 +76,7 @@ const AppleMusicSettingsPage = () => {
             buttonColor={theme.colors.error}
             onPress={onPressDisconnect}
           >
-            Disconnect Apple Music
+            <Trans>Disconnect Apple Music</Trans>
           </Button>
         ) : (
           <Button
@@ -74,7 +85,7 @@ const AppleMusicSettingsPage = () => {
             disabled={loading}
             onPress={onPressConnect}
           >
-            Connect with Apple Music
+            <Trans>Connect with Apple Music</Trans>
           </Button>
         )}
       </View>
