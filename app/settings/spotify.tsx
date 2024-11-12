@@ -15,7 +15,6 @@ import { coolDownAsync, warmUpAsync } from "expo-web-browser";
 import { useEffect, useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
-import { useLingui } from "@lingui/react";
 import { t, Trans } from "@lingui/macro";
 
 import {
@@ -27,7 +26,6 @@ import {
 } from "../../store/oauth-configs/spotify";
 
 const SpotifySettingsPage = () => {
-  const { i18n } = useLingui();
   const theme = useTheme();
 
   const [hasSetUp, setSetupState] = useState(
@@ -58,7 +56,7 @@ const SpotifySettingsPage = () => {
   const onPressConnect = () => {
     setLoading(true);
     ToastAndroid.show(
-      t(i18n)`Log in with Spotify to continue.`,
+      t`Log in with Spotify to continue.`,
       ToastAndroid.SHORT,
     );
     promptAsync();
@@ -75,7 +73,7 @@ const SpotifySettingsPage = () => {
     setLoading(false);
     setSetupState(false);
     ToastAndroid.show(
-      t(i18n)`Successfully disconnected from Spotify.`,
+      t`Successfully disconnected from Spotify.`,
       ToastAndroid.SHORT,
     );
   };
@@ -128,7 +126,7 @@ const SpotifySettingsPage = () => {
         () => {
           setLoading(false);
           ToastAndroid.show(
-            t(i18n)`Successfully connected to Spotify.`,
+            t`Successfully connected to Spotify.`,
             ToastAndroid.SHORT,
           );
         },
@@ -137,7 +135,7 @@ const SpotifySettingsPage = () => {
 
     if (response?.type === "cancel" || response?.type === "dismiss") {
       ToastAndroid.show(
-        t(i18n)`Spotify log in cancelled, please try again.`,
+        t`Spotify log in cancelled, please try again.`,
         ToastAndroid.SHORT,
       );
       setLoading(false);
@@ -181,7 +179,7 @@ const SpotifySettingsPage = () => {
             disabled={loading}
             onPress={onPressConnect}
           >
-            {loading ? t(i18n)`Connecting...` : t(i18n)`Connect with Spotify`}
+            {loading ? t`Connecting...` : t`Connect with Spotify`}
           </Button>
         )}
       </View>

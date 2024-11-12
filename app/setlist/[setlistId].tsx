@@ -15,7 +15,6 @@ import {
   Text,
 } from "react-native-paper";
 import * as Clipboard from "expo-clipboard";
-import { useLingui } from "@lingui/react";
 import { t, Trans } from "@lingui/macro";
 
 import AddToPlaylistAppbarAction from "../../components/AddToPlaylistAppbarAction";
@@ -32,7 +31,6 @@ import { useGet10SetlistBySetlistIdQuery } from "../../store/services/setlistFm"
 
 /** View for setlist set, metadata, links */
 const SetlistDetails = () => {
-  const { i18n } = useLingui();
   const dispatch = useAppDispatch();
   const { setlistId } = useLocalSearchParams<{ setlistId: string }>();
 
@@ -77,13 +75,11 @@ const SetlistDetails = () => {
       {
         url: setlist?.url ?? `https://setlist.fm/`,
         message: setlistInPast
-          ? t(
-              i18n,
-            )`Here's what ${setlist?.artist?.name} played at ${setlist?.venue?.name}: ${setlist?.url}`
+          ? t`Here's what ${setlist?.artist?.name} played at ${setlist?.venue?.name}: ${setlist?.url}`
           : setlist?.url,
       },
       {
-        dialogTitle: t(i18n)`Share this setlist`,
+        dialogTitle: t`Share this setlist`,
       },
     );
   };
@@ -119,8 +115,8 @@ const SetlistDetails = () => {
         </List.Subheader>
         {setlistInPast && (
           <List.Item
-            title={t(i18n)`Find photos and videos from this gig`}
-            description={t(i18n)`From Concert Archives`}
+            title={t`Find photos and videos from this gig`}
+            description={t`From Concert Archives`}
             left={(props) => <List.Icon color={props.color} icon="camera" />}
             titleNumberOfLines={3}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
@@ -136,10 +132,10 @@ const SetlistDetails = () => {
         <List.Item
           title={
             !setlistInPast
-              ? t(i18n)`Find tickets for this gig`
-              : t(i18n)`Find upcoming ${setlist?.artist?.name} tour dates`
+              ? t`Find tickets for this gig`
+              : t`Find upcoming ${setlist?.artist?.name} tour dates`
           }
-          description={t(i18n)`On Songkick`}
+          description={t`On Songkick`}
           left={() => (
             <List.Icon
               icon={({ color, size }) => (
@@ -212,8 +208,8 @@ const SetlistDetails = () => {
                   icon={isSaved ? "star" : "star-outline"}
                   accessibilityLabel={
                     isSaved
-                      ? t(i18n)`This setlist is in your saved list`
-                      : t(i18n)`Save this setlist to your saved list`
+                      ? t`This setlist is in your saved list`
+                      : t`Save this setlist to your saved list`
                   }
                   onPress={toggleSaveState}
                 />
@@ -224,7 +220,7 @@ const SetlistDetails = () => {
                 <Appbar.Action
                   icon="share"
                   onPress={onShareSetlistUrl}
-                  accessibilityLabel={t(i18n)`Share the link to this setlist`}
+                  accessibilityLabel={t`Share the link to this setlist`}
                 />
               </>
             ),
@@ -249,9 +245,7 @@ const SetlistDetails = () => {
         <FAB
           icon="content-copy"
           onPress={onCopySetlist}
-          accessibilityLabel={t(
-            i18n,
-          )`Copy the contents of this setlist to your clipboard`}
+          accessibilityLabel={t`Copy the contents of this setlist to your clipboard`}
           style={styles.floatingButton}
         />
       )}
@@ -261,7 +255,7 @@ const SetlistDetails = () => {
         action={
           isSaved
             ? {
-                label: t(i18n)`View`,
+                label: t`View`,
                 onPress: () => {
                   router.navigate("/saved");
                 },
@@ -270,8 +264,8 @@ const SetlistDetails = () => {
         }
       >
         {isSaved
-          ? t(i18n)`Added to your saved setlists`
-          : t(i18n)`Removed from your saved setlists`}
+          ? t`Added to your saved setlists`
+          : t`Removed from your saved setlists`}
       </Snackbar>
     </View>
   );

@@ -3,7 +3,6 @@ import { getItem } from "expo-secure-store";
 import { useState } from "react";
 import { StyleSheet, View, ListRenderItem, FlatList } from "react-native";
 import { List, Text } from "react-native-paper";
-import { useLingui } from "@lingui/react";
 import { t } from "@lingui/macro";
 
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
@@ -17,7 +16,6 @@ interface SettingItem {
 
 /** Settings controls, accessible from homepage */
 const SettingsPage = () => {
-  const { i18n } = useLingui();
   const renderSetting: ListRenderItem<SettingItem> = ({ item, index }) => (
     <List.Item
       title={item.label}
@@ -37,12 +35,12 @@ const SettingsPage = () => {
   const settings: SettingItem[] = [
     {
       label: "Spotify",
-      value: spotifyHasSetup ? t(i18n)`Connected` : t(i18n)`Set up`,
+      value: spotifyHasSetup ? t`Connected` : t`Set up`,
       onPress: () => router.navigate("/settings/spotify"),
     },
     {
       label: "Apple Music",
-      value: appleMusicHasSetup ? t(i18n)`Connected` : t(i18n)`Set up`,
+      value: appleMusicHasSetup ? t`Connected` : t`Set up`,
       onPress: () => router.navigate("/settings/appleMusic"),
     },
   ];
@@ -56,7 +54,7 @@ const SettingsPage = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: t(i18n)`Settings` }} />
+      <Stack.Screen options={{ title: t`Settings` }} />
       <FlatList<SettingItem> data={settings} renderItem={renderSetting} />
     </View>
   );

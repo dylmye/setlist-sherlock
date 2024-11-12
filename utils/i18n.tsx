@@ -1,5 +1,7 @@
-import type { AllMessages } from "@lingui/core";
-import type { Locale } from "expo-localization";
+import { i18n, type I18n, type AllMessages } from "@lingui/core";
+import { useLocales, type Locale } from "expo-localization";
+import { useMemo } from "react";
+
 import { messages as messagesEnGb } from "../locales/en_GB/messages.po";
 import { messages as messagesEsEs } from "../locales/es_ES/messages.po";
 import { messages as messagesFrFr } from "../locales/fr_FR/messages.po";
@@ -48,4 +50,16 @@ export const setApiLanguage = async ({
   }
 
   await setItemAsync(SETLIST_FM_API_LANGUAGE_STORAGE_KEY, languageCode);
+};
+
+export const useSetLanguages = () => {
+  const [primaryLocale] = useLocales();
+  const loadableTranslations = getLoadableTranslations();
+
+  return useMemo<I18n>(() => {
+    i18n.load(loadableTranslations);
+    i18n.activate(primaryLocale.languageTag?.replace("-", "_"));
+    setApiLanguage(primaryLocale);
+    return i18n;
+  }, [i18n, loadableTranslations]);
 };

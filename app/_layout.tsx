@@ -17,14 +17,12 @@ import {
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import { useLocales } from "expo-localization";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 
 import PaperNavigationBar from "../components/PaperNavigationBar";
 import { store } from "../store";
-import { getLoadableTranslations, setApiLanguage } from "../utils/i18n";
-import { useEffect } from "react";
+import { useSetLanguages } from "../utils/i18n";
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: LightNavTheme,
@@ -36,6 +34,7 @@ const AppLayout = () => {
   const { theme: m3Theme } = useMaterial3Theme({
     fallbackSourceColor: "#C8E6C9",
   });
+  const i18n = useSetLanguages();
 
   const paperTheme =
     systemTheme === "dark"
@@ -43,14 +42,6 @@ const AppLayout = () => {
       : { ...LightPaperTheme, colors: m3Theme.light };
 
   const persistor = persistStore(store);
-
-  const [primaryLocale] = useLocales();
-
-  useEffect(() => {
-    i18n.load(getLoadableTranslations());
-    i18n.activate(primaryLocale.languageTag?.replace("-", "_"));
-    setApiLanguage(primaryLocale);
-  }, [i18n, setApiLanguage]);
 
   return (
     <Provider store={store}>

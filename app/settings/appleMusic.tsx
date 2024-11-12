@@ -3,7 +3,6 @@ import { deleteItemAsync, getItem } from "expo-secure-store";
 import { useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
-import { useLingui } from "@lingui/react";
 import { t, Trans } from "@lingui/macro";
 
 import {
@@ -14,7 +13,6 @@ import {
 import { authorise } from "../../utils/appleMusic";
 
 const AppleMusicSettingsPage = () => {
-  const { i18n } = useLingui();
   const theme = useTheme();
 
   const [hasSetUp, setSetupState] = useState(
@@ -25,13 +23,13 @@ const AppleMusicSettingsPage = () => {
   const onPressConnect = async () => {
     setLoading(true);
     ToastAndroid.show(
-      t(i18n)`Log in with Apple to continue.`,
+      t`Log in with Apple to continue.`,
       ToastAndroid.SHORT,
     );
     try {
       await authorise();
     } catch (error) {
-      console.error(t(i18n)`Authorisation failed:`, error);
+      console.error(t`Authorisation failed:`, error);
     }
   };
 
@@ -46,7 +44,7 @@ const AppleMusicSettingsPage = () => {
     setLoading(false);
     setSetupState(false);
     ToastAndroid.show(
-      t(i18n)`Successfully disconnected from Apple Music.`,
+      t`Successfully disconnected from Apple Music.`,
       ToastAndroid.SHORT,
     );
   };

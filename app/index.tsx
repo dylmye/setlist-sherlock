@@ -5,7 +5,6 @@ import { StyleSheet, SectionList, SectionBase } from "react-native";
 import { Divider, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { t } from "@lingui/macro";
-import { useLingui } from "@lingui/react";
 
 import HomepageHeader from "../components/HomepageHeader";
 import SetlistListItem from "../components/SetlistListItem";
@@ -24,7 +23,6 @@ interface HomepageSection extends SectionBase<Setlist> {
 
 /** Entry point for users - latest setlists view default */
 const Home = () => {
-  const { i18n } = useLingui();
   const isKeyboardVisible = useKeyboardVisible();
   // setlist-fm API uses UK date format, two digit padded, explicitly instead of RFC y-M-d format
   const today = useMemo(() => format(new Date(), "dd-MM-y"), []);
@@ -37,14 +35,14 @@ const Home = () => {
   const sections: HomepageSection[] = [
     {
       index: 0,
-      title: t(i18n)`For You`,
+      title: t`For You`,
       key: "for-you",
       data: forYouSetlists ?? [],
       loading: true,
     },
     {
       index: 1,
-      title: t(i18n)`Latest`,
+      title: t`Latest`,
       key: "latest",
       data: latestSetlists?.setlist ?? [],
       loading: isFetchingSetlists,
@@ -53,7 +51,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <Stack.Screen options={{ title: t(i18n)`Homepage`, headerShown: false }} />
+      <Stack.Screen options={{ title: t`Homepage`, headerShown: false }} />
       <SectionList<Setlist, HomepageSection>
         sections={sections}
         renderSectionHeader={({ section }) =>

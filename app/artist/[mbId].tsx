@@ -1,7 +1,6 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Divider } from "react-native-paper";
-import { useLingui } from "@lingui/react";
 import { t } from "@lingui/macro";
 
 import SetlistListItem from "../../components/SetlistListItem";
@@ -13,7 +12,6 @@ import {
 
 /** View for artist */
 const ArtistPage = () => {
-  const { i18n } = useLingui();
   const { mbId } = useLocalSearchParams<{ mbId: string }>();
   const { data: artistData } = useGet10ArtistByMbidQuery({ mbid: mbId! });
   const {
@@ -26,7 +24,7 @@ const ArtistPage = () => {
     <>
       <Stack.Screen
         options={{
-          title: artistData ? t(i18n)`${artistData?.name}'s latest setlists` : "",
+          title: artistData ? t`${artistData?.name}'s latest setlists` : "",
         }}
       />
       <View style={styles.container}>
