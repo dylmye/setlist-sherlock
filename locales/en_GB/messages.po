@@ -46,19 +46,23 @@ msgstr "Apply"
 msgid "Artist"
 msgstr "Artist"
 
-#: app/settings/appleMusic.tsx:32
+#: app/settings/appleMusic.tsx:49
 msgid "Authorisation failed:"
 msgstr "Authorisation failed:"
 
 #: components/SetlistEmptyCard/index.tsx:20
-msgid "Check back later or add it yourself by clicking the pencil button (Setlist.fm account required.)"
-msgstr "Check back later or add it yourself by clicking the pencil button (Setlist.fm account required.)"
+#~ msgid "Check back later or add it yourself by clicking the pencil button (Setlist.fm account required.)"
+#~ msgstr "Check back later or add it yourself by clicking the pencil button (Setlist.fm account required.)"
+
+#: components/SetlistEmptyCard/index.tsx:20
+msgid "Check back later or, if you know it already, add it on the Setlist.fm website."
+msgstr "Check back later or, if you know it already, add it on the Setlist.fm website."
 
 #: components/SearchFilterModal/index.tsx:85
 msgid "City"
 msgstr "City"
 
-#: app/settings/appleMusic.tsx:88
+#: app/settings/appleMusic.tsx:105
 msgid "Connect with Apple Music"
 msgstr "Connect with Apple Music"
 
@@ -66,7 +70,7 @@ msgstr "Connect with Apple Music"
 msgid "Connect with Spotify"
 msgstr "Connect with Spotify"
 
-#: app/settings/appleMusic.tsx:68
+#: app/settings/appleMusic.tsx:85
 msgid "Connect your Apple Music account to save setlists as playlists."
 msgstr "Connect your Apple Music account to save setlists as playlists."
 
@@ -95,7 +99,7 @@ msgstr "Couldn't find any setlists for your search."
 msgid "Date"
 msgstr "Date"
 
-#: app/settings/appleMusic.tsx:79
+#: app/settings/appleMusic.tsx:96
 msgid "Disconnect Apple Music"
 msgstr "Disconnect Apple Music"
 
@@ -140,7 +144,7 @@ msgstr "Latest"
 msgid "Location"
 msgstr "Location"
 
-#: app/settings/appleMusic.tsx:26
+#: app/settings/appleMusic.tsx:43
 msgid "Log in with Apple to continue."
 msgstr "Log in with Apple to continue."
 
@@ -229,7 +233,7 @@ msgstr "Spotify log in cancelled, please try again."
 msgid "Successfully connected to Spotify."
 msgstr "Successfully connected to Spotify."
 
-#: app/settings/appleMusic.tsx:47
+#: app/settings/appleMusic.tsx:64
 msgid "Successfully disconnected from Apple Music."
 msgstr "Successfully disconnected from Apple Music."
 
@@ -287,7 +291,7 @@ msgstr "Year"
 msgid "You haven't saved any setlists yet."
 msgstr "You haven't saved any setlists yet."
 
-#: app/settings/appleMusic.tsx:63
+#: app/settings/appleMusic.tsx:80
 msgid "You've connected your Apple Music account. Now you can press the share button on any setlist to get your playlist!"
 msgstr "You've connected your Apple Music account. Now you can press the share button on any setlist to get your playlist!"
 

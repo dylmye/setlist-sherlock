@@ -18,8 +18,8 @@ const SetlistEmptyCard = ({ style }: SetlistEmptyCardProps) => (
     <Card.Content>
       <Text variant="bodyMedium">
         <Trans>
-          Check back later or add it yourself by clicking the pencil button
-          (Setlist.fm account required.)
+          Check back later or, if you know it already, add it on the Setlist.fm
+          website.
         </Trans>
       </Text>
     </Card.Content>
