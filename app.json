@@ -87,6 +87,12 @@
             "deploymentTarget": "15.0"
           }
         }
+      ],
+      [
+        "expo-check-installed-apps",
+        {
+          "android": ["com.apple.android.music"]
+        }
       ]
     ]
   }

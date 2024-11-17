@@ -44,9 +44,9 @@ const AppLayout = () => {
   const persistor = persistStore(store);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-        <I18nProvider i18n={i18n}>
+    <I18nProvider i18n={i18n}>
+      <Provider store={store}>
+        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <ThemeProvider
             value={systemTheme === "dark" ? DarkTheme : LightTheme}
           >
@@ -60,9 +60,9 @@ const AppLayout = () => {
               />
             </PaperProvider>
           </ThemeProvider>
-        </I18nProvider>
-      </PersistGate>
-    </Provider>
+        </PersistGate>
+      </Provider>
+    </I18nProvider>
   );
 };
 

@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { deleteItemAsync, getItem } from "expo-secure-store";
 import { useState } from "react";
-import { StyleSheet, ToastAndroid, View } from "react-native";
+import { Linking, StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
 import { t, Trans } from "@lingui/macro";
 
@@ -10,7 +10,7 @@ import {
   DEV_TOKEN_STORAGE_KEY as APPLE_MUSIC_DEV_TOKEN_STORAGE_KEY,
   DEV_TOKEN_EXPIRY_STORAGE_KEY as APPLE_MUSIC_DEV_TOKEN_EXPIRY_STORAGE_KEY,
 } from "../../store/oauth-configs/appleMusic";
-import { authorise } from "../../utils/appleMusic";
+import { appleMusicInstalled, authorise } from "../../utils/appleMusic";
 
 const AppleMusicSettingsPage = () => {
   const theme = useTheme();
@@ -21,15 +21,29 @@ const AppleMusicSettingsPage = () => {
   const [loading, setLoading] = useState(false);
 
   const onPressConnect = async () => {
+    const isInstalled = await appleMusicInstalled();
+
+    if (!isInstalled) {
+      // we can assume here it's Android because iOS always
+      // has Apple Music
+      ToastAndroid.show(
+        t`Please install Apple Music to continue.`,
+        ToastAndroid.SHORT,
+      );
+      await Linking.openURL(
+        "https://play.google.com/store/apps/details?id=com.apple.android.music",
+      );
+      return;
+    }
+
     setLoading(true);
-    ToastAndroid.show(
-      t`Log in with Apple to continue.`,
-      ToastAndroid.SHORT,
-    );
+    ToastAndroid.show(t`Log in with Apple to continue.`, ToastAndroid.SHORT);
     try {
       await authorise();
     } catch (error) {
       console.error(t`Authorisation failed:`, error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,6 +116,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   copy: {
+    marginHorizontal: 12,
     marginBottom: 12,
     textAlign: "center",
   },

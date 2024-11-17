@@ -1,7 +1,8 @@
 import { Auth } from "@lomray/react-native-apple-music";
 import { add, getUnixTime } from "date-fns";
 import { applicationId } from "expo-application";
-import { startActivityAsync } from "expo-intent-launcher";
+import { IntentLauncherResult, startActivityAsync } from "expo-intent-launcher";
+import { checkInstalledApps } from "expo-check-installed-apps";
 import { getLocales } from "expo-localization";
 import { setItemAsync } from "expo-secure-store";
 import { Platform } from "react-native";
@@ -23,6 +24,33 @@ interface AuthIntentResult {
   /** two letter country */
   music_storefront?: string;
 }
+
+const APPLE_MUSIC_ANDROID_BUNDLE_ID = "com.apple.android.music";
+
+/**
+ * Checks if a handler for Apple Music's specific url scheme is installed.
+ * @returns `true` if on iOS or if Apple Music is installed
+ */
+export const appleMusicInstalled = async (): Promise<boolean> => {
+  if (!(Platform.OS === "android")) {
+    return true;
+  }
+
+  const installMatches = await checkInstalledApps([
+    APPLE_MUSIC_ANDROID_BUNDLE_ID,
+  ]);
+
+  return installMatches[APPLE_MUSIC_ANDROID_BUNDLE_ID];
+};
+
+/**
+ * Build an Apple Music intent auth-v1 URI
+ */
+const buildAppleMusicAndroidIntentUri = (
+  appId: string,
+  devToken: string,
+): string =>
+  `musicsdk://applemusic/authenticate-v1?appPackage=${appId}&devToken=${devToken}`;
 
 /**
  * On iOS, confirm authorised status. On Android, call
@@ -48,6 +76,12 @@ export const authorise = async (): Promise<boolean> => {
     console.error("No dev token endpoint available");
     return false;
   }
+
+  if (!(await appleMusicInstalled())) {
+    console.error("Apple Music not available on device");
+    return false;
+  }
+
   try {
     const devTokenRes = await fetch(
       process.env.EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT,
@@ -65,9 +99,16 @@ export const authorise = async (): Promise<boolean> => {
       return false;
     }
     const devToken: { token: string } = await devTokenRes.json();
-    const res = await startActivityAsync("android.intent.action.VIEW", {
-      data: `musicsdk://applemusic/authenticate-v1?appPackage=${applicationId}&devToken=${devToken.token}`,
-    });
+
+    let res: IntentLauncherResult | undefined;
+    try {
+      res = await startActivityAsync("android.intent.action.VIEW", {
+        data: buildAppleMusicAndroidIntentUri(applicationId!, devToken.token),
+      });
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
 
     const extras: AuthIntentResult | undefined = res.extra;
 
@@ -102,6 +143,7 @@ export const authorise = async (): Promise<boolean> => {
         "Successful response but no token provided:",
         JSON.stringify(res),
       );
+      return false;
     }
 
     const expiryDate = add(new Date(), {
