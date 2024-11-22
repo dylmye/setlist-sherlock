@@ -93,6 +93,12 @@
         {
           "android": ["com.apple.android.music"]
         }
+      ],
+      [
+        "@dylmye/expo-native-language-picker",
+        {
+          "languages": ["en_GB", "fr_FR"]
+        }
       ]
     ]
   }
