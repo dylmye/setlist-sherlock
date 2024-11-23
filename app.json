@@ -95,9 +95,9 @@
         }
       ],
       [
-        "@dylmye/expo-native-language-picker",
+        "react-native-localization-settings",
         {
-          "languages": ["en_GB", "fr_FR"]
+          "languages": ["en-GB", "fr-FR"]
         }
       ]
     ]
