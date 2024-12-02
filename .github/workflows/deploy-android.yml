@@ -26,6 +26,7 @@ jobs:
           eas-version: latest
           expo-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+          packager: bun
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
