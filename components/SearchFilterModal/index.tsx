@@ -1,3 +1,4 @@
+import { t, Trans } from "@lingui/macro";
 import { useForm } from "react-hook-form";
 import {
   Dimensions,
@@ -16,7 +17,6 @@ import {
 
 import { Get10SearchSetlistsApiArg } from "../../store/services/setlistFm";
 import ControlledTextInput from "../ControlledTextInput";
-import { t, Trans } from "@lingui/macro";
 
 interface SearchFilterModalProps {
   visible: boolean;

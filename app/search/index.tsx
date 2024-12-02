@@ -1,9 +1,9 @@
+import { t } from "@lingui/macro";
 import { Stack, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Divider } from "react-native-paper";
 import { Edge, SafeAreaView } from "react-native-safe-area-context";
-import { t } from "@lingui/macro";
 
 import NoSearchResultsCard from "../../components/NoSearchResultsCard";
 import SearchFilterModal from "../../components/SearchFilterModal";
@@ -69,7 +69,9 @@ const Search = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={safeAreaEdges}>
-      <Stack.Screen options={{ title: t`Search Results`, headerShown: false }} />
+      <Stack.Screen
+        options={{ title: t`Search Results`, headerShown: false }}
+      />
       {/* TODO: add empty results message */}
       {/* TODO: add bottom padding for gesture displays */}
       <FlatList<Setlist>

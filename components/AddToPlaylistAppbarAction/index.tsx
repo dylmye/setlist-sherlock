@@ -1,8 +1,8 @@
+import { t } from "@lingui/macro";
 import { getItem } from "expo-secure-store";
 import { useEffect, useMemo, useState } from "react";
 import { ToastAndroid } from "react-native";
 import { Appbar } from "react-native-paper";
-import { t } from "@lingui/macro";
 
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
 import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";

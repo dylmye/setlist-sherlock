@@ -1,9 +1,9 @@
+import { Trans } from "@lingui/macro";
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 
 import SetlistSearchbar from "../SetlistSearchbar";
 import HeaderActionButtons from "./actionButtons";
-import { Trans } from "@lingui/macro";
 
 interface Props {
   showForYouHeader: boolean;

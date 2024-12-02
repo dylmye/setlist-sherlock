@@ -1,7 +1,7 @@
+import { t } from "@lingui/macro";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Divider } from "react-native-paper";
-import { t } from "@lingui/macro";
 
 import SetlistListItem from "../../components/SetlistListItem";
 import {
@@ -20,11 +20,13 @@ const ArtistPage = () => {
     isFetching,
   } = useGet10ArtistByMbidSetlistsQuery({ mbid: mbId! });
 
+  const artistName = artistData?.name;
+
   return (
     <>
       <Stack.Screen
         options={{
-          title: artistData ? t`${artistData?.name}'s latest setlists` : "",
+          title: artistData ? t`${artistName}'s latest setlists` : "",
         }}
       />
       <View style={styles.container}>

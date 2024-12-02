@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getItem } from "expo-secure-store";
 import { Platform } from "react-native";
 
 import { version as appVersion } from "../../../package.json";
-import { getItem } from "expo-secure-store";
 import { SETLIST_FM_API_LANGUAGE_STORAGE_KEY } from "../../../utils/i18n";
 
 /**
@@ -19,7 +19,10 @@ export const setlistFmApi = createApi({
       );
       headers.set("Origin", "https://setlist-sherlock.dylmye.me");
       headers.set("Accept", "application/json");
-      headers.set("Accept-Language", getItem(SETLIST_FM_API_LANGUAGE_STORAGE_KEY) ?? "en"); // TODO: allow users to switch between en, es, fr, de, pt, tr, it, pl
+      headers.set(
+        "Accept-Language",
+        getItem(SETLIST_FM_API_LANGUAGE_STORAGE_KEY) ?? "en",
+      ); // TODO: allow users to switch between en, es, fr, de, pt, tr, it, pl
       headers.set(
         "User-Agent",
         `setlist-sherlock, ${Platform.OS}, ${appVersion}`,

@@ -1,3 +1,4 @@
+import { t, Trans } from "@lingui/macro";
 import {
   AccessTokenRequestConfig,
   exchangeCodeAsync,
@@ -15,7 +16,6 @@ import { coolDownAsync, warmUpAsync } from "expo-web-browser";
 import { useEffect, useState } from "react";
 import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
-import { t, Trans } from "@lingui/macro";
 
 import {
   discovery as spotifyDiscovery,
@@ -55,10 +55,7 @@ const SpotifySettingsPage = () => {
 
   const onPressConnect = () => {
     setLoading(true);
-    ToastAndroid.show(
-      t`Log in with Spotify to continue.`,
-      ToastAndroid.SHORT,
-    );
+    ToastAndroid.show(t`Log in with Spotify to continue.`, ToastAndroid.SHORT);
     promptAsync();
   };
 
@@ -168,9 +165,7 @@ const SpotifySettingsPage = () => {
             buttonColor={theme.colors.error}
             onPress={onPressDisconnect}
           >
-            <Trans>
-              Disconnect Spotify
-            </Trans>
+            <Trans>Disconnect Spotify</Trans>
           </Button>
         ) : (
           <Button

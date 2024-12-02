@@ -1,8 +1,8 @@
 import { Auth } from "@lomray/react-native-apple-music";
 import { add, getUnixTime } from "date-fns";
 import { applicationId } from "expo-application";
-import { IntentLauncherResult, startActivityAsync } from "expo-intent-launcher";
 import { checkInstalledApps } from "expo-check-installed-apps";
+import { IntentLauncherResult, startActivityAsync } from "expo-intent-launcher";
 import { getLocales } from "expo-localization";
 import { setItemAsync } from "expo-secure-store";
 import { Platform } from "react-native";

@@ -1,16 +1,16 @@
 import { i18n, type I18n, type AllMessages } from "@lingui/core";
 import { useLocales, type Locale } from "expo-localization";
+import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { useMemo } from "react";
 
+import { messages as messagesDeDe } from "../locales/de_DE/messages.po";
 import { messages as messagesEnGb } from "../locales/en_GB/messages.po";
 import { messages as messagesEsEs } from "../locales/es_ES/messages.po";
 import { messages as messagesFrFr } from "../locales/fr_FR/messages.po";
-import { messages as messagesDeDe } from "../locales/de_DE/messages.po";
-import { messages as messagesPtBr } from "../locales/pt_BR/messages.po";
-import { messages as messagesTrTr } from "../locales/tr_TR/messages.po";
 import { messages as messagesItIt } from "../locales/it_IT/messages.po";
 import { messages as messagesPlPl } from "../locales/pl_PL/messages.po";
-import { getItemAsync, setItemAsync } from "expo-secure-store";
+import { messages as messagesPtBr } from "../locales/pt_BR/messages.po";
+import { messages as messagesTrTr } from "../locales/tr_TR/messages.po";
 
 export const SETLIST_FM_API_LANGUAGE_STORAGE_KEY =
   "SETLIST_FM_API_LANGUAGE_STORAGE_KEY";

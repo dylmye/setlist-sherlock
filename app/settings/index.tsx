@@ -1,9 +1,9 @@
+import { t } from "@lingui/macro";
 import { Stack, router, useFocusEffect } from "expo-router";
 import { getItem } from "expo-secure-store";
 import { useState } from "react";
 import { StyleSheet, View, ListRenderItem, FlatList } from "react-native";
 import { List, Text } from "react-native-paper";
-import { t } from "@lingui/macro";
 
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
 import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";

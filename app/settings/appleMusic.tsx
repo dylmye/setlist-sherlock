@@ -1,9 +1,9 @@
+import { t, Trans } from "@lingui/macro";
 import { Stack } from "expo-router";
 import { deleteItemAsync, getItem } from "expo-secure-store";
 import { useState } from "react";
 import { Linking, StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, ButtonProps, Text, useTheme } from "react-native-paper";
-import { t, Trans } from "@lingui/macro";
 
 import {
   USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY,

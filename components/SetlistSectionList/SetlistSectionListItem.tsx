@@ -1,9 +1,9 @@
+import { t } from "@lingui/macro";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { List } from "react-native-paper";
 
 import { Song } from "../../store/services/setlistFm";
-import { t } from "@lingui/macro";
 
 interface SetlistSectionListItemProps {
   song: Song;
@@ -14,16 +14,19 @@ const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
   const description = () => {
     const d = [];
     if (song.with) {
+      const withArtistName = song.with.name;
+
       d.push(
         t({
           comment:
             'Text displayed under a song with a featured guest. E.g. "with The Beatles"',
-          message: `with ${song.with.name}`,
+          message: `with ${withArtistName}`,
         }),
       );
     }
     if (song.cover) {
-      d.push(t`${song.cover.name} cover`);
+      const coverArtistName = song.cover.name;
+      d.push(t`${coverArtistName} cover`);
     }
     if (song.tape) {
       d.push(t`Pre-recorded`);

@@ -2,7 +2,6 @@
   "expo": {
     "name": "Setlist Sherlock",
     "description": "Find all your favourite artist's gig setlists - powered by Setlist.fm, easily find concert setlists on the go.",
-    "privacy": "public",
     "githubUrl": "https://github.com/dylmye/setlist-sherlock",
     "slug": "setlist-sherlock",
     "owner": "dylmye",
@@ -10,6 +9,7 @@
     "version": "1.3.4",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "backgroundColor": "#000000",
     "splash": {
       "image": "./assets/splash.png",
@@ -84,7 +84,7 @@
         "expo-build-properties",
         {
           "ios": {
-            "deploymentTarget": "15.0"
+            "deploymentTarget": "15.1"
           }
         }
       ],

@@ -1,10 +1,10 @@
+import { t } from "@lingui/macro";
 import { format, parse } from "date-fns";
 import * as Linking from "expo-linking";
 import { router } from "expo-router";
 import React, { useMemo } from "react";
 import { FlatList, ListRenderItem, StyleProp, ViewStyle } from "react-native";
 import { Card, List } from "react-native-paper";
-import { t } from "@lingui/macro";
 
 import SetlistMetadataItem from "./SetlistMetadataItem";
 import { Setlist } from "../../store/services/setlistFm";

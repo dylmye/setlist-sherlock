@@ -1,6 +1,6 @@
+import { t } from "@lingui/macro";
 import { Stack } from "expo-router";
 import { FlatList, View } from "react-native";
-import { t } from "@lingui/macro";
 
 import NoSavedSetlistsCard from "../../components/NoSavedSetlistsCard";
 import SetlistListItem from "../../components/SetlistListItem";

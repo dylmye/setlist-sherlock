@@ -1,3 +1,4 @@
+import { I18nProvider } from "@lingui/react";
 import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import {
   ThemeProvider,
@@ -17,8 +18,6 @@ import {
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import { i18n } from "@lingui/core";
-import { I18nProvider } from "@lingui/react";
 
 import PaperNavigationBar from "../components/PaperNavigationBar";
 import { store } from "../store";
@@ -48,13 +47,17 @@ const AppLayout = () => {
       <Provider store={store}>
         <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <ThemeProvider
-            value={systemTheme === "dark" ? DarkTheme : LightTheme}
+            value={
+              systemTheme === "dark"
+                ? // @TODO: when react-native-paper adds font to NavigationTheme, revert back to returning just the object
+                  { ...DarkTheme, fonts: DarkNavTheme.fonts }
+                : { ...LightTheme, fonts: LightNavTheme.fonts }
+            }
           >
             <PaperProvider theme={paperTheme}>
               <StatusBar style="auto" />
               <Stack
                 screenOptions={{
-                  // @ts-expect-error dumb expo router - rn paper mismatch of rnav versions
                   header: (props) => <PaperNavigationBar {...props} />,
                 }}
               />

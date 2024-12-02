@@ -1,11 +1,10 @@
 import { t } from "@lingui/macro";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { StyleProp, ViewStyle } from "react-native";
 import { Searchbar, SearchbarProps } from "react-native-paper";
 
 interface SetlistSearchbarProps {
-  style?: StyleProp<ViewStyle>;
+  style?: SearchbarProps["style"];
   redirectToSearchPage?: boolean;
   onSearch?: (search: string) => void;
   initialQuery?: string;

@@ -1,4 +1,6 @@
+import { t, Trans } from "@lingui/macro";
 import { isAfter, parse } from "date-fns";
+import * as Clipboard from "expo-clipboard";
 import { Image } from "expo-image";
 import { getNetworkStateAsync } from "expo-network";
 import { Link, router, Stack, useLocalSearchParams } from "expo-router";
@@ -14,8 +16,6 @@ import {
   Snackbar,
   Text,
 } from "react-native-paper";
-import * as Clipboard from "expo-clipboard";
-import { t, Trans } from "@lingui/macro";
 
 import AddToPlaylistAppbarAction from "../../components/AddToPlaylistAppbarAction";
 import SetlistEmptyCard from "../../components/SetlistEmptyCard";
@@ -71,11 +71,15 @@ const SetlistDetails = () => {
   }, [setlist?.sets?.set, isLoading]);
 
   const onShareSetlistUrl = async () => {
+    const artistName = setlist?.artist?.name;
+    const venueName = setlist?.venue?.name;
+    const setlistUrl = setlist?.url;
+
     await Share.share(
       {
         url: setlist?.url ?? `https://setlist.fm/`,
         message: setlistInPast
-          ? t`Here's what ${setlist?.artist?.name} played at ${setlist?.venue?.name}: ${setlist?.url}`
+          ? t`Here's what ${artistName} played at ${venueName}: ${setlistUrl}`
           : setlist?.url,
       },
       {
@@ -91,79 +95,80 @@ const SetlistDetails = () => {
   const Header = () => (
     <SetlistMetadataList {...setlist} style={styles.metadataCard} />
   );
-  const Footer = () => (
-    <View style={styles.footer}>
-      {setlist?.info && (
-        <>
-          <Divider style={styles.footerDivider} />
-          <Text style={styles.infoText} variant="bodyMedium">
-            {setlist?.info}
-          </Text>
-          <Link asChild href={setlist?.url ?? "https://setlist.fm"}>
-            <Text style={styles.sourceText} variant="bodySmall">
-              <Trans>
-                Source: {setlist?.artist?.name!} setlist on setlist.fm
-              </Trans>
+  const Footer = () => {
+    const artistName = setlist?.artist?.name;
+    return (
+      <View style={styles.footer}>
+        {setlist?.info && (
+          <>
+            <Divider style={styles.footerDivider} />
+            <Text style={styles.infoText} variant="bodyMedium">
+              {setlist?.info}
             </Text>
-          </Link>
-        </>
-      )}
+            <Link asChild href={setlist?.url ?? "https://setlist.fm"}>
+              <Text style={styles.sourceText} variant="bodySmall">
+                <Trans>Source: {artistName} setlist on setlist.fm</Trans>
+              </Text>
+            </Link>
+          </>
+        )}
 
-      <List.Section>
-        <List.Subheader style={styles.listSubheader}>
-          Across the web
-        </List.Subheader>
-        {setlistInPast && (
+        <List.Section>
+          <List.Subheader style={styles.listSubheader}>
+            Across the web
+          </List.Subheader>
+          {setlistInPast && (
+            <List.Item
+              title={t`Find photos and videos from this gig`}
+              description={t`From Concert Archives`}
+              left={(props) => <List.Icon color={props.color} icon="camera" />}
+              titleNumberOfLines={3}
+              right={(props) => <List.Icon {...props} icon="chevron-right" />}
+              onPress={async () =>
+                openBrowserAsync(
+                  `https://www.concertarchives.org/past-concert-search-engine?utf8=%E2%9C%93&search=${encodeURIComponent(
+                    setlist?.artist?.name!,
+                  )}+${setlist?.eventDate}#concert-table`,
+                )
+              }
+            />
+          )}
           <List.Item
-            title={t`Find photos and videos from this gig`}
-            description={t`From Concert Archives`}
-            left={(props) => <List.Icon color={props.color} icon="camera" />}
+            title={
+              !setlistInPast
+                ? t`Find tickets for this gig`
+                : t`Find upcoming ${artistName} tour dates`
+            }
+            description={t`On Songkick`}
+            left={() => (
+              <List.Icon
+                icon={({ color, size }) => (
+                  <Image
+                    source="songkick"
+                    style={{ width: size, height: size }}
+                    tintColor={color}
+                  />
+                )}
+              />
+            )}
             titleNumberOfLines={3}
             right={(props) => <List.Icon {...props} icon="chevron-right" />}
             onPress={async () =>
               openBrowserAsync(
-                `https://www.concertarchives.org/past-concert-search-engine?utf8=%E2%9C%93&search=${encodeURIComponent(
-                  setlist?.artist?.name!,
-                )}+${setlist?.eventDate}#concert-table`,
+                !setlistInPast
+                  ? `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
+                      setlist?.artist?.name!,
+                    )}%20${setlist?.venue?.name}&type=events`
+                  : `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
+                      setlist?.artist?.name!,
+                    )}&type=artists`,
               )
             }
           />
-        )}
-        <List.Item
-          title={
-            !setlistInPast
-              ? t`Find tickets for this gig`
-              : t`Find upcoming ${setlist?.artist?.name} tour dates`
-          }
-          description={t`On Songkick`}
-          left={() => (
-            <List.Icon
-              icon={({ color, size }) => (
-                <Image
-                  source="songkick"
-                  style={{ width: size, height: size }}
-                  tintColor={color}
-                />
-              )}
-            />
-          )}
-          titleNumberOfLines={3}
-          right={(props) => <List.Icon {...props} icon="chevron-right" />}
-          onPress={async () =>
-            openBrowserAsync(
-              !setlistInPast
-                ? `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
-                    setlist?.artist?.name!,
-                  )}%20${setlist?.venue?.name}&type=events`
-                : `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
-                    setlist?.artist?.name!,
-                  )}&type=artists`,
-            )
-          }
-        />
-      </List.Section>
-    </View>
-  );
+        </List.Section>
+      </View>
+    );
+  };
 
   const toggleSaveState = useCallback(() => {
     if (isSaved) {
@@ -182,6 +187,8 @@ const SetlistDetails = () => {
     setSavedSnackbarVisible(true);
   }, [isSaved, setlistId, setlist]);
 
+  const artistName = setlist?.artist?.name;
+
   useEffect(() => {
     const setNetworkStatus = async () => {
       const state = await getNetworkStateAsync();
@@ -198,7 +205,7 @@ const SetlistDetails = () => {
           title: setlist
             ? t({
                 comment: "e.g. The Beatles setlist",
-                message: `${setlist?.artist?.name} setlist`,
+                message: `${artistName} setlist`,
               })
             : "",
           headerRight: () =>

@@ -23,8 +23,8 @@ const SetlistSectionList = ({
       : encoreNum === 1
         ? "Encore"
         : encoreNum
-        // @TODO support i18n
-          ? `${getNumberWithOrdinal(encoreNum)} Encore`
+          ? // @TODO support i18n
+            `${getNumberWithOrdinal(encoreNum)} Encore`
           : "Setlist";
   };
 

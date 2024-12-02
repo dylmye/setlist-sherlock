@@ -1,10 +1,10 @@
+import { t } from "@lingui/macro";
 import { format } from "date-fns";
 import { Stack } from "expo-router";
 import React, { useMemo } from "react";
 import { StyleSheet, SectionList, SectionBase } from "react-native";
 import { Divider, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { t } from "@lingui/macro";
 
 import HomepageHeader from "../components/HomepageHeader";
 import SetlistListItem from "../components/SetlistListItem";
