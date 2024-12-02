@@ -10,12 +10,7 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "backgroundColor": "#000000",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "backgroundColor": "#1c1b1f",
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -25,8 +20,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "icon": "./assets/icon-ios-1024.png",
+      "icon": {
+        "light": "./assets/icon-ios-1024.png",
+        "dark": "./assets/icon-ios-dark-1024.png",
+        "tinted": "./assets/icon-ios-tint-1024.png"
+      },
+      "appStoreUrl": "https://apps.apple.com/us/app/setlist-sherlock/id6477339282",
       "bundleIdentifier": "com.dylmye.setlists",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
       "infoPlist": {
         "NSAppleMusicUsageDescription": "Allow Setlist Sherlock to access your Apple Music data to save setlists as playlists",
         "NSPhotoLibraryUsageDescription": "Setlist Sherlock does not require access to the photo library"
@@ -98,6 +101,17 @@
         "react-native-localization-settings",
         {
           "languages": ["en-GB", "fr-FR"]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/splash-light.png",
+          "dark": {
+            "backgroundColor": "#1c1b1f",
+            "image": "./assets/splash-dark.png"
+          }
         }
       ]
     ]
