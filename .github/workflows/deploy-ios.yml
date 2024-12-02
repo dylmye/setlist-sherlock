@@ -15,12 +15,10 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version-file: '.nvmrc'
-          check-latest: true
-          cache: yarn
+          bun-version: latest
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
@@ -30,7 +28,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Set eas.json file - EXPO_PUBLIC_SETLISTFM_API_KEY
         uses: jossef/action-set-json-field@v2.2
