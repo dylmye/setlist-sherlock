@@ -52,13 +52,40 @@ export const setApiLanguage = async ({
   await setItemAsync(SETLIST_FM_API_LANGUAGE_STORAGE_KEY, languageCode);
 };
 
+/**
+ * Get the closest available language to the user's. This is necessary because Apple makes up language tags.
+ * If you set your language to French (Francais) and are based in the UK, Apple reports your language
+ * as fr_GB when it should be fr_FR...
+ */
+export const getClosestAvailableLanguage = (
+  primaryLang: string,
+  availableLangs: string[],
+): string => {
+  if (availableLangs.includes(primaryLang)) return primaryLang;
+
+  const availableLangsWithoutRegions = availableLangs.map(
+    (a) => a.split("_")?.[0],
+  );
+  const primaryLangWithoutRegion = primaryLang.split("_")?.[0];
+
+  if (availableLangsWithoutRegions.includes(primaryLangWithoutRegion))
+    return availableLangs.find((a) => a.startsWith(primaryLangWithoutRegion))!;
+
+  return availableLangs[0];
+};
+
 export const useSetLanguages = () => {
   const [primaryLocale] = useLocales();
   const loadableTranslations = getLoadableTranslations();
 
   return useMemo<I18n>(() => {
     i18n.load(loadableTranslations);
-    i18n.activate(primaryLocale.languageTag?.replace("-", "_"));
+    i18n.activate(
+      getClosestAvailableLanguage(
+        primaryLocale.languageTag?.replace("-", "_"),
+        Object.keys(loadableTranslations),
+      ),
+    );
     setApiLanguage(primaryLocale);
     return i18n;
   }, [i18n, loadableTranslations]);
