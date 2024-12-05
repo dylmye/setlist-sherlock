@@ -7,7 +7,10 @@ const FILE_CONTENTS: string =
   `<?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
   <capability android:name="actions.intent.GET_THING">
-    //
+    <intent>
+      <url-template android:value="setlist-sherlock://search{?query}" />
+      <parameter android:name="thing.name" android:key="query" />
+    </intent>
   </capability>
 </shortcuts>
 `;
