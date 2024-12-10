@@ -1,0 +1,1 @@
+A small update to the release from the other day, to better support languages. Language settings don't fall back to English as quickly now.
