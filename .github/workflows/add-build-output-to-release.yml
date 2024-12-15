@@ -21,7 +21,14 @@ jobs:
     steps:
       - name: Run cURL script to download
         run: |
-          curl ${{ inputs.artifactUrl }} -o ${{ inputs.appVersion }}.aab
+          curl -sS ${{ inputs.artifactUrl }} -o ${{ inputs.appVersion }}.aab
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aab-file
+          path: ${{ inputs.appVersion }}.aab
+          retention-days: 1
 
       - name: Generate APK for F-Droid
         id: convert_aab
