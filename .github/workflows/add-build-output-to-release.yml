@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Run cURL script to download
         run: |
-          curl $ARTIFACTURL -o $APPVERSION.aab
+          curl ${{ inputs.artifactUrl }} -o ${{ inputs.appVersion }}.aab
       - name: Test
         run: |
           ls -lha
