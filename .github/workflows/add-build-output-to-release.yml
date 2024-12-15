@@ -12,7 +12,7 @@ on:
         type: string
 
 jobs:
-  add_eas_build_to_release:
+  download_eas_build:
     runs-on: ubuntu-latest
     environment: production
     name: Download EAS Build and Add To Release
@@ -30,19 +30,42 @@ jobs:
           path: ${{ inputs.appVersion }}.aab
           retention-days: 1
 
-      - name: Generate APK for F-Droid
-        id: convert_aab
-        uses: mukeshsolanki/bundletool-action@v1.0.2
+  create_and_upload_artifacts:
+    runs-on: ubuntu-latest
+    environment: production
+    needs: [download_eas_build]
+    name: Create and Upload Artifacts
+    steps:
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
         with:
-          aabFile: ${{ inputs.appVersion }}.aab
-          base64Keystore: ${{ secrets.APP_JKS }}
-          keystorePassword: ${{ secrets.APP_KS_PWD }}
-          keystoreAlias: ${{ secrets.APP_KS_KEY_ALS }}
-          keyPassword: ${{ secrets.APP_KS_KEY_PWD }}
+          java-version: 17
+          distribution: temurin
 
-      - name: Add Build To Release
-        uses: softprops/action-gh-release@v2
+      - name: Setup Bundletool
+        uses: amyu/setup-bundletool@v1
+
+      - name: Get AAB Artifact
+        uses: actions/download-artifact@v4
         with:
-          files: |
-            ${{ inputs.appVersion }}.aab
-            ${{ steps.convert_aab.outputs.apkPath }}
+          name: aab-file
+
+      - name: Test
+        run: ls -lha
+
+      # - name: Generate APK for F-Droid
+      #   id: convert_aab
+      #   uses: mukeshsolanki/bundletool-action@v1.0.2
+      #   with:
+      #     aabFile: ${{ inputs.appVersion }}.aab
+      #     base64Keystore: ${{ secrets.APP_JKS }}
+      #     keystorePassword: ${{ secrets.APP_KS_PWD }}
+      #     keystoreAlias: ${{ secrets.APP_KS_KEY_ALS }}
+      #     keyPassword: ${{ secrets.APP_KS_KEY_PWD }}
+
+      # - name: Add Build To Release
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     files: |
+      #       ${{ inputs.appVersion }}.aab
+      #       ${{ steps.convert_aab.outputs.apkPath }}
