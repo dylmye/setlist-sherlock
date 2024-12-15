@@ -1,0 +1,25 @@
+name: Deploy Android and iOS
+on:
+  push:
+    tags:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  meta:
+    name: Metadata
+    uses: ./.github/workflows/create-release-from-tag.yml
+  android:
+    name: Android
+    needs: meta
+    uses: ./.github/workflows/deploy-android.yml
+    secrets: inherit
+  ios:
+    name: iOS
+    needs: meta
+    uses: ./.github/workflows/deploy-ios.yml
+    secrets: inherit
+
+concurrency:
+  group: conc_grp_deployments
+  cancel-in-progress: true

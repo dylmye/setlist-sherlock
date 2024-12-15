@@ -15,7 +15,8 @@
     "generate:api:setlistfm": "rtk-query-codegen-openapi ./store/open-api-configs/setlist-fm.ts",
     "generate:api:spotify": "rtk-query-codegen-openapi ./store/open-api-configs/spotify.ts",
     "lingui:extract": "lingui extract",
-    "plugin:dev:add-app-actions": "expo-module build plugins/add-app-actions"
+    "plugin:dev": "expo-module build plugins",
+    "bump": "./scripts/bump-version.sh"
   },
   "dependencies": {
     "@formatjs/intl-locale": "^4.2.2",

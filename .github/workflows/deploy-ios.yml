@@ -1,14 +1,12 @@
 name: Trigger Expo Build (iOS)
 on:
-  push:
-    tags:
-      - '**'
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: production
+    name: Build
     permissions:
       contents: read
     steps:

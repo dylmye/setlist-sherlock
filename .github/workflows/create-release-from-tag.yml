@@ -1,0 +1,20 @@
+name: Create Release Metadata From Tag
+on:
+  workflow_call:
+
+jobs:
+  create_gh_release:
+    runs-on: ubuntu-latest
+    name: Create Release In GitHub
+    permissions:
+      contents: write
+    steps:
+      - name: Create
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --generate-notes

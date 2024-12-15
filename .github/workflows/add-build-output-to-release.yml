@@ -1,0 +1,24 @@
+name: Add Build Output To Release
+on:
+  workflow_dispatch:
+    inputs:
+      artifactUrl:
+        description: The URL of the build artifact hosted on EAS. From the build payload result this is `artifacts.buildUrl` (if the build is successful.)
+        required: true
+        type: string
+      appVersion:
+        description: The "version name" aka "marketing version" of the app. It should match an already existing release.
+        required: true
+        type: string
+
+jobs:
+  download_artifact_from_eas:
+    runs-on: ubuntu-latest
+    name: Download Artifact From EAS
+    steps:
+      - name: Run cURL script to download
+        run: |
+          curl $ARTIFACTURL -o $APPVERSION.aab
+      - name: Test
+        run: |
+          ls -lha
