@@ -50,18 +50,11 @@ jobs:
         with:
           name: aab-file
 
-      - name: Test
-        run: ls -lha
+      - name: Create Keystore
+        run: echo -n ${{ secrets.APP_JKS }} | base64 --decode > signingKey.jks
 
-      # - name: Generate APK for F-Droid
-      #   id: convert_aab
-      #   uses: mukeshsolanki/bundletool-action@v1.0.2
-      #   with:
-      #     aabFile: ${{ inputs.appVersion }}.aab
-      #     base64Keystore: ${{ secrets.APP_JKS }}
-      #     keystorePassword: ${{ secrets.APP_KS_PWD }}
-      #     keystoreAlias: ${{ secrets.APP_KS_KEY_ALS }}
-      #     keyPassword: ${{ secrets.APP_KS_KEY_PWD }}
+      - name: Build APKs
+        run: "bundletool build-apks --bundle=${{ inputs.appVersion }}.aab --output temp.apks --ks=signingKey.jks --ks-pass=pass:${{ secrets.APP_KS_PWD }} --ks-key-alias=${{ secrets.APP_KS_KEY_ALS }} --key-pass=pass:${{ secrets.APP_KS_KEY_PWD }} --mode=universal"
 
       # - name: Add Build To Release
       #   uses: softprops/action-gh-release@v2
