@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Run cURL script to download
         run: |
-          curl -sS ${{ inputs.artifactUrl }} -o ${{ inputs.appVersion }}.aab
+          curl -sSL ${{ inputs.artifactUrl }} -o ${{ inputs.appVersion }}.aab
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
