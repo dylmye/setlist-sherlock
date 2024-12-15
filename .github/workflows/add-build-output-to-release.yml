@@ -14,7 +14,10 @@ on:
 jobs:
   add_eas_build_to_release:
     runs-on: ubuntu-latest
+    environment: production
     name: Download EAS Build and Add To Release
+    permissions:
+      contents: read
     steps:
       - name: Run cURL script to download
         run: |
