@@ -3,22 +3,36 @@ on:
   workflow_dispatch:
     inputs:
       artifactUrl:
-        description: The URL of the build artifact hosted on EAS. From the build payload result this is `artifacts.buildUrl` (if the build is successful.)
+        description: Artifact URL - The URL of the build artifact hosted on EAS. From the build payload result this is `artifacts.buildUrl` (if the build is successful.)
         required: true
         type: string
       appVersion:
-        description: The "version name" aka "marketing version" of the app. It should match an already existing release.
+        description: App Version - The "version name" aka "marketing version" of the app. It should match an already existing release.
         required: true
         type: string
 
 jobs:
-  download_artifact_from_eas:
+  add_eas_build_to_release:
     runs-on: ubuntu-latest
-    name: Download Artifact From EAS
+    name: Download EAS Build and Add To Release
     steps:
       - name: Run cURL script to download
         run: |
           curl ${{ inputs.artifactUrl }} -o ${{ inputs.appVersion }}.aab
-      - name: Test
-        run: |
-          ls -lha
+
+      - name: Generate APK for F-Droid
+        id: convert_aab
+        uses: mukeshsolanki/bundletool-action@v1.0.2
+        with:
+          aabFile: ${{ inputs.appVersion }}.aab
+          base64Keystore: ${{ secrets.APP_JKS }}
+          keystorePassword: ${{ secrets.APP_KS_PWD }}
+          keystoreAlias: ${{ secrets.APP_KS_KEY_ALS }}
+          keyPassword: ${{ secrets.APP_KS_KEY_PWD }}
+
+      - name: Add Build To Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ inputs.appVersion }}.aab
+            ${{ steps.convert_aab.outputs.apkPath }}

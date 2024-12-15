@@ -11,7 +11,7 @@ IssueTracker: https://github.com/dylmye/setlist-sherlock/issues
 Changelog: https://github.com/dylmye/setlist-sherlock/releases
 RepoType: git
 Repo: https://github.com/dylmye/setlist-sherlock.git
-Binaries: https://github.com/dylmye/setlist-sherlock/releases/download/v%v/MyApp-%v.apk
+Binaries: https://github.com/dylmye/setlist-sherlock/releases/download/v%v/%v-universal.apk
 
 Builds:
   - versionName: '1.1.1'
