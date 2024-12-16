@@ -62,6 +62,7 @@ jobs:
       - name: Add Build To Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ inputs.appVersion }}
           files: |
             ${{ inputs.appVersion }}.aab
             ${{ inputs.appVersion }}.apk
