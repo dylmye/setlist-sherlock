@@ -53,12 +53,15 @@ jobs:
       - name: Create Keystore
         run: echo -n ${{ secrets.APP_JKS }} | base64 --decode > signingKey.jks
 
-      - name: Build APKs
+      - name: Build APKs from AAB
         run: "bundletool build-apks --bundle=${{ inputs.appVersion }}.aab --output temp.apks --ks=signingKey.jks --ks-pass=pass:${{ secrets.APP_KS_PWD }} --ks-key-alias=${{ secrets.APP_KS_KEY_ALS }} --key-pass=pass:${{ secrets.APP_KS_KEY_PWD }} --mode=universal"
 
-      # - name: Add Build To Release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     files: |
-      #       ${{ inputs.appVersion }}.aab
-      #       ${{ steps.convert_aab.outputs.apkPath }}
+      - name: Unzip APKs and rename inner APK
+        run: unzip temp.apks && mv universal.apk ${{ inputs.appVersion }}.apk
+
+      - name: Add Build To Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ inputs.appVersion }}.aab
+            ${{ inputs.appVersion }}.apk
