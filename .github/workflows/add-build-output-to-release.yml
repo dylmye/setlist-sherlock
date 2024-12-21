@@ -58,7 +58,7 @@ jobs:
       - name: Build APKs from AAB
         run: "bundletool build-apks --bundle=${{ inputs.appVersion }}.aab --output temp.apks --ks=signingKey.jks --ks-pass=pass:${{ secrets.APP_KS_PWD }} --ks-key-alias=${{ secrets.APP_KS_KEY_ALS }} --key-pass=pass:${{ secrets.APP_KS_KEY_PWD }} --mode=universal"
 
-      - name: Unzip APKs and rename inner APK
+      - name: Unzip APKs and Rename Inner APK
         run: unzip temp.apks && mv universal.apk ${{ inputs.appVersion }}.apk
 
       - name: Add Build To Release

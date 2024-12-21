@@ -16,7 +16,7 @@
     "generate:api:spotify": "rtk-query-codegen-openapi ./store/open-api-configs/spotify.ts",
     "lingui:extract": "lingui extract",
     "plugin:dev": "expo-module build plugins",
-    "bump": "./scripts/bump-version.sh"
+    "bump": "bun ./scripts/bump-version.ts"
   },
   "dependencies": {
     "@formatjs/intl-locale": "^4.2.2",
@@ -74,14 +74,19 @@
     "@lingui/format-po": "^5.0.0",
     "@lingui/metro-transformer": "^5.0.0",
     "@rtk-query/codegen-openapi": "^2.0.0",
+    "@types/bun": "^1.1.14",
+    "@types/js-yaml": "^4.0.9",
     "@types/react": "~18.3.12",
+    "@types/semver": "^7.5.8",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-universe": "^13.0.0",
     "eslint-plugin-lingui": "^0.8.1",
     "expo-module-scripts": "^4.0.2",
+    "js-yaml": "^4.1.0",
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
+    "semver": "^7.6.3",
     "ts-node": "^10.9.2",
     "typescript": "~5.3.3"
   },

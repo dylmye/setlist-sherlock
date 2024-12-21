@@ -4,3 +4,6 @@ indent_style = space
 
 [*]
 end_of_line = crlf
+
+[*.{po,sh}]
+end_of_line = lf

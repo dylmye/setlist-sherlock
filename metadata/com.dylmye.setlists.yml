@@ -5,69 +5,34 @@ AuthorEmail: business@dylmye.me
 AuthorWebSite: https://dylmye.me
 License: ISC
 AutoName: Setlist Sherlock
-
 SourceCode: https://github.com/dylmye/setlist-sherlock
 IssueTracker: https://github.com/dylmye/setlist-sherlock/issues
 Changelog: https://github.com/dylmye/setlist-sherlock/releases
 RepoType: git
 Repo: https://github.com/dylmye/setlist-sherlock.git
-Binaries: https://github.com/dylmye/setlist-sherlock/releases/download/v%v/%v-universal.apk
-
+Binaries: https://github.com/dylmye/setlist-sherlock/releases/download/%v/%v.apk
 Builds:
-  - versionName: '1.1.1'
-    versionCode: 15
-    commit: v1.1.1
-    subdir: android
-    gradle:
-      - yes
-  - versionName: '1.2.1'
-    versionCode: 16
-    commit: v1.2.1
-    subdir: android
-    gradle:
-      - yes
-  - versionName: '1.3.0'
-    versionCode: 17
-    commit: v1.3.0
-    subdir: android
-    gradle:
-      - yes
-  - versionName: '1.3.2'
-    versionCode: 19
-    commit: v1.3.2
-    subdir: android
-    gradle:
-      - yes
-  - versionName: '1.3.3'
-    versionCode: 20
-    commit: v1.3.3
-    subdir: android
-    gradle:
-      - yes
-  - versionName: '1.4.0'
+  - versionName: 1.4.0
     versionCode: 22
-    commit: v1.4.0
+    commit: 1.4.0
     subdir: android
     gradle:
-      - yes
-  - versionName: '1.4.2'
+      - 'yes'
+  - versionName: 1.4.2
     versionCode: 24
-    commit: v1.4.2
+    commit: 1.4.2
     subdir: android
     gradle:
-      - yes
-  - versionName: '1.5.0'
+      - 'yes'
+  - versionName: 1.5.0
     versionCode: 25
-    commit: v1.5.0
+    commit: 1.5.0
     subdir: android
     gradle:
-      - yes
-
+      - 'yes'
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 CurrentVersion: 1.5.0
 CurrentVersionCode: 25
-
 AllowedAPKSigningKeys: f90e81f7e88e4d8c0fa51d9165573aa86ab4cb1384bf94d8bd651e423e7690f6
-
 AntiFeatures: NonFreeNet,TetheredNet
