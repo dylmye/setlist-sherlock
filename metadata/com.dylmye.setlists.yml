@@ -24,15 +24,9 @@ Builds:
     subdir: android
     gradle:
       - 'yes'
-  - versionName: 1.5.0
-    versionCode: 25
-    commit: 1.5.0
-    subdir: android
-    gradle:
-      - 'yes'
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.5.0
-CurrentVersionCode: 25
+CurrentVersion: 1.4.2
+CurrentVersionCode: 24
 AllowedAPKSigningKeys: f90e81f7e88e4d8c0fa51d9165573aa86ab4cb1384bf94d8bd651e423e7690f6
 AntiFeatures: NonFreeNet,TetheredNet
