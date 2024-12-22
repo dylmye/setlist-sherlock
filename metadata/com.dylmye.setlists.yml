@@ -1,13 +1,16 @@
+AntiFeatures:
+  - NonFreeNet
+  - TetheredNet
 Categories:
   - Multimedia
+License: ISC
 AuthorName: Dylan Myers
 AuthorEmail: business@dylmye.me
 AuthorWebSite: https://dylmye.me
-License: ISC
-AutoName: Setlist Sherlock
 SourceCode: https://github.com/dylmye/setlist-sherlock
 IssueTracker: https://github.com/dylmye/setlist-sherlock/issues
 Changelog: https://github.com/dylmye/setlist-sherlock/releases
+AutoName: Setlist Sherlock
 RepoType: git
 Repo: https://github.com/dylmye/setlist-sherlock.git
 Binaries: https://github.com/dylmye/setlist-sherlock/releases/download/%v/%v.apk
@@ -15,7 +18,6 @@ Builds:
   - versionName: 1.5.0
     versionCode: 25
     commit: 1.5.0
-    subdir: android/app
     sudo:
       - apt install unzip
       - curl -fsSL https://bun.sh/install | bash
@@ -23,16 +25,14 @@ Builds:
       - echo "e7b80346bb586790ac6b29aa25c96716fcdf6039a6929c2ed506cec09cebc3c0 node.tar.gz" | sha256sum -c -
       - tar xzf node.tar.gz --strip-components=1 -C /usr/local/
       - sysctl fs.inotify.max_user_watches=524288 || true
-    init: bun install --frozen-lockfile
-    scanignore: node_modules
+    init: /root/.bun/bin/bun install --frozen-lockfile
+    scanignore:
+      - node_modules
     gradle:
       - yes
     ndk: r26
+AllowedAPKSigningKeys: f90e81f7e88e4d8c0fa51d9165573aa86ab4cb1384bf94d8bd651e423e7690f6
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 CurrentVersion: 1.5.0
 CurrentVersionCode: 25
-AllowedAPKSigningKeys: f90e81f7e88e4d8c0fa51d9165573aa86ab4cb1384bf94d8bd651e423e7690f6
-AntiFeatures:
-  - NonFreeNet
-  - TetheredNet
