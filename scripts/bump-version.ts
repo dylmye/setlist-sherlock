@@ -38,7 +38,7 @@ type FdroidMetadata = {
     versionCode: number;
     commit: string;
     subdir: string;
-    gradle: boolean[];
+    gradle: string[];
   }[];
   CurrentVersion: string;
   CurrentVersionCode: number;
@@ -60,13 +60,16 @@ const updateFdroid = async (version: string): Promise<void> => {
         versionCode: fdroidYaml.CurrentVersionCode + 1,
         commit: version,
         subdir: "android",
-        gradle: [true],
+        gradle: ['yes'],
       },
     ],
   };
 
+  // we have to use yes instead of true due to fdroid's formatter! fun!
+  const dumpedYaml = dump(Object.assign(fdroidYaml, yamlUpdates)).replaceAll("'yes'", "yes");
+
   try {
-    await Bun.write(filename, dump(Object.assign(fdroidYaml, yamlUpdates)));
+    await Bun.write(filename, dumpedYaml);
   } catch {
     throw new Error("Unable to update package.json");
   }
