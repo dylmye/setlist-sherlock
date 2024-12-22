@@ -16,20 +16,19 @@ const updatePackageJson = async (version: string): Promise<void> => {
   console.log("Updated package.json\n");
 };
 
-const updateAndroid = async (version: string): Promise<void> => {
-  console.log("Updating build.gradle...");
-  const filename = "./android/app/build.gradle";
-  let buildGradle = await Bun.file(filename).text();
-  buildGradle = buildGradle.replace(
-    /(\s+versionName\s")(.+)(")/,
-    `$1${version}$3`,
-  );
+const updateExpo = async (version: string): Promise<void> => {
+  console.log("Updating app.json...");
+  const filename = "./app.json";
+  const json = await Bun.file(filename).json();
   try {
-    await Bun.write(filename, buildGradle);
+    await Bun.write(
+      filename,
+      JSON.stringify(Object.assign(json, { version }), null, 2),
+    );
   } catch {
-    throw new Error("Unable to update build.gradle");
+    throw new Error("Unable to update app.json");
   }
-  console.log("Updated build.gradle\n");
+  console.log("Updated app.json\n");
 };
 
 type FdroidMetadata = {
@@ -92,7 +91,7 @@ const main = async (): Promise<void> => {
     );
   }
   await updatePackageJson(versionNumber);
-  await updateAndroid(versionNumber);
+  await updateExpo(versionNumber);
   await updateFdroid(versionNumber);
   console.log("all done :)");
 };

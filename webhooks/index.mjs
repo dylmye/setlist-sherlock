@@ -12,7 +12,7 @@ export const isVerifiedRequest = (payload, providedHash) => {
 
 /** @type import('aws-lambda').LambdaFunctionURLHandler */
 export const handler = async ({ body, headers }) => {
-  console.log("Origin header:", headers["origin"]);
+  console.log("Body:", body);
   if (!isVerifiedRequest(body, headers["expo-signature"])) {
     throw new Error("Unexpected hash result");
   }
