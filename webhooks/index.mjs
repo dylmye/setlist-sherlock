@@ -18,6 +18,11 @@ export const handler = async ({ body, headers }) => {
 
   const bodyDecoded = JSON.parse(body);
 
+  if (bodyDecoded.platform !== "android") {
+    console.log("Build platform isn't android, no further actions required");
+    return;
+  }
+
   const req = await fetch(
     "https://api.github.com/repos/dylmye/setlist-sherlock/actions/workflows/add-build-output-to-release.yml/dispatches",
     {
