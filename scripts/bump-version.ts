@@ -60,13 +60,20 @@ const updateFdroid = async (version: string): Promise<void> => {
         versionCode: fdroidYaml.CurrentVersionCode + 1,
         commit: version,
         subdir: "android",
-        gradle: ['yes'],
+        gradle: ["yes"],
       },
     ],
   };
 
   // we have to use yes instead of true due to fdroid's formatter! fun!
-  const dumpedYaml = dump(Object.assign(fdroidYaml, yamlUpdates)).replaceAll("'yes'", "yes");
+  // they also require dumb spacing
+  const dumpedYaml = dump(Object.assign(fdroidYaml, yamlUpdates))
+    .replaceAll("'yes'", "yes")
+    .replace("AutoName:", `\nAutoName:`)
+    .replace("RepoType:", `\nRepoType:`)
+    .replace("Builds:", `\nBuilds:`)
+    .replace("AllowedAPKSigningKeys", `\nAllowedAPKSigningKeys`)
+    .replace("AutoUpdateMode", `\nAutoUpdateMode`);
 
   try {
     await Bun.write(filename, dumpedYaml);

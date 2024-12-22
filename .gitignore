@@ -41,4 +41,5 @@ yarn-error.*
 store/open-api-configs/spotify.yml
 
 android/
+!android/app/
 ios/
