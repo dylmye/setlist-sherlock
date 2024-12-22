@@ -9,11 +9,15 @@ jobs:
   meta:
     name: Metadata
     uses: ./.github/workflows/create-release-from-tag.yml
+    permissions:
+      contents: write
+
   android:
     name: Android
     needs: meta
     uses: ./.github/workflows/deploy-android.yml
     secrets: inherit
+
   ios:
     name: iOS
     needs: meta
