@@ -101,7 +101,7 @@ resource "aws_lambda_function_url" "fn_url_add_eas_build_to_release" {
   function_name      = aws_lambda_function.fn_add_eas_build_to_release.function_name
   authorization_type = "NONE"
   cors {
-    allow_headers = ["expo-signature", "content-type"]
+    allow_headers = ["expo-signature", "content-type", "origin"]
     allow_methods = ["POST"]
     allow_origins = ["*"] // until we determine what the correct origin is
   }
