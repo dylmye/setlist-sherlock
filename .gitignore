@@ -40,6 +40,9 @@ yarn-error.*
 # external provider's files - grab them from source instead - see README
 store/open-api-configs/spotify.yml
 
-android/
+!android/
+android/*
 !android/app/
+android/app/**
+!android/app/.gitkeep
 ios/
