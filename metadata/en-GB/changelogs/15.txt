@@ -1,1 +1,0 @@
-Welcome to Setlist Sherlock! This first release includes all the main bits. Look out for more to come :)

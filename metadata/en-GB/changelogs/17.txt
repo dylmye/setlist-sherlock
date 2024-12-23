@@ -1,6 +1,0 @@
-In 1.3.0:
-• Link your Apple Music account to save setlists to your Apple Music library.
-• Spotify connection support is disabled until they allow Setlist Sherlock access. It has been awaiting their approval for 3+ months soo :)
-• Find photos and videos from gigs thanks to Concert Archive!
-• Find tickets for upcoming gigs or upcoming dates from past gigs thanks to Songkick!
-• A number of internal package upgrades to ensure stability and performance.

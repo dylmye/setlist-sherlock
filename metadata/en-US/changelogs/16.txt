@@ -1,5 +1,0 @@
-In 1.2.1:
-* You can now link your Spotify account to unlock special features.
-* Click the "playlist" button to add a setlist to your Spotify library! (*subject to Spotify approval)
-* Share the link to a setlist by clicking the "share" arrow button.
-* Fixed some miscellaneous small bugs around search and filtering.

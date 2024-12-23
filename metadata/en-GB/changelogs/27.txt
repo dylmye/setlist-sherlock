@@ -1,0 +1,1 @@
+In 1.5.1 support for Google Assistant has been added. Why not ask Google Assistant for setlists by your favourite artist? Try: "Show me Kings of Leon setlists on Setlist Sherlock."

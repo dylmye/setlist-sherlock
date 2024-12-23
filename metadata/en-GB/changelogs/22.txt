@@ -1,4 +1,0 @@
-It's been a while! Here's what's coming to 1.4.0:
-* Initial language support for French
-* Fixed crash when trying to connect to Apple Music without the app installed
-* A number of big internal updates, performance improvements and futureproofing

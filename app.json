@@ -88,6 +88,10 @@
         {
           "ios": {
             "deploymentTarget": "15.1"
+          },
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
           }
         }
       ],
