@@ -6,7 +6,7 @@
     "slug": "setlist-sherlock",
     "owner": "dylmye",
     "scheme": "setlist-sherlock",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -98,13 +98,18 @@
       [
         "expo-check-installed-apps",
         {
-          "android": ["com.apple.android.music"]
+          "android": [
+            "com.apple.android.music"
+          ]
         }
       ],
       [
         "react-native-localization-settings",
         {
-          "languages": ["en", "fr"]
+          "languages": [
+            "en",
+            "fr"
+          ]
         }
       ],
       [

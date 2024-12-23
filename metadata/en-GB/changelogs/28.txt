@@ -1,0 +1,1 @@
+Boring update time: some performance optimisations have been made to reduce the app size.

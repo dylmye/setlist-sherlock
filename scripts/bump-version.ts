@@ -23,7 +23,7 @@ const updateExpo = async (version: string): Promise<void> => {
   try {
     await Bun.write(
       filename,
-      JSON.stringify(Object.assign(json, { version }), null, 2),
+      JSON.stringify(Object.assign(json, { expo: { version } }), null, 2),
     );
   } catch {
     throw new Error("Unable to update app.json");
@@ -37,11 +37,19 @@ type FdroidMetadata = {
     versionCode: number;
     commit: string;
     subdir: string;
+    sudo: string[];
+    init: string;
     gradle: string[];
+    forcevercode: boolean;
+    prebuild: string;
+    scanignore: string[];
+    ndk: string;
   }[];
   CurrentVersion: string;
   CurrentVersionCode: number;
 };
+
+const NDK_VERSION = "26.1.10909125";
 
 const updateFdroid = async (version: string): Promise<void> => {
   console.log("Updating com.dylmye.setlists.yml...");
@@ -58,15 +66,27 @@ const updateFdroid = async (version: string): Promise<void> => {
         versionName: version,
         versionCode: fdroidYaml.CurrentVersionCode + 1,
         commit: version,
-        subdir: "android",
+        subdir: "android/app",
+        sudo: [
+          "curl -Lo node.tar.gz https://nodejs.org/dist/v18.20.5/node-v18.20.5-linux-x64.tar.gz",
+          'echo "e7b80346bb586790ac6b29aa25c96716fcdf6039a6929c2ed506cec09cebc3c0 node.tar.gz" | sha256sum -c -',
+          "tar xzf node.tar.gz --strip-components=1 -C /usr/local/",
+          "sysctl fs.inotify.max_user_watches=524288 || true",
+          "npm install -g bun",
+        ],
+        init: "bun install --frozen-lockfile",
         gradle: ["yes"],
+        forcevercode: true,
+        prebuild: "cd ../../ && bun x expo prebuild --platform android",
+        scanignore: ["node_modules", "webhooks"],
+        ndk: NDK_VERSION,
       },
     ],
   };
 
   // we have to use yes instead of true due to fdroid's formatter! fun!
   // they also require dumb spacing
-  const dumpedYaml = dump(Object.assign(fdroidYaml, yamlUpdates))
+  const dumpedYaml = dump(Object.assign(fdroidYaml, yamlUpdates), { lineWidth: -1 })
     .replaceAll("'yes'", "yes")
     .replace("AutoName:", `\nAutoName:`)
     .replace("RepoType:", `\nRepoType:`)
