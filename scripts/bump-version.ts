@@ -19,12 +19,10 @@ const updatePackageJson = async (version: string): Promise<void> => {
 const updateExpo = async (version: string): Promise<void> => {
   console.log("Updating app.json...");
   const filename = "./app.json";
-  const json = await Bun.file(filename).json();
+  let json = await Bun.file(filename).json();
+  json.expo.version = version;
   try {
-    await Bun.write(
-      filename,
-      JSON.stringify(Object.assign(json, { expo: { version } }), null, 2),
-    );
+    await Bun.write(filename, JSON.stringify(json, null, 2));
   } catch {
     throw new Error("Unable to update app.json");
   }
@@ -68,8 +66,8 @@ const updateFdroid = async (version: string): Promise<void> => {
         commit: version,
         subdir: "android/app",
         sudo: [
-          "curl -Lo node.tar.gz https://nodejs.org/dist/v18.20.5/node-v18.20.5-linux-x64.tar.gz",
-          'echo "e7b80346bb586790ac6b29aa25c96716fcdf6039a6929c2ed506cec09cebc3c0 node.tar.gz" | sha256sum -c -',
+          "curl -Lo node.tar.gz https://nodejs.org/dist/v20.18.1/node-v20.18.1-linux-x64.tar.gz",
+          'echo "259e5a8bf2e15ecece65bd2a47153262eda71c0b2c9700d5e703ce4951572784 node.tar.gz" | sha256sum -c -',
           "tar xzf node.tar.gz --strip-components=1 -C /usr/local/",
           "sysctl fs.inotify.max_user_watches=524288 || true",
           "npm install -g bun",
@@ -86,7 +84,9 @@ const updateFdroid = async (version: string): Promise<void> => {
 
   // we have to use yes instead of true due to fdroid's formatter! fun!
   // they also require dumb spacing
-  const dumpedYaml = dump(Object.assign(fdroidYaml, yamlUpdates), { lineWidth: -1 })
+  const dumpedYaml = dump(Object.assign(fdroidYaml, yamlUpdates), {
+    lineWidth: -1,
+  })
     .replaceAll("'yes'", "yes")
     .replace("AutoName:", `\nAutoName:`)
     .replace("RepoType:", `\nRepoType:`)
