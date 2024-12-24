@@ -12,9 +12,11 @@ export const isVerifiedRequest = (payload, providedHash) => {
 
 /** @type import('aws-lambda').LambdaFunctionURLHandler */
 export const handler = async ({ body, headers }) => {
-  console.log("Headers:", JSON.stringify(headers, null, 2));
   if (!isVerifiedRequest(body, headers["expo-signature"])) {
     throw new Error("Unexpected hash result");
+  }
+  if (headers["user-agent"]?.toLowerCase() !== "expo-webhook-caller/1.0") {
+    throw new Error("404");
   }
 
   const bodyDecoded = JSON.parse(body);
@@ -22,6 +24,15 @@ export const handler = async ({ body, headers }) => {
   if (bodyDecoded.platform !== "android") {
     console.log("Build platform isn't android, no further actions required");
     return;
+  }
+
+  if (bodyDecoded.metadata.buildProfile !== "production") {
+    console.log("Not a production build, no further actions required");
+    return;
+  }
+
+  if (Object.keys(bodyDecoded).includes("error")) {
+    throw new Error(bodyDecoded.error.message);
   }
 
   const req = await fetch(
@@ -43,8 +54,9 @@ export const handler = async ({ body, headers }) => {
   );
 
   if (req.status !== 204) {
+    const res = await req.text();
     throw new Error(
-      `Call to GitHub workflow didn't respond as expected: ${req.statusText}, ${req.toString()}`,
+      `Call to GitHub workflow didn't respond as expected: ${req.statusText}, ${res}`,
     );
   }
 };
