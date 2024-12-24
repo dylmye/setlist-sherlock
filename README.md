@@ -5,14 +5,15 @@
 <div align="center">
   <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fdylmye%2Fsetlist-sherlock?ref=badge_shield&issueType=license"><img alt="FOSSA License Scan Result" src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdylmye%2Fsetlist-sherlock.svg?type=shield&issueType=license" /></a>
   <a href="https://apps.apple.com/gb/app/setlist-sherlock/id6477339282?itscg=30200&itsct=apps_box_badge&mttnsubad=6477339282"><img alt="App Store" src="https://img.shields.io/itunes/v/6477339282?style=flat&logo=apple&logoColor=%23000000&label=App%20Store&labelColor=%23f9f9f9&color=%23ffffff"></a>
-  <a href="https://play.google.com/store/apps/details?id=com.dylmye.setlists&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img src="https://img.shields.io/badge/Google_Play-0F9D58?style=flat&logo=google-play&logoColor=white"></a>
+  <a href="https://play.google.com/store/apps/details?id=com.dylmye.setlists&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Play Store" src="https://img.shields.io/badge/Google_Play-0F9D58?style=flat&logo=google-play&logoColor=white"></a>
+  <a href="https://github.com/dylmye/setlist-sherlock/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/dylmye/setlist-sherlock?style=flat&logo=github&color=%23ffffff"></a>
 </div>
 
 <br />
 
 Find and read concert setlists with ease. Powered by Setlists.fm.
 
-F-Droid coming soon.
+**This app isn't available on F-Droid due to them not allowing apps that require a private API key. The app also does not meet the inclusion policy (size requirement) for IzzyOnDroid. If you don't want to use Google Play, feel free to install APKs from [the release page](https://github.com/dylmye/setlist-sherlock/releases/latest) instead.**
 
 ## Develop
 

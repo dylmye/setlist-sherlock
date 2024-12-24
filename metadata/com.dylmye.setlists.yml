@@ -19,7 +19,7 @@ Binaries: https://github.com/dylmye/setlist-sherlock/releases/download/%v/%v.apk
 
 Builds:
   - versionName: 1.5.3
-    versionCode: 29
+    versionCode: 30
     commit: 1.5.3
     subdir: android/app
     sudo:
@@ -44,4 +44,4 @@ AllowedAPKSigningKeys: f90e81f7e88e4d8c0fa51d9165573aa86ab4cb1384bf94d8bd651e423
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 CurrentVersion: 1.5.3
-CurrentVersionCode: 29
+CurrentVersionCode: 30
