@@ -1,4 +1,4 @@
-import { t, Trans } from "@lingui/macro";
+import { useLingui, Trans } from "@lingui/react/macro";
 import { Stack } from "expo-router";
 import { deleteItemAsync, getItem } from "expo-secure-store";
 import { useState } from "react";
@@ -14,6 +14,7 @@ import { appleMusicInstalled, authorise } from "../../utils/appleMusic";
 
 const AppleMusicSettingsPage = () => {
   const theme = useTheme();
+  const { t } = useLingui();
 
   const [hasSetUp, setSetupState] = useState(
     !!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY),

@@ -1,4 +1,4 @@
-import { t, Trans } from "@lingui/macro";
+import { useLingui, Trans } from "@lingui/react/macro";
 import { useForm } from "react-hook-form";
 import {
   Dimensions,
@@ -33,6 +33,7 @@ const SearchFilterModal = ({
   onDismiss,
   initialFilters,
 }: SearchFilterModalProps) => {
+  const { t } = useLingui();
   const {
     handleSubmit,
     control,

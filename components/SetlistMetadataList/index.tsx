@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { format, parse } from "date-fns";
 import * as Linking from "expo-linking";
 import { router } from "expo-router";
@@ -23,6 +23,7 @@ const SetlistMetadataList = ({
   tour,
   style,
 }: SetlistMetadataListProps) => {
+  const { t } = useLingui();
   const formattedEventDate = useMemo(
     () =>
       eventDate

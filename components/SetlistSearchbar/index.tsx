@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Searchbar, SearchbarProps } from "react-native-paper";
@@ -26,6 +26,7 @@ const SetlistSearchbar = ({
   searchbarProps = {},
   loading = false,
 }: SetlistSearchbarProps) => {
+  const { t } = useLingui();
   const [query, setQuery] = useState(initialQuery);
 
   const onSubmit = () => {

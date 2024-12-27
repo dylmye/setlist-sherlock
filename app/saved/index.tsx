@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Stack } from "expo-router";
 import { FlatList, View } from "react-native";
 
@@ -9,6 +9,7 @@ import { selectSavedSetlists } from "../../store/saved/slice";
 
 /** List of saved setlists marked by user */
 const SavedSetlists = () => {
+  const { t } = useLingui();
   const setlists = useAppSelector(selectSavedSetlists);
   return (
     <View>

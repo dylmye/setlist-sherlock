@@ -1,4 +1,4 @@
-import { t, Trans } from "@lingui/macro";
+import { useLingui, Trans } from "@lingui/react/macro";
 import { isAfter, parse } from "date-fns";
 import * as Clipboard from "expo-clipboard";
 import { Image } from "expo-image";
@@ -31,6 +31,7 @@ import { useGet10SetlistBySetlistIdQuery } from "../../store/services/setlistFm"
 
 /** View for setlist set, metadata, links */
 const SetlistDetails = () => {
+  const { t } = useLingui();
   const dispatch = useAppDispatch();
   const { setlistId } = useLocalSearchParams<{ setlistId: string }>();
 
@@ -97,6 +98,7 @@ const SetlistDetails = () => {
   );
   const Footer = () => {
     const artistName = setlist?.artist?.name;
+
     return (
       <View style={styles.footer}>
         {setlist?.info && (

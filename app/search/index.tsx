@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Stack, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
@@ -17,6 +17,7 @@ import {
 
 /** Search results for setlists from user input */
 const Search = () => {
+  const { t } = useLingui();
   const params = useLocalSearchParams<{ query?: string; tourName?: string }>();
   const [trigger, result] = setlistFmApi.useLazyGet10SearchSetlistsQuery();
 

@@ -1,7 +1,8 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Divider } from "react-native-paper";
+import React from 'react';
 
 import SetlistListItem from "../../components/SetlistListItem";
 import {
@@ -12,6 +13,7 @@ import {
 
 /** View for artist */
 const ArtistPage = () => {
+  const { t } = useLingui();
   const { mbId } = useLocalSearchParams<{ mbId: string }>();
   const { data: artistData } = useGet10ArtistByMbidQuery({ mbid: mbId! });
   const {

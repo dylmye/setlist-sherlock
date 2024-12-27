@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { format } from "date-fns";
 import { Stack } from "expo-router";
 import React, { useMemo } from "react";
@@ -23,6 +23,7 @@ interface HomepageSection extends SectionBase<Setlist> {
 
 /** Entry point for users - latest setlists view default */
 const Home = () => {
+  const { t } = useLingui();
   const isKeyboardVisible = useKeyboardVisible();
   // setlist-fm API uses UK date format, two digit padded, explicitly instead of RFC y-M-d format
   const today = useMemo(() => format(new Date(), "dd-MM-y"), []);

@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Stack, router, useFocusEffect } from "expo-router";
 import { getItem } from "expo-secure-store";
 import { useState } from "react";
@@ -16,6 +16,7 @@ interface SettingItem {
 
 /** Settings controls, accessible from homepage */
 const SettingsPage = () => {
+  const { t } = useLingui();
   const renderSetting: ListRenderItem<SettingItem> = ({ item, index }) => (
     <List.Item
       title={item.label}

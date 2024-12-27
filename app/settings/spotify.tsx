@@ -1,4 +1,4 @@
-import { t, Trans } from "@lingui/macro";
+import { useLingui, Trans } from "@lingui/react/macro";
 import {
   AccessTokenRequestConfig,
   exchangeCodeAsync,
@@ -26,6 +26,7 @@ import {
 } from "../../store/oauth-configs/spotify";
 
 const SpotifySettingsPage = () => {
+  const { t } = useLingui();
   const theme = useTheme();
 
   const [hasSetUp, setSetupState] = useState(

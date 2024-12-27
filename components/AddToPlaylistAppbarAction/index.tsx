@@ -1,8 +1,9 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { getItem } from "expo-secure-store";
 import { useEffect, useMemo, useState } from "react";
 import { ToastAndroid } from "react-native";
 import { Appbar } from "react-native-paper";
+import React from 'react';
 
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
 import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";
@@ -23,6 +24,7 @@ const AddToPlaylistAppbarAction = ({
   setlist,
   show = true,
 }: AddToPlaylistAppbarActionProps) => {
+  const { t } = useLingui();
   const [loading, setLoading] = useState(false);
   const hasSpotifySetup = !!getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY);
   const hasAppleMusicSetup = !!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY);

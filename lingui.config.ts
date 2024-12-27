@@ -1,7 +1,7 @@
-import type { LinguiConfig } from "@lingui/conf";
+import { defineConfig } from "@lingui/conf";
 import { formatter } from "@lingui/format-po";
 
-export default {
+export default defineConfig({
   locales: [
     "en_GB",
     "es_ES",
@@ -20,4 +20,4 @@ export default {
     },
   ],
   format: formatter(),
-} as LinguiConfig;
+});

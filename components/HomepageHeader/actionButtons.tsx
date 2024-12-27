@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Appbar } from "react-native-paper";
@@ -16,6 +16,7 @@ interface HeaderActionButtonsProps {
 }
 
 const HeaderActionButtons = ({ visible }: HeaderActionButtonsProps) => {
+  const { t } = useLingui();
   const config: WithTimingConfig = {
     duration: 250,
     easing: Easing.bezier(0.5, 0.01, 0, 1),

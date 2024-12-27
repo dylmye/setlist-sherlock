@@ -1,4 +1,4 @@
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { List } from "react-native-paper";
@@ -11,6 +11,7 @@ interface SetlistSectionListItemProps {
 
 /** Indivial item for setlist song item */
 const SetlistSectionListItem = memo(({ song }: SetlistSectionListItemProps) => {
+  const { t } = useLingui();
   const description = () => {
     const d = [];
     if (song.with) {
