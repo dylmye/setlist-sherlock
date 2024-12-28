@@ -13,19 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: components/SetlistSectionList/SetlistSectionListItem.tsx:26
-#~ msgid "{0} cover"
-#~ msgstr "{0} cover"
-
-#. e.g. The Beatles setlist
-#: app/setlist/[setlistId].tsx:203
-#~ msgid "{0} setlist"
-#~ msgstr "{0} setlist"
-
-#: app/artist/[mbId].tsx:29
-#~ msgid "{0}'s latest setlists"
-#~ msgstr "{0}'s latest setlists"
-
 #. e.g. The Beatles setlist
 #: app/setlist/[setlistId].tsx:208
 msgid "{artistName} setlist"
@@ -124,10 +111,6 @@ msgstr "Find photos and videos from this gig"
 msgid "Find tickets for this gig"
 msgstr "Find tickets for this gig"
 
-#: app/setlist/[setlistId].tsx:140
-#~ msgid "Find upcoming {0} tour dates"
-#~ msgstr "Find upcoming {0} tour dates"
-
 #: app/setlist/[setlistId].tsx:142
 msgid "Find upcoming {artistName} tour dates"
 msgstr "Find upcoming {artistName} tour dates"
@@ -140,10 +123,6 @@ msgstr "For You"
 #: app/setlist/[setlistId].tsx:125
 msgid "From Concert Archives"
 msgstr "From Concert Archives"
-
-#: app/setlist/[setlistId].tsx:80
-#~ msgid "Here's what {0} played at {1}: {2}"
-#~ msgstr "Here's what {0} played at {1}: {2}"
 
 #: app/setlist/[setlistId].tsx:83
 msgid "Here's what {artistName} played at {venueName}: {setlistUrl}"
@@ -242,10 +221,6 @@ msgstr "Share the link to this setlist"
 msgid "Share this setlist"
 msgstr "Share this setlist"
 
-#: app/setlist/[setlistId].tsx:108
-#~ msgid "Source: {0} setlist on setlist.fm"
-#~ msgstr "Source: {0} setlist on setlist.fm"
-
 #: app/setlist/[setlistId].tsx:112
 msgid "Source: {artistName} setlist on setlist.fm"
 msgstr "Source: {artistName} setlist on setlist.fm"
@@ -302,11 +277,6 @@ msgstr "View"
 #: components/HomepageHeader/actionButtons.tsx:42
 msgid "View saved setlists"
 msgstr "View saved setlists"
-
-#. Text displayed under a song with a featured guest. E.g. "with The Beatles"
-#: components/SetlistSectionList/SetlistSectionListItem.tsx:18
-#~ msgid "with {0}"
-#~ msgstr "with {0}"
 
 #. Text displayed under a song with a featured guest. E.g. "with The Beatles"
 #: components/SetlistSectionList/SetlistSectionListItem.tsx:21

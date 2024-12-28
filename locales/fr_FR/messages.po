@@ -13,31 +13,18 @@ msgstr ""
 "POT-Creation-Date: \n"
 "Plural-Forms: \n"
 
-#: components/SetlistSectionList/SetlistSectionListItem.tsx:26
-#~ msgid "{0} cover"
-#~ msgstr "Repris par {0}"
-
-#. e.g. The Beatles setlist
-#: app/setlist/[setlistId].tsx:203
-#~ msgid "{0} setlist"
-#~ msgstr "La setlist de {0}"
-
-#: app/artist/[mbId].tsx:29
-#~ msgid "{0}'s latest setlists"
-#~ msgstr "Derniers setlists de {0}"
-
 #. e.g. The Beatles setlist
 #: app/setlist/[setlistId].tsx:208
 msgid "{artistName} setlist"
-msgstr ""
+msgstr "La setlist de {artistName}"
 
 #: app/artist/[mbId].tsx:31
 msgid "{artistName}'s latest setlists"
-msgstr ""
+msgstr "Derniers setlists de {artistName}"
 
 #: components/SetlistSectionList/SetlistSectionListItem.tsx:30
 msgid "{coverArtistName} cover"
-msgstr ""
+msgstr "Repris par {coverArtistName}"
 
 #: components/AddToPlaylistAppbarAction/index.tsx:78
 msgid "Add this setlist to your Spotify"
@@ -124,13 +111,9 @@ msgstr "Retrouvez les photos et vidéos de ce concert"
 msgid "Find tickets for this gig"
 msgstr "Trouver des billets pour ce concert"
 
-#: app/setlist/[setlistId].tsx:140
-#~ msgid "Find upcoming {0} tour dates"
-#~ msgstr "Trouver les prochaines dates de tournée de {0}"
-
 #: app/setlist/[setlistId].tsx:142
 msgid "Find upcoming {artistName} tour dates"
-msgstr ""
+msgstr "Trouver les prochaines dates de tournée de {artistName}"
 
 #: app/index.tsx:39
 #: components/HomepageHeader/index.tsx:23
@@ -141,13 +124,9 @@ msgstr "Pour toi"
 msgid "From Concert Archives"
 msgstr "Extrait de Concert Archives"
 
-#: app/setlist/[setlistId].tsx:80
-#~ msgid "Here's what {0} played at {1}: {2}"
-#~ msgstr "Voici ce que {0} a joué à {1} : {2}"
-
 #: app/setlist/[setlistId].tsx:83
 msgid "Here's what {artistName} played at {venueName}: {setlistUrl}"
-msgstr ""
+msgstr "Voici ce que {artistName} a joué à {venueName} : {setlistUrl}"
 
 #: app/index.tsx:55
 msgid "Homepage"
@@ -242,13 +221,9 @@ msgstr "Partager le lien vers cette setlist"
 msgid "Share this setlist"
 msgstr "Partager cette setlist"
 
-#: app/setlist/[setlistId].tsx:108
-#~ msgid "Source: {0} setlist on setlist.fm"
-#~ msgstr "Source : setlist {0} sur setlist.fm"
-
 #: app/setlist/[setlistId].tsx:112
 msgid "Source: {artistName} setlist on setlist.fm"
-msgstr ""
+msgstr "Source : setlist {artistName} sur setlist.fm"
 
 #: app/settings/spotify.tsx:136
 msgid "Spotify log in cancelled, please try again."
@@ -304,14 +279,9 @@ msgid "View saved setlists"
 msgstr "Afficher les setlists enregistrées"
 
 #. Text displayed under a song with a featured guest. E.g. "with The Beatles"
-#: components/SetlistSectionList/SetlistSectionListItem.tsx:18
-#~ msgid "with {0}"
-#~ msgstr "avec {0}"
-
-#. Text displayed under a song with a featured guest. E.g. "with The Beatles"
 #: components/SetlistSectionList/SetlistSectionListItem.tsx:21
 msgid "with {withArtistName}"
-msgstr ""
+msgstr "avec {withArtistName}"
 
 #: components/SearchFilterModal/index.tsx:107
 msgid "Year"
