@@ -32,7 +32,7 @@
     "@react-navigation/native-stack": "^7.0.0",
     "@reduxjs/toolkit": "^2.5.0",
     "date-fns": "^4.1.0",
-    "expo": "~52.0.21",
+    "expo": "~53.0.0",
     "expo-application": "~6.0.1",
     "expo-asset": "~11.0.1",
     "expo-auth-session": "~6.0.1",
