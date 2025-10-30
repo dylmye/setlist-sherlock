@@ -7,6 +7,7 @@ import { List, Text } from "react-native-paper";
 
 import { USER_TOKEN_STORAGE_KEY as APPLE_MUSIC_USER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/appleMusic";
 import { BEARER_TOKEN_STORAGE_KEY as SPOTIFY_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/spotify";
+import { BEARER_TOKEN_STORAGE_KEY as TIDAL_BEARER_TOKEN_STORAGE_KEY } from "../../store/oauth-configs/tidal";
 
 interface SettingItem {
   label: string;
@@ -33,6 +34,10 @@ const SettingsPage = () => {
     !!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY),
   );
 
+  const [_tidalHasSetup, setTidalSetupState] = useState(
+    !!getItem(TIDAL_BEARER_TOKEN_STORAGE_KEY),
+  );
+
   const settings: SettingItem[] = [
     {
       label: "Spotify",
@@ -44,11 +49,17 @@ const SettingsPage = () => {
       value: appleMusicHasSetup ? t`Connected` : t`Set up`,
       onPress: () => router.navigate("/settings/appleMusic"),
     },
+    // {
+    //   label: "TIDAL",
+    //   value: tidalHasSetup ? t`Connected` : t`Set up`,
+    //   onPress: () => router.navigate("/settings/tidal"),
+    // },
   ];
 
   useFocusEffect(() => {
     setSpotifySetupState(!!getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY));
     setAppleMusicSetupState(!!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY));
+    setTidalSetupState(!!getItem(TIDAL_BEARER_TOKEN_STORAGE_KEY))
   });
 
   // @TODO: when there's >1 category of settings, use a SectionList instead

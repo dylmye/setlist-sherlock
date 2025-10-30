@@ -128,7 +128,9 @@
             "image": "./assets/splash-dark.png"
           }
         }
-      ]
+      ],
+      "expo-web-browser",
+      "expo-font"
     ]
   }
 }

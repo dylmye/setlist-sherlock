@@ -1,5 +1,4 @@
 import { setlistFmApi as api } from "./base";
-
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     get10ArtistByMbid: build.query<
@@ -14,7 +13,9 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/1.0/artist/${queryArg.mbid}/setlists`,
-        params: { p: queryArg.p },
+        params: {
+          p: queryArg.p,
+        },
       }),
     }),
     get10CityByGeoId: build.query<
@@ -128,7 +129,9 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/1.0/user/${queryArg.userId}/attended`,
-        params: { p: queryArg.p },
+        params: {
+          p: queryArg.p,
+        },
       }),
     }),
     get10UserByUserIdEdited: build.query<
@@ -137,7 +140,9 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/1.0/user/${queryArg.userId}/edited`,
-        params: { p: queryArg.p },
+        params: {
+          p: queryArg.p,
+        },
       }),
     }),
     get10VenueByVenueId: build.query<
@@ -152,7 +157,9 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/1.0/venue/${queryArg.venueId}/setlists`,
-        params: { p: queryArg.p },
+        params: {
+          p: queryArg.p,
+        },
       }),
     }),
   }),
@@ -183,7 +190,7 @@ export type Get10SearchArtistsApiArg = {
   artistMbid?: string;
   /** the artist's name */
   artistName?: string;
-  /** the artist's Ticketmaster Identifier (tmid) */
+  /** the artist's Ticketmaster Identifier (tmid) (deprecated) */
   artistTmid?: number;
   /** the number of the result page you'd like to have */
   p?: number;
@@ -212,7 +219,7 @@ export type Get10SearchSetlistsApiArg = {
   artistMbid?: string;
   /** the artist's name */
   artistName?: string;
-  /** the artist's Ticketmaster Identifier (tmid) */
+  /** the artist's Ticketmaster Identifier (tmid) (deprecated) */
   artistTmid?: number;
   /** the city's geoId */
   cityId?: string;
@@ -305,105 +312,182 @@ export type Get10VenueByVenueIdSetlistsApiArg = {
   p?: number;
 };
 export type Artist = {
+  /** unique Musicbrainz Identifier (MBID), e.g. <em>&quot;b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d&quot;</em> */
   mbid?: string;
+  /** unique Ticket Master Identifier (TMID), e.g. <em>735610</em> (deprecated) */
   tmid?: number;
+  /** the artist's name, e.g. <em>&quot;The Beatles&quot;</em> */
   name?: string;
+  /** the artist's sort name, e.g. <em>&quot;Beatles, The&quot;</em> or <em>&quot;Springsteen, Bruce&quot;</em> */
   sortName?: string;
+  /** disambiguation to distinguish between artists with same names */
   disambiguation?: string;
+  /** the attribution url */
   url?: string;
 };
 export type Coords = {
+  /** The longitude part of the coordinates. */
   long?: number;
+  /** The latitude part of the coordinates. */
   lat?: number;
 };
 export type Country = {
+  /** The country's <a href= "http://www.iso.org/iso/english_country_names_and_code_elements" >ISO code</a>. E.g.
+    <em>&quot;ie&quot;</em> for Ireland */
   code?: string;
+  /** The country's name. Can be a localized name - e.g. <em>&quot;Austria&quot;</em> or
+    <em>&quot;&Ouml;sterreich&quot;</em> for Austria if the German name was requested. */
   name?: string;
 };
 export type City = {
+  /** unique identifier */
   id?: string;
+  /** the city's name, depending on the language valid values are e.g. <em>&quot;M&uuml;chen&quot;</em> or
+    <em>Munich</em> */
   name?: string;
+  /** The code of the city's state. For most countries this is a two-digit numeric code, with which the state can be
+    identified uniquely in the specific Country. The code can also be a String for other cities. Valid
+    examples are <em>&quot;CA&quot;</em> or <em>&quot;02&quot;</em>
+    
+    which in turn get uniquely identifiable when combined with the state's country:
+    
+    <em>&quot;US.CA&quot;</em> for California, United States or <em>&quot;DE.02&quot;</em> for Bavaria, Germany
+    
+    For a complete list of available states (that aren't necessarily used in this database) is available in
+    <a href= "http://download.geonames.org/export/dump/admin1CodesASCII.txt">a textfile on geonames.org</a>.
+    
+    Note that this code is only unique combined with the city's Country. The code alone is
+    <strong>not</strong> unique. */
   stateCode?: string;
+  /** The name of city's state, e.g. <em>&quot;Bavaria&quot;</em> or <em>&quot;Florida&quot;</em> */
   state?: string;
   coords?: Coords;
   country?: Country;
 };
 export type Venue = {
   city?: City;
+  /** the attribution url */
   url?: string;
+  /** unique identifier */
   id?: string;
+  /** the name of the venue, usually without city and country. E.g. <em>&quot;Madison Square Garden&quot;</em> or
+    <em>&quot;Royal Albert Hall&quot;</em> */
   name?: string;
 };
 export type Tour = {
+  /** The name of the tour. */
   name?: string;
 };
 export type Song = {
+  /** The name of the song. E.g. <em>Yesterday</em> or <em>&quot;Wish You Were Here&quot;</em> */
   name?: string;
   with?: Artist;
   cover?: Artist;
+  /** Special incidents or additional information about the way the song was performed at this specific concert. See
+    the <a href="https://www.setlist.fm/guidelines">setlist.fm guidelines</a> for a complete list of allowed content. */
   info?: string;
+  /** The song came from tape rather than being performed live. See the
+    <a href="https://www.setlist.fm/guidelines#tape-songs">tape section of the guidelines</a> for valid usage. */
   tape?: boolean;
 };
 export type Set = {
+  /** the description/name of the set. E.g. <em>&quot;Acoustic set&quot;</em> or <em>&quot;Paul McCartney
+    solo&quot;</em> */
   name?: string;
+  /** if the set is an encore, this is the number of the encore, starting with 1 for the first encore, 2 for the second
+    and so on. */
   encore?: number;
+  /** this set's songs */
   song?: Song[];
 };
 export type Setlist = {
   artist?: Artist;
   venue?: Venue;
   tour?: Tour;
-  // manually edited to match actual schema
-  // set?: Set[];
-  sets?: {
-    set: Set[];
-  };
+  /** all sets of this setlist */
+  set?: Set[];
+  /** additional information on the concert - see the <a href="https://www.setlist.fm/guidelines">setlist.fm
+    guidelines</a> for a complete list of allowed content. */
   info?: string;
+  /** the attribution url to which you have to link to wherever you use data from this setlist in your application */
   url?: string;
+  /** unique identifier */
   id?: string;
+  /** unique identifier of the version */
   versionId?: string;
+  /** the id this event has on <a href="http://last.fm/">last.fm</a> (deprecated) */
   lastFmEventId?: number;
+  /** date of the concert in the format &quot;dd-MM-yyyy&quot; */
   eventDate?: string;
+  /** date, time and time zone of the last update to this setlist in the format
+    &quot;yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ&quot; */
   lastUpdated?: string;
 };
 export type Setlists = {
+  /** result list of setlists */
   setlist?: Setlist[];
+  /** the total amount of items matching the query */
   total?: number;
+  /** the current page. starts at 1 */
   page?: number;
+  /** the amount of items you get per page */
   itemsPerPage?: number;
 };
 export type Artists = {
+  /** result list of artists */
   artist?: Artist[];
+  /** the total amount of items matching the query */
   total?: number;
+  /** the current page. starts at 1 */
   page?: number;
+  /** the amount of items you get per page */
   itemsPerPage?: number;
 };
 export type Cities = {
+  /** result list of cities */
   cities?: City[];
+  /** the total amount of items matching the query */
   total?: number;
+  /** the current page. starts at 1 */
   page?: number;
+  /** the amount of items you get per page */
   itemsPerPage?: number;
 };
 export type Countries = {
+  /** result list of countries */
   country?: Country[];
+  /** the total amount of items matching the query */
   total?: number;
+  /** the current page. starts at 1 */
   page?: number;
+  /** the amount of items you get per page */
   itemsPerPage?: number;
 };
 export type Venues = {
+  /** result list of venues */
   venue?: Venue[];
+  /** the total amount of items matching the query */
   total?: number;
+  /** the current page. starts at 1 */
   page?: number;
+  /** the amount of items you get per page */
   itemsPerPage?: number;
 };
 export type User = {
   userId?: string;
+  /** never set (deprecated) */
   fullname?: string;
+  /** never set (deprecated) */
   lastFm?: string;
+  /** never set (deprecated) */
   mySpace?: string;
+  /** never set (deprecated) */
   twitter?: string;
+  /** never set (deprecated) */
   flickr?: string;
+  /** never set (deprecated) */
   website?: string;
+  /** never set (deprecated) */
   about?: string;
   url?: string;
 };

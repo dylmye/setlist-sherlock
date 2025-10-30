@@ -7,6 +7,7 @@ import { Link, router, Stack, useLocalSearchParams } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Share, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   ActivityIndicator,
   Appbar,
@@ -34,6 +35,7 @@ const SetlistDetails = () => {
   const { t } = useLingui();
   const dispatch = useAppDispatch();
   const { setlistId } = useLocalSearchParams<{ setlistId: string }>();
+  const insets = useSafeAreaInsets();
 
   const { data: setlist, isLoading } = useGet10SetlistBySetlistIdQuery({
     setlistId: setlistId!,
@@ -44,13 +46,14 @@ const SetlistDetails = () => {
   const isSaved = useAppSelector((store) =>
     selectSetlistIsSaved(store, setlistId!),
   );
+  const setlistDate = setlist?.eventDate && parse(`${setlist.eventDate} Z`, "d-M-y X", new Date())
   const setlistEmpty = !isLoading && !setlist?.sets?.set?.length;
   const setlistInPast =
-    setlist?.eventDate &&
+    setlistDate &&
     // Adding the Z specifies that the date provided to us is in UTC.
     // It's not, but it's much easier than determining the TZ by the
     // event location.
-    isAfter(new Date(), parse(`${setlist.eventDate} Z`, "d-M-y X", new Date()));
+    isAfter(new Date(), setlistDate);
 
   const plaintextSetlistContents = useMemo<string>(() => {
     const allSets = setlist?.sets?.set;
@@ -128,9 +131,9 @@ const SetlistDetails = () => {
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
               onPress={async () =>
                 openBrowserAsync(
-                  `https://www.concertarchives.org/past-concert-search-engine?utf8=%E2%9C%93&search=${encodeURIComponent(
+                  `https://www.concertarchives.org/concert-search-engine?utf8=%E2%9C%93&bands_query%5B%5D=${encodeURIComponent(
                     setlist?.artist?.name!,
-                  )}+${setlist?.eventDate}#concert-table`,
+                  )}&band_match_type=and&single_date%5Bmonth%5D=${setlistDate.getMonth() + 1}&single_date%5Bday%5D=${setlistDate.getDate()}&single_date%5Byear%5D=${setlistDate.getFullYear()}&venue_match_type=or&location_match_type=or&user_match_type=and&sort_by=latest_date`,
                 )
               }
             />
@@ -159,11 +162,11 @@ const SetlistDetails = () => {
               openBrowserAsync(
                 !setlistInPast
                   ? `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
-                      setlist?.artist?.name!,
-                    )}%20${setlist?.venue?.name}&type=events`
+                    setlist?.artist?.name!,
+                  )}%20${setlist?.venue?.name}&type=events`
                   : `https://www.songkick.com/search?utf8=%E2%9C%93&query=${encodeURIComponent(
-                      setlist?.artist?.name!,
-                    )}&type=artists`,
+                    setlist?.artist?.name!,
+                  )}&type=artists`,
               )
             }
           />
@@ -206,9 +209,9 @@ const SetlistDetails = () => {
         options={{
           title: setlist
             ? t({
-                comment: "e.g. The Beatles setlist",
-                message: `${artistName} setlist`,
-              })
+              comment: "e.g. The Beatles setlist",
+              message: `${artistName} setlist`,
+            })
             : "",
           headerRight: () =>
             setlist && (
@@ -255,7 +258,7 @@ const SetlistDetails = () => {
           icon="content-copy"
           onPress={onCopySetlist}
           accessibilityLabel={t`Copy the contents of this setlist to your clipboard`}
-          style={styles.floatingButton}
+          style={{ ...styles.floatingButton, bottom: insets.bottom + 32 }}
         />
       )}
       <Snackbar
@@ -264,11 +267,11 @@ const SetlistDetails = () => {
         action={
           isSaved
             ? {
-                label: t`View`,
-                onPress: () => {
-                  router.navigate("/saved");
-                },
-              }
+              label: t`View`,
+              onPress: () => {
+                router.navigate("/saved");
+              },
+            }
             : undefined
         }
       >
