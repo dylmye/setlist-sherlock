@@ -94,10 +94,29 @@ Builds:
       - node_modules
       - webhooks
     ndk: 26.1.10909125
+  - versionName: 1.6.2
+    versionCode: 34
+    commit: 1.6.2
+    subdir: android/app
+    sudo:
+      - curl -Lo node.tar.gz https://nodejs.org/dist/v20.18.1/node-v20.18.1-linux-x64.tar.gz
+      - echo "259e5a8bf2e15ecece65bd2a47153262eda71c0b2c9700d5e703ce4951572784 node.tar.gz" | sha256sum -c -
+      - tar xzf node.tar.gz --strip-components=1 -C /usr/local/
+      - sysctl fs.inotify.max_user_watches=524288 || true
+      - npm install -g bun
+    init: bun install --frozen-lockfile
+    gradle:
+      - yes
+    forcevercode: true
+    prebuild: cd ../../ && bun x expo prebuild --platform android
+    scanignore:
+      - node_modules
+      - webhooks
+    ndk: 26.1.10909125
 
 AllowedAPKSigningKeys: f90e81f7e88e4d8c0fa51d9165573aa86ab4cb1384bf94d8bd651e423e7690f6
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.6.1
-CurrentVersionCode: 33
+CurrentVersion: 1.6.2
+CurrentVersionCode: 34
