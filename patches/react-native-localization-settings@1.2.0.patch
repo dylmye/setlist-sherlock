@@ -1,0 +1,133 @@
+diff --git a/plugin/build/index.d.ts b/plugin/build/index.d.ts
+index 6c9108435461522f15e215860842c5ad71fc5f31..191cacb60416588ee11ee234ee00273730105712 100644
+--- a/plugin/build/index.d.ts
++++ b/plugin/build/index.d.ts
+@@ -1,5 +1,6 @@
+ import { ConfigPlugin } from '@expo/config-plugins';
+ declare const withReactNativeLocalizationSettings: ConfigPlugin<{
++    defaultLanguage?: string;
+     languages?: string[];
+ }>;
+ export default withReactNativeLocalizationSettings;
+diff --git a/plugin/build/index.js b/plugin/build/index.js
+index 0c3c1116939609055f6e6dae3f27ff3d4a401726..8c9ffea55ef488873888f507f50d64f5f0b1ffc4 100644
+--- a/plugin/build/index.js
++++ b/plugin/build/index.js
+@@ -2,9 +2,9 @@
+ Object.defineProperty(exports, "__esModule", { value: true });
+ const android_1 = require("./android");
+ const ios_1 = require("./ios");
+-const withReactNativeLocalizationSettings = (config, { languages = [] } = {}) => {
++const withReactNativeLocalizationSettings = (config, { defaultLanguage, languages = [] } = {}) => {
+     config = (0, android_1.withAndroidLanguages)(config, { languages });
+-    config = (0, ios_1.withIosLanguages)(config, { languages });
++    config = (0, ios_1.withIosLanguages)(config, { defaultLanguage, languages });
+     return config;
+ };
+ exports.default = withReactNativeLocalizationSettings;
+diff --git a/plugin/build/ios.d.ts b/plugin/build/ios.d.ts
+index 708d89e5e3abaa46eb198a28ed9472af951f4651..0de230e6612be900188a14564000657ef99e50b7 100644
+--- a/plugin/build/ios.d.ts
++++ b/plugin/build/ios.d.ts
+@@ -1,4 +1,5 @@
+ import { ConfigPlugin } from '@expo/config-plugins';
+ export declare const withIosLanguages: ConfigPlugin<{
++    defaultLanguage?: string;
+     languages?: string[];
+ }>;
+diff --git a/plugin/build/ios.js b/plugin/build/ios.js
+index f9a33155d6535e93e97617183e6a2576345e9351..44abf564b02952f00a9901258d6b0572da31a7e8 100644
+--- a/plugin/build/ios.js
++++ b/plugin/build/ios.js
+@@ -2,8 +2,8 @@
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.withIosLanguages = void 0;
+ const config_plugins_1 = require("@expo/config-plugins");
+-const generateLocalizableContent = (languages) => `{
+-  "sourceLanguage" : "Base",
++const generateLocalizableContent = (languages, defaultLanguage) => `{
++  "sourceLanguage" : "${defaultLanguage || languages[0]}",
+   "strings" : {
+     "react-native-localization-settings" : {
+       "extractionState" : "manual",
+@@ -17,7 +17,7 @@ const generateLocalizableContent = (languages) => `{
+   },
+   "version" : "1.0"
+ }`;
+-const withIosLanguages = (config, { languages = [] } = {}) => {
++const withIosLanguages = (config, { defaultLanguage, languages = [] } = {}) => {
+     config = (0, config_plugins_1.withXcodeProject)(config, (config) => {
+         const project = config.modResults;
+         const projectObject = project.pbxProjectSection()[project.getFirstProject().uuid];
+@@ -29,7 +29,7 @@ const withIosLanguages = (config, { languages = [] } = {}) => {
+                 project,
+                 nativeProjectRoot: config.modRequest.platformProjectRoot,
+                 filePath: 'Localizable.xcstrings',
+-                fileContents: generateLocalizableContent(languages),
++                fileContents: generateLocalizableContent(languages, defaultLanguage),
+                 overwrite: true,
+             });
+         }
+diff --git a/plugin/src/index.ts b/plugin/src/index.ts
+index cd5821e67fd5110e2b7744f580496390bc6fcd1f..89d191e3eb7912611d780538f0b84b280a2cecf1 100644
+--- a/plugin/src/index.ts
++++ b/plugin/src/index.ts
+@@ -3,10 +3,11 @@ import { withAndroidLanguages } from './android';
+ import { withIosLanguages } from './ios';
+ 
+ const withReactNativeLocalizationSettings: ConfigPlugin<{
++  defaultLanguage?: string;
+   languages?: string[];
+-}> = (config, { languages = [] } = {}) => {
++}> = (config, { defaultLanguage, languages = [] } = {}) => {
+   config = withAndroidLanguages(config, { languages });
+-  config = withIosLanguages(config, { languages });
++  config = withIosLanguages(config, { defaultLanguage, languages });
+ 
+   return config;
+ };
+diff --git a/plugin/src/ios.ts b/plugin/src/ios.ts
+index 6caae2a0f52c90c0d429ae605cee9f907a6ff226..229095280900f04775237db75e3efa4ee6e74e75 100644
+--- a/plugin/src/ios.ts
++++ b/plugin/src/ios.ts
+@@ -4,8 +4,11 @@ import {
+   withXcodeProject,
+ } from '@expo/config-plugins';
+ 
+-const generateLocalizableContent = (languages: string[]) => `{
+-  "sourceLanguage" : "Base",
++const generateLocalizableContent = (
++  languages: string[],
++  defaultLanguage?: string
++) => `{
++  "sourceLanguage" : "${defaultLanguage || languages[0]}",
+   "strings" : {
+     "react-native-localization-settings" : {
+       "extractionState" : "manual",
+@@ -24,22 +27,23 @@ const generateLocalizableContent = (languages: string[]) => `{
+ }`;
+ 
+ export const withIosLanguages: ConfigPlugin<{
++  defaultLanguage?: string;
+   languages?: string[];
+-}> = (config, { languages = [] } = {}) => {
++}> = (config, { defaultLanguage, languages = [] } = {}) => {
+   config = withXcodeProject(config, (config) => {
+     const project = config.modResults;
+     const projectObject =
+       project.pbxProjectSection()[project.getFirstProject().uuid];
+     if (projectObject) {
+       // Add known regions to the project
+-      projectObject.knownRegions = ['Base', ...languages];
++      projectObject.knownRegions = languages;
+ 
+       // Write the Localizable.xcstrings file
+       IOSConfig.XcodeProjectFile.createBuildSourceFile({
+         project,
+         nativeProjectRoot: config.modRequest.platformProjectRoot,
+         filePath: 'Localizable.xcstrings',
+-        fileContents: generateLocalizableContent(languages),
++        fileContents: generateLocalizableContent(languages, defaultLanguage),
+         overwrite: true,
+       });
+     }

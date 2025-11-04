@@ -112,5 +112,8 @@
         ]
       }
     }
+  },
+  "patchedDependencies": {
+    "react-native-localization-settings@1.2.0": "patches/react-native-localization-settings@1.2.0.patch"
   }
 }
