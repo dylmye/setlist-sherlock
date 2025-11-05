@@ -35,8 +35,7 @@ const SpotifySettingsPage = () => {
   const [loading, setLoading] = useState(false);
 
   const redirectUri = makeRedirectUri({
-    // scheme: "setlist-sherlock",
-    scheme: "com.dylmye.setlists",
+    scheme: "setlist-sherlock",
     path: "settings/spotify",
   });
 
