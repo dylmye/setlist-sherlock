@@ -1,3 +1,87 @@
+diff --git a/node_modules/react-native-localization-settings/.bun-tag-c44e3cac3dc0a8f0 b/.bun-tag-c44e3cac3dc0a8f0
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/android/src/main/java/com/localizationsettings/LocalizationSettingsModule.kt b/android/src/main/java/com/localizationsettings/LocalizationSettingsModule.kt
+index 67fffcff77dad575635610454a7856d138afe5b3..5a94c82012be5ae910280fb78fe048821e996f98 100644
+--- a/android/src/main/java/com/localizationsettings/LocalizationSettingsModule.kt
++++ b/android/src/main/java/com/localizationsettings/LocalizationSettingsModule.kt
+@@ -1,8 +1,10 @@
+ package com.localizationsettings
+ 
++import android.app.LocaleManager
+ import android.content.Context
+ import android.content.SharedPreferences
+ import android.os.Build
++import android.os.LocaleList
+ import androidx.appcompat.app.AppCompatDelegate
+ import androidx.core.os.LocaleListCompat
+ import com.facebook.react.bridge.Promise
+@@ -41,14 +43,14 @@ class LocalizationSettingsModule internal constructor(context: ReactApplicationC
+   private fun getCurrentLanguage(): String? {
+     // If API version is >= 33, then use per-app language settings
+     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+-      val currentLocaleName = if (!AppCompatDelegate.getApplicationLocales().isEmpty) {
+-        // get per-app language
+-        AppCompatDelegate.getApplicationLocales()[0]?.toLanguageTag()
++        // Use LocaleManager directly to read per-app language set in Android Settings
++        val localeManager = reactApplicationContext.getSystemService(LocaleManager::class.java)
++        val appLocales = localeManager?.applicationLocales
++        return if (appLocales != null && !appLocales.isEmpty) {
++          appLocales[0]?.toLanguageTag()
+       } else {
+-        // Fallback to the default System Locale
+         Locale.getDefault().toLanguageTag()
+       }
+-      return currentLocaleName
+     }
+     // if API is < 33, then use SharedPreferences with fallback to default System Locale
+     if (getPreferences().getString("languageFrom", null) == Locale.getDefault().language) {
+@@ -68,8 +70,11 @@ class LocalizationSettingsModule internal constructor(context: ReactApplicationC
+   private fun setCurrentLanguage(language: String) {
+     // If API version is >= 33, then use per-app language settings
+     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+-      val localeList = LocaleListCompat.forLanguageTags(getLanguageTag(language))
+-      AppCompatDelegate.setApplicationLocales(localeList)
++      // Use LocaleManager directly to ensure sync with Android Settings
++      val localeManager = reactApplicationContext.getSystemService(LocaleManager::class.java)
++      val languageTag = getLanguageTag(language)
++      val localeList = LocaleList.forLanguageTags(languageTag)
++      localeManager?.applicationLocales = localeList
+     } else {
+       // if API is < 33, then set SharedPreferences language
+       val editor = getEditor();
+diff --git a/ios/LocalizationSettings.mm b/ios/LocalizationSettings.mm
+index 3066ba9daa0f778760227412c629dc47290e3ee8..781f7b80a1ca6c49c8c58ed734127d3395ac3483 100644
+--- a/ios/LocalizationSettings.mm
++++ b/ios/LocalizationSettings.mm
+@@ -17,26 +17,12 @@ RCT_EXPORT_MODULE()
+     return [[locale languageCode] stringByAppendingFormat:@"-%@", [currentLocale countryCode]];
+ }
+ 
+--(NSString*) getUserLocale {
+-    NSArray* locales = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
+-    if (locales == nil ) { return nil; }
+-    if ([locales count] == 0) { return nil; }
+-
+-    NSString* userLocale = locales[0];
+-    return userLocale;
+-}
+-
+ /**
+  * Get current language
+  * returns string in IETF BCP 47 (language-COUNTRY "pl-PL")
+  **/
+ - (NSString *)getCurrentLanguage {
+-    NSString *userLocale = [self getUserLocale];
+-    if (userLocale) {
+-        return userLocale;
+-        
+-    }
+-    return [[NSLocale preferredLanguages] objectAtIndex:0];
++    return [self getLanguageTag:[[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0]];
+ }
+ 
+ /**
 diff --git a/plugin/build/index.d.ts b/plugin/build/index.d.ts
 index 6c9108435461522f15e215860842c5ad71fc5f31..191cacb60416588ee11ee234ee00273730105712 100644
 --- a/plugin/build/index.d.ts
