@@ -404,8 +404,12 @@ export type Setlist = {
   artist?: Artist;
   venue?: Venue;
   tour?: Tour;
+  // manually edited to match actual schema
+  // sets?: Set[];
   /** all sets of this setlist */
-  set?: Set[];
+  sets?: {
+    set: Set[];
+  };
   /** additional information on the concert - see the <a href="https://www.setlist.fm/guidelines">setlist.fm
     guidelines</a> for a complete list of allowed content. */
   info?: string;

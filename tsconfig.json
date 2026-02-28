@@ -8,5 +8,12 @@
     "**/*.tsx",
     "app.config.js"
   ],
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node",
+      "customConditions": null
+    }
+  }
 }

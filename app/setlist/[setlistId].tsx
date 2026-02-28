@@ -149,7 +149,7 @@ const SetlistDetails = () => {
               <List.Icon
                 icon={({ color, size }) => (
                   <Image
-                    source="songkick"
+                    source={require('../../assets/songkick.svg')}
                     style={{ width: size, height: size }}
                     tintColor={color}
                   />

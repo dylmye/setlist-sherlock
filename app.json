@@ -76,14 +76,6 @@
       "expo-secure-store",
       "expo-localization",
       [
-        "expo-asset",
-        {
-          "assets": [
-            "./assets/songkick.png"
-          ]
-        }
-      ],
-      [
         "expo-build-properties",
         {
           "ios": {
