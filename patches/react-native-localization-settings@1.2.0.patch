@@ -1,3 +1,6 @@
+diff --git a/node_modules/react-native-localization-settings/.bun-tag-8d58562317c3f51c b/.bun-tag-8d58562317c3f51c
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/node_modules/react-native-localization-settings/.bun-tag-c44e3cac3dc0a8f0 b/.bun-tag-c44e3cac3dc0a8f0
 new file mode 100644
 index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
@@ -120,10 +123,10 @@ index 708d89e5e3abaa46eb198a28ed9472af951f4651..0de230e6612be900188a14564000657e
      languages?: string[];
  }>;
 diff --git a/plugin/build/ios.js b/plugin/build/ios.js
-index f9a33155d6535e93e97617183e6a2576345e9351..44abf564b02952f00a9901258d6b0572da31a7e8 100644
+index f9a33155d6535e93e97617183e6a2576345e9351..050c8ec121d91c7a70e52533bcf82b498f602719 100644
 --- a/plugin/build/ios.js
 +++ b/plugin/build/ios.js
-@@ -2,8 +2,8 @@
+@@ -2,13 +2,12 @@
  Object.defineProperty(exports, "__esModule", { value: true });
  exports.withIosLanguages = void 0;
  const config_plugins_1 = require("@expo/config-plugins");
@@ -134,7 +137,12 @@ index f9a33155d6535e93e97617183e6a2576345e9351..44abf564b02952f00a9901258d6b0572
    "strings" : {
      "react-native-localization-settings" : {
        "extractionState" : "manual",
-@@ -17,7 +17,7 @@ const generateLocalizableContent = (languages) => `{
+       "localizations" : {
+-        "base" : {"stringUnit" : {"state" : "translated","value" : ""}},
+         ${languages
+     .map((lang) => `"${lang}" : {"stringUnit" : {"state" : "translated","value" : ""}},`)
+     .join('\n        ')}
+@@ -17,19 +16,19 @@ const generateLocalizableContent = (languages) => `{
    },
    "version" : "1.0"
  }`;
@@ -143,7 +151,12 @@ index f9a33155d6535e93e97617183e6a2576345e9351..44abf564b02952f00a9901258d6b0572
      config = (0, config_plugins_1.withXcodeProject)(config, (config) => {
          const project = config.modResults;
          const projectObject = project.pbxProjectSection()[project.getFirstProject().uuid];
-@@ -29,7 +29,7 @@ const withIosLanguages = (config, { languages = [] } = {}) => {
+         if (projectObject) {
+             // Add known regions to the project
+-            projectObject.knownRegions = ['Base', ...languages];
++            projectObject.knownRegions = languages;
+             // Write the Localizable.xcstrings file
+             config_plugins_1.IOSConfig.XcodeProjectFile.createBuildSourceFile({
                  project,
                  nativeProjectRoot: config.modRequest.platformProjectRoot,
                  filePath: 'Localizable.xcstrings',
@@ -171,10 +184,10 @@ index cd5821e67fd5110e2b7744f580496390bc6fcd1f..89d191e3eb7912611d780538f0b84b28
    return config;
  };
 diff --git a/plugin/src/ios.ts b/plugin/src/ios.ts
-index 6caae2a0f52c90c0d429ae605cee9f907a6ff226..229095280900f04775237db75e3efa4ee6e74e75 100644
+index 6caae2a0f52c90c0d429ae605cee9f907a6ff226..9ecad57298b6c26e92e65a0ce5679436fd61a400 100644
 --- a/plugin/src/ios.ts
 +++ b/plugin/src/ios.ts
-@@ -4,8 +4,11 @@ import {
+@@ -4,13 +4,15 @@ import {
    withXcodeProject,
  } from '@expo/config-plugins';
  
@@ -188,7 +201,12 @@ index 6caae2a0f52c90c0d429ae605cee9f907a6ff226..229095280900f04775237db75e3efa4e
    "strings" : {
      "react-native-localization-settings" : {
        "extractionState" : "manual",
-@@ -24,22 +27,23 @@ const generateLocalizableContent = (languages: string[]) => `{
+       "localizations" : {
+-        "base" : {"stringUnit" : {"state" : "translated","value" : ""}},
+         ${languages
+           .map(
+             (lang) =>
+@@ -24,22 +26,23 @@ const generateLocalizableContent = (languages: string[]) => `{
  }`;
  
  export const withIosLanguages: ConfigPlugin<{
