@@ -11,15 +11,15 @@ jobs:
       contents: read
     steps:
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
         with:
           bun-version: latest
 
       - name: Setup EAS
-        uses: expo/expo-github-action@v8
+        uses: expo/expo-github-action@eab7a230208c952974db8c3245cfd78402c7b385
         with:
           eas-version: latest
           expo-version: latest
@@ -30,21 +30,21 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Set eas.json file - EXPO_PUBLIC_SETLISTFM_API_KEY
-        uses: jossef/action-set-json-field@v2.2
+        uses: jossef/action-set-json-field@890d7642122dbb2833dddd2003659bb71a2b21fe
         with:
           file: eas.json
           field: build.production.env.EXPO_PUBLIC_SETLISTFM_API_KEY
           value: ${{ secrets.EXPO_PUBLIC_SETLISTFM_API_KEY }}
 
       - name: Set eas.json file - EXPO_PUBLIC_SPOTIFY_API_KEY
-        uses: jossef/action-set-json-field@v2.2
+        uses: jossef/action-set-json-field@890d7642122dbb2833dddd2003659bb71a2b21fe
         with:
           file: eas.json
           field: build.production.env.EXPO_PUBLIC_SPOTIFY_API_KEY
           value: ${{ secrets.EXPO_PUBLIC_SPOTIFY_API_KEY }}
 
       - name: Set eas.json file - EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT
-        uses: jossef/action-set-json-field@v2.2
+        uses: jossef/action-set-json-field@890d7642122dbb2833dddd2003659bb71a2b21fe
         with:
           file: eas.json
           field: build.production.env.EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT

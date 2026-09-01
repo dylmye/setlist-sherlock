@@ -37,13 +37,13 @@ Requirements:
 - bun
 
 ```bash
-$ bun install
+bun install
 ```
 
 ### Create Development Build
 
 ```bash
-$ bun run start
+bun run start
 ```
 
 Add a `--go` flag if you want to use the Expo Go app.
@@ -68,6 +68,10 @@ To update the Spotify API:
 1. Replace the file in `store/open-api-configs` named `spotify.yml`
 2. Make sure you have `ts-node` installed globally - `bun install -g ts-node`
 3. Run `bun run generate:api:spotify`
+
+### Updating GitHub workflow action versions
+
+The policy in this repo is that all external actions not authored by /github or /actions are pinned to a commit hash. Find the hash of the newest version for the action.
 
 ## Build
 

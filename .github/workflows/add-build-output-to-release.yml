@@ -24,11 +24,11 @@ jobs:
           curl -sSL ${{ inputs.artifactUrl }} -o ${{ inputs.appVersion }}.aab
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: aab-file
           path: ${{ inputs.appVersion }}.aab
           retention-days: 1
+          archive: false
 
   create_and_upload_artifacts:
     runs-on: ubuntu-latest
@@ -39,16 +39,16 @@ jobs:
       contents: write
     steps:
       - name: Setup JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v6
         with:
           java-version: 17
           distribution: temurin
 
       - name: Setup Bundletool
-        uses: amyu/setup-bundletool@v1
+        uses: amyu/setup-bundletool@cc2e1857284660bd625e43f2c8a45626f034302f
 
       - name: Get AAB Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: aab-file
 
@@ -62,7 +62,7 @@ jobs:
         run: unzip temp.apks && mv universal.apk ${{ inputs.appVersion }}.apk
 
       - name: Add Build To Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64
         with:
           tag_name: ${{ inputs.appVersion }}
           files: |
