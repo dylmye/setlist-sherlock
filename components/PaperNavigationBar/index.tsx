@@ -1,5 +1,5 @@
-import { getHeaderTitle } from "@react-navigation/elements";
-import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import type { NativeStackHeaderProps } from "expo-router";
+import { getHeaderTitle } from "expo-router/react-navigation";
 import { Appbar } from "react-native-paper";
 
 /** Replacement RNav-compatible topbar */
