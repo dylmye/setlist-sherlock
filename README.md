@@ -11,9 +11,7 @@
 
 <br />
 
-Find and read concert setlists with ease. Powered by Setlists.fm.
-
-**This app isn't available on F-Droid due to them not allowing apps that require a private API key. The app also does not meet the inclusion policy (size requirement) for IzzyOnDroid. If you don't want to use Google Play, feel free to install APKs from [the release page](https://github.com/dylmye/setlist-sherlock/releases/latest) instead.**
+Find and read concert setlists with ease. Powered by Setlist.fm.
 
 ## Develop
 
@@ -23,22 +21,28 @@ This app is built on the [Expo](https://expo.dev) framework.
 
 The following environment variables are required in a `.env` file in the root directory:
 
-| Name                                       | Value                                                                              |
-| ------------------------------------------ | ---------------------------------------------------------------------------------- |
-| EXPO_PUBLIC_SETLISTFM_API_KEY              | Setlist.fm API key from [here](https://api.setlist.fm/docs/)                       |
-| EXPO_PUBLIC_SPOTIFY_API_KEY                | Spotify client ID from [here](https://developer.spotify.com/documentation/web-api) |
-| EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT | The URL (Lambda invocation endpoint etc) to grab a developer token from.           |
+| Name                                       | Value                                                                                               |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| EXPO_PUBLIC_API_PROXY_BASE_URL             | Setlist.fm API [proxy instance](https://github.com/dylmye/setlist-sherlock-api) with trailing slash |
+| EXPO_PUBLIC_SPOTIFY_API_KEY                | Spotify client ID from [here](https://developer.spotify.com/documentation/web-api)                  |
+| EXPO_PUBLIC_APPLE_MUSIC_DEV_TOKEN_ENDPOINT | The URL (Lambda invocation endpoint etc) to grab a developer token from.                            |
 
 ### Install
 
 Requirements:
 
-- node v18+
+- node v24+
 - bun
 
 ```bash
 bun install
 ```
+
+### Setup your proxy backend
+
+To protect your Setlist.fm API key, you'll need to set up a proxy instance. It's a serverless function that takes requests from the app and forwards it to Setlist.fm's API with your API key attached.
+
+An example server is available here: <https://github.com/dylmye/setlist-sherlock-api>
 
 ### Create Development Build
 
@@ -68,6 +72,11 @@ To update the Spotify API:
 1. Replace the file in `store/open-api-configs` named `spotify.yml`
 2. Make sure you have `ts-node` installed globally - `bun install -g ts-node`
 3. Run `bun run generate:api:spotify`
+
+
+### Updating Tidal API config
+
+TBC
 
 ### Updating GitHub workflow action versions
 
