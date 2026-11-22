@@ -1,19 +1,20 @@
 import { I18nProvider } from "@lingui/react";
 import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import {
+  Stack,
   ThemeProvider,
   DarkTheme as DarkNavTheme,
   DefaultTheme as LightNavTheme,
-} from "@react-navigation/native";
-import { Stack } from "expo-router";
+  type Theme,
+} from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "react-native";
 import {
   PaperProvider,
-  adaptNavigationTheme,
   MD3DarkTheme as DarkPaperTheme,
   MD3LightTheme as LightPaperTheme,
   ActivityIndicator,
+  type MD3Theme,
 } from "react-native-paper";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
@@ -23,9 +24,27 @@ import PaperNavigationBar from "../components/PaperNavigationBar";
 import { store } from "../store";
 import { useSetLanguages } from "../utils/i18n";
 
-const { LightTheme, DarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: LightNavTheme,
-  reactNavigationDark: DarkNavTheme,
+/**
+ * Maps Paper's MD3 colors onto an Expo Router navigation theme.
+ *
+ * Replaces `adaptNavigationTheme` from react-native-paper, which is typed
+ * against React Navigation's `string` colors rather than Expo Router's
+ * `ColorValue` colors.
+ */
+const createNavigationTheme = (
+  paperTheme: MD3Theme,
+  navTheme: Theme,
+): Theme => ({
+  ...navTheme,
+  colors: {
+    ...navTheme.colors,
+    primary: paperTheme.colors.primary,
+    background: paperTheme.colors.background,
+    card: paperTheme.colors.elevation.level2,
+    text: paperTheme.colors.onSurface,
+    border: paperTheme.colors.outline,
+    notification: paperTheme.colors.error,
+  },
 });
 
 const AppLayout = () => {
@@ -40,20 +59,18 @@ const AppLayout = () => {
       ? { ...DarkPaperTheme, colors: m3Theme.dark }
       : { ...LightPaperTheme, colors: m3Theme.light };
 
+  const navigationTheme = createNavigationTheme(
+    systemTheme === "dark" ? DarkPaperTheme : LightPaperTheme,
+    systemTheme === "dark" ? DarkNavTheme : LightNavTheme,
+  );
+
   const persistor = persistStore(store);
 
   return (
     <I18nProvider i18n={i18n}>
       <Provider store={store}>
         <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-          <ThemeProvider
-            value={
-              systemTheme === "dark"
-                ? // @TODO: when react-native-paper adds font to NavigationTheme, revert back to returning just the object
-                  { ...DarkTheme, fonts: DarkNavTheme.fonts }
-                : { ...LightTheme, fonts: LightNavTheme.fonts }
-            }
-          >
+          <ThemeProvider value={navigationTheme}>
             <PaperProvider theme={paperTheme}>
               <StatusBar style="auto" />
               <Stack
