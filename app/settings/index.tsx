@@ -38,28 +38,38 @@ const SettingsPage = () => {
     !!getItem(TIDAL_BEARER_TOKEN_STORAGE_KEY),
   );
 
+  const [userCity, setCityState] = useState(getItem("userCityIdAndName"));
+
   const settings: SettingItem[] = [
+    {
+      label: t`Connected streaming service`,
+      value: spotifyHasSetup ? "Spotify" : appleMusicHasSetup ? "Apple Music" : t`Set up`,
+      onPress: console.log, // todo: move spotify/apple music / tidal to one page
+    },
+    // deprecated
     {
       label: "Spotify",
       value: spotifyHasSetup ? t`Connected` : t`Set up`,
       onPress: () => router.navigate("/settings/spotify"),
     },
+    // deprecated
     {
       label: "Apple Music",
       value: appleMusicHasSetup ? t`Connected` : t`Set up`,
       onPress: () => router.navigate("/settings/appleMusic"),
     },
-    // {
-    //   label: "TIDAL",
-    //   value: tidalHasSetup ? t`Connected` : t`Set up`,
-    //   onPress: () => router.navigate("/settings/tidal"),
-    // },
+    {
+      label: t`Your city`,
+      value: userCity ?? t`Set up`,
+      onPress: () => router.navigate("/settings/city"),
+    }
   ];
 
   useFocusEffect(() => {
     setSpotifySetupState(!!getItem(SPOTIFY_BEARER_TOKEN_STORAGE_KEY));
     setAppleMusicSetupState(!!getItem(APPLE_MUSIC_USER_TOKEN_STORAGE_KEY));
-    setTidalSetupState(!!getItem(TIDAL_BEARER_TOKEN_STORAGE_KEY))
+    setTidalSetupState(!!getItem(TIDAL_BEARER_TOKEN_STORAGE_KEY));
+    setCityState(getItem("userCityIdAndName"));
   });
 
   // @TODO: when there's >1 category of settings, use a SectionList instead
